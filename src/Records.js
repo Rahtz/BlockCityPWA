@@ -94,11 +94,11 @@ function Records() {
 
  
   return (
-    <div className="bg-gray-200 h-screen border border-red-500 divide-x mt-16">
-        <div className="bg-white mx-96 my-10 h-auto border rounded-lg">
-            <div className="ml-36 my-5">
+    <div className="bg-gray-200 h-screen border divide-x">
+        <div className="bg-white lg:mx-96 my-1 lg:my-10 h-auto border rounded-lg">
+            <div className="mx-24 lg:ml-36 my-5">
                 <h1 className="text-xl font-bold">Club Records Per Game</h1>
-                <div className="grid grid-cols-3 h-auto my-5">
+                <div className="lg:grid grid-cols-3 h-auto my-5">
                     <div className="col-span-1">
                         <h2 className="my-5 text-md font-bold text-blue-700">Points Per Game</h2>
                         <ol className="ml-5 list-decimal">
@@ -124,7 +124,7 @@ function Records() {
                         </ol>
                     </div>
                 </div>
-                <div className="grid grid-cols-3 h-auto my-5">
+                <div className="lg:grid grid-cols-3 h-auto my-5">
                     <div className="col-span-1">
                     <h2 className="my-5 text-md font-bold text-blue-700">Steals Per Game</h2>
                     <ol className="ml-5 list-decimal">
@@ -152,7 +152,7 @@ function Records() {
                         </ol>
                     </div>
                 </div>
-                <div className="grid grid-cols-3 h-auto my-5">
+                <div className="lg:grid grid-cols-3 h-auto my-5">
                     <div className="col-span-1">
                     <h2 className="my-5 text-md font-bold text-blue-700">Three Pointers Made</h2>
                     <ol className="ml-5 list-decimal">

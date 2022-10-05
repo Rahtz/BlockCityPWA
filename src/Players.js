@@ -56,8 +56,8 @@ function Players() {
   // }
 
   return (
-    <div className="grid grid-cols-10 divide-x mt-20">
-    <div className="grid grid-cols-3 divide-x col-span-3">
+    <div className="lg:grid grid-cols-10 divide-x mt-1">
+    <div className="hidden lg:grid grid-cols-3 divide-x col-span-3">
     <div className="col-span-2">
       <input
         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -77,15 +77,15 @@ function Players() {
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" className="py-3 px-6">Player Name</th>
-                    <th scope="col" className="py-3 px-6">Options</th>
+                    <th scope="col" className="hidden lg:block py-3 px-6">Options</th>
                 </tr>
             </thead>
             <tbody>
             {players.map((player) => (
-                <tr key={player.id} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                <tr key={player.id} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 text-xs">
                 <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">{player.PlayerName}</th>
                 <td className="py-4 px-6">
-                    <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => deletePlayer(player.id)}>
+                    <button className="hidden lg:block font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => deletePlayer(player.id)}>
                     Delete
                     </button>
                 </td>

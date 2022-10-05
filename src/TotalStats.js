@@ -47,58 +47,56 @@ function Stats() {
   
 
   return (
-    <div className="grid grid-cols-4 divide-x mt-20">
+    <div className="lg:grid grid-cols-4 divide-x mt-2">
         <div className="overflow-x-auto relative shadow-md sm:rounded-lg w-full col-span-3">
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-            <th scope="col" className="py-3 px-6">playerId</th>
-            <th scope="col" className="py-3 px-6">teamId</th>
-            <th scope="col" className="py-3 px-6">date</th>
-            <th scope="col" className="py-3 px-6">Points</th>
-            <th scope="col" className="py-3 px-6">Rebounds</th>
-            <th scope="col" className="py-3 px-6">Assists</th>
-            <th scope="col" className="py-3 px-6">Steals</th>
-            <th scope="col" className="py-3 px-6">Blocks</th>
-            <th scope="col" className="py-3 px-6">FGA</th>
-            <th scope="col" className="py-3 px-6">FGM</th>
-            <th scope="col" className="py-3 px-6">3PA</th>
-            <th scope="col" className="py-3 px-6">3PM</th>
-            <th scope="col" className="py-3 px-6">FTA</th>
-            <th scope="col" className="py-3 px-6">FTM</th>
+            <th scope="col" className="py-2 px-2">Player</th>
+            <th scope="col" className="py-2 px-2">Team</th>
+            <th scope="col" className="py-2 px-2 text-center">Points</th>
+            <th scope="col" className="py-2 px-2 text-center">Rebounds</th>
+            <th scope="col" className="py-2 px-2 text-center">Assists</th>
+            <th scope="col" className="py-2 px-2 text-center">Steals</th>
+            <th scope="col" className="py-2 px-2 text-center">Blocks</th>
+            <th scope="col" className="py-2 px-2 text-center">FGA</th>
+            <th scope="col" className="py-2 px-2 text-center">FGM</th>
+            <th scope="col" className="py-2 px-2 text-center">3PA</th>
+            <th scope="col" className="py-2 px-2 text-center">3PM</th>
+            <th scope="col" className="py-2 px-2 text-center">FTA</th>
+            <th scope="col" className="py-2 px-2 text-center">FTM</th>
           </tr>
           </thead>
           <tbody>
           {totalstats.map((stat) => (
-            <tr key={stat.id} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-              <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <tr key={stat.id} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 text-xs">
+              <th scope="row" className="py-2 px-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {PlayersName[stat.PlayerId]}
               </th>
-              <td className="py-4 px-6">
+              <td className="py-2 px-2">
                 {TeamsName[stat.TeamId]}
               </td>
-              <td className="py-4 px-6">{stat.YourDate}</td>
-              <td className="py-4 px-6">{stat.Points}</td>
-              <td className="py-4 px-6">{stat.Rebounds}</td>
-              <td className="py-4 px-6">{stat.Assists}</td>
-              <td className="py-4 px-6">{stat.Steals}</td>
-              <td className="py-4 px-6">{stat.Blocks}</td>
-              <td className="py-4 px-6">
+              <td className="py-2 px-2 text-center">{stat.Points}</td>
+              <td className="py-2 px-2 text-center">{stat.Rebounds}</td>
+              <td className="py-2 px-2 text-center">{stat.Assists}</td>
+              <td className="py-2 px-2 text-center">{stat.Steals}</td>
+              <td className="py-2 px-2 text-center">{stat.Blocks}</td>
+              <td className="py-2 px-2 text-center">
                 {stat.FeildGoalsAttempted}
               </td>
-              <td className="py-4 px-6">
+              <td className="py-2 px-2 text-center">
                 {stat.FeildGoalsMade}
               </td>
-              <td className="py-4 px-6">
+              <td className="py-2 px-2 text-center">
                 {stat.ThreePointersAttempted}
               </td>
-              <td className="py-4 px-6">
+              <td className="py-2 px-2 text-center">
                 {stat.ThreePointersMade}
               </td>
-              <td className="py-4 px-6">
+              <td className="py-2 px-2 text-center">
                 {stat.FreeThrowsAttempted}
               </td>
-              <td className="py-4 px-6">
+              <td className="py-2 px-2 text-center">
                 {stat.FreeThrowsMade}
               </td>
             </tr>

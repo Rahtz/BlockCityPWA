@@ -130,10 +130,10 @@ function Stats() {
 
 
   return (
-    <div className="divide-x mt-20 lg:grid grid-cols-4 ">
+    <div className="divide-x mt-2 lg:grid grid-cols-4 ">
       <div className="hidden lg:grid grid-cols-3 divide-x col-span-1">
         <div className="col-span-3">
-        <div className="grid grid-cols-2 mt-5">
+        <div className="grid grid-cols-2 mt-2">
           <input
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-3 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="date"
@@ -161,7 +161,7 @@ function Stats() {
           </select>
           {/* <input type="number" placeholder="TeamId" value={TeamId} onChange={e => setStat({ ...stat, TeamId: e.target.value})} /> */}
           <select
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-3 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             value={TeamId}
             onChange={(e) => setStat({ ...stat, TeamId: e.target.value })}
           >
@@ -268,7 +268,7 @@ function Stats() {
           />
         </div>
       </div>
-      <div className="overflow-x-auto overflow-y-auto h-5/6 relative shadow-md sm:rounded-lg mx-5 col-span-3">
+      <div className="overflow-x-auto overflow-y-auto h-5/6 relative shadow-md sm:rounded-lg mx-1 col-span-3">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -281,43 +281,43 @@ function Stats() {
               <th scope="col" className="py-3 px-1">
                 date
               </th>
-              <th scope="col" className="py-3 px-1">
+              <th scope="col" className="py-3 px-1 text-center">
                 Points
               </th>
-              <th scope="col" className="py-3 px-1">
+              <th scope="col" className="py-3 px-1 text-center">
                 Rebounds
               </th>
-              <th scope="col" className="py-3 px-1">
+              <th scope="col" className="py-3 px-1 text-center">
                 Assists
               </th>
-              <th scope="col" className="py-3 px-1">
+              <th scope="col" className="py-3 px-1 text-center">
                 Steals
               </th>
-              <th scope="col" className="py-3 px-1">
+              <th scope="col" className="py-3 px-1 text-center">
                 Blocks
               </th>
-              <th scope="col" className="py-3 px-1">
+              <th scope="col" className="py-3 px-1 text-center">
                 FGA
               </th>
-              <th scope="col" className="py-3 px-1">
+              <th scope="col" className="py-3 px-1 text-center">
                 FGM
               </th>
-              <th scope="col" className="py-3 px-1">
+              <th scope="col" className="py-3 px-1 text-center">
                 3PA
               </th>
-              <th scope="col" className="py-3 px-1">
+              <th scope="col" className="py-3 px-1 text-center">
                 3PM
               </th>
-              <th scope="col" className="py-3 px-1">
+              <th scope="col" className="py-3 px-1 text-center">
                 FTA
               </th>
-              <th scope="col" className="py-3 px-1">
+              <th scope="col" className="py-3 px-1 text-center">
                 FTM
               </th>
-              <th scope="col" className="py-3 px-1">
+              <th scope="col" className="py-3 px-1 text-center">
                 Season
               </th>
-              <th scope="col" className="hidden md:block py-3 px-1">
+              <th scope="col" className="hidden md:block py-3 px-1 text-center">
                 Options
               </th>
             </tr>
@@ -326,7 +326,7 @@ function Stats() {
             {stats.map((stat) => (
               <tr
                 key={stat.id}
-                className="bg-white border-b dark:bg-gray-900 dark:border-gray-700"
+                className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 text-xs"
               >
                 <th
                   scope="row"
@@ -338,21 +338,21 @@ function Stats() {
                 </th>
                 <td>{TeamsName[stat.TeamId]}</td>
                 <td className="py-1 px-1">{stat.YourDate}</td>
-                <td className="py-1 px-1">{stat.Points}</td>
-                <td className="py-1 px-1">{stat.Rebounds}</td>
-                <td className="py-1 px-1">{stat.Assists}</td>
-                <td className="py-1 px-1">{stat.Steals}</td>
-                <td className="py-1 px-1">{stat.Blocks}</td>
-                <td className="py-1 px-1">{stat.FeildGoalsAttempted}</td>
-                <td className="py-1 px-1">{stat.FeildGoalsMade}</td>
-                <td className="py-1 px-1">{stat.ThreePointersAttempted}</td>
-                <td className="py-1 px-1">{stat.ThreePointersMade}</td>
-                <td className="py-1 px-1">{stat.FreeThrowsAttempted}</td>
-                <td className="py-1 px-1">{stat.FreeThrowsMade}</td>
-                <td className="py-1 px-1">{stat.Season}</td>
-                <td className="py-1 px-1">
+                <td className="py-1 px-1 text-center">{stat.Points}</td>
+                <td className="py-1 px-1 text-center">{stat.Rebounds}</td>
+                <td className="py-1 px-1 text-center">{stat.Assists}</td>
+                <td className="py-1 px-1 text-center">{stat.Steals}</td>
+                <td className="py-1 px-1 text-center">{stat.Blocks}</td>
+                <td className="py-1 px-1 text-center">{stat.FeildGoalsAttempted}</td>
+                <td className="py-1 px-1 text-center">{stat.FeildGoalsMade}</td>
+                <td className="py-1 px-1 text-center">{stat.ThreePointersAttempted}</td>
+                <td className="py-1 px-1 text-center">{stat.ThreePointersMade}</td>
+                <td className="py-1 px-1 text-center">{stat.FreeThrowsAttempted}</td>
+                <td className="py-1 px-1 text-center">{stat.FreeThrowsMade}</td>
+                <td className="py-1 px-1 text-center">{stat.Season}</td>
+                <td className="py-1 px-1 text-center">
                   <button
-                    className="hidden md:block font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    className="hidden md:block font-medium text-blue-600 dark:text-blue-500 hover:underline "
                     onClick={() => deleteStat(stat.id)}
                   >
                     Delete

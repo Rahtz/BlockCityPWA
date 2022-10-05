@@ -10,7 +10,7 @@ const Navbar = () => {
      <nav className="w-full bg-gray-800 shadow">
             <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
                 <div>
-                    <div className="flex items-center justify-between py-3 md:py-5 md:block">
+                    <div className="flex items-center justify-between py-3 md:py-5 md:block ">
                     <img src={Blockcity} alt="BC" className="w-14" />
                         <div className="md:hidden">
                             <button
@@ -57,25 +57,25 @@ const Navbar = () => {
                         }`}
                     >
                         <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
-                            <li className="text-white hover:text-blue-600">
+                            <li className="text-white hover:text-blue-600" onClick={() => setNavbar(!navbar)}>
                               <Link to="/stats">Stats</Link>
                             </li>
-                            <li className="text-white hover:text-blue-600">
+                            <li className="text-white hover:text-blue-600" onClick={() => setNavbar(!navbar)}>
                               <Link to="/totalstats">Total Stats</Link>
                             </li>
-                            <li className="text-white hover:text-blue-600">
+                            <li className="text-white hover:text-blue-600" onClick={() => setNavbar(!navbar)}>
                               <Link to="/averagestats">Average Stats</Link>
                             </li>
-                            <li className="text-white hover:text-blue-600">
+                            <li className="text-white hover:text-blue-600" onClick={() => setNavbar(!navbar)}>
                               <Link to="/seasonleaders">Season Leaders</Link>
                             </li>
-                            <li className="text-white hover:text-blue-600">
+                            <li className="text-white hover:text-blue-600" onClick={() => setNavbar(!navbar)}>
                               <Link to="/records">Records</Link>
                             </li>
-                            <li className="text-white hover:text-blue-600">
+                            <li className="text-white hover:text-blue-600" onClick={() => setNavbar(!navbar)}>
                               <Link to="/players">Players</Link>
                             </li>
-                            <li className="text-white hover:text-blue-600">
+                            <li className="text-white hover:text-blue-600" onClick={() => setNavbar(!navbar)}>
                               <Link to="/teams">Teams</Link>
                             </li>
                         </ul>
