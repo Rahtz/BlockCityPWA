@@ -1,19 +1,19 @@
 {
-  "short_name": "Block City App",
+  "short_name": "Block City",
   "name": "Block City Application",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "Blockcity.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "../images/",
+      "src": "Blockcity.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "Blockcity.png",
       "type": "image/png",
       "sizes": "512x512"
     }
