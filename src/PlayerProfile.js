@@ -5,14 +5,14 @@ import { useParams } from "react-router-dom";
 
 function Stats() {
   const [openTab, setOpenTab] = useState(1);
-  // const [players, setPlayers] = useState([]);
+  const [players, setPlayers] = useState([]);
   const [teams, setTeams] = useState([]);
   const [stats, setStats] = useState([]);
   const [totalstats, setTotalStats] = useState([]);
   const params = useParams();
 
   useEffect(() => {
-    // fetchPlayers();
+    fetchPlayers();
     fetchTeams();
     //eslint-disable-next-line
     fetchStatsById();
@@ -25,21 +25,19 @@ function Stats() {
       .from("stats")
       .select()
       .eq("PlayerId", params.id);
-    console.log(data);
     setStats(data);
   }
 
   async function fetchTotalStats() {
     const { data } = await supabase.rpc('totalstat');
-    console.log(data);
     setTotalStats(data);
     
   }
 
-  // async function fetchPlayers() {
-  //   const { data } = await supabase.from("players").select();
-  //   setPlayers(data);
-  // }
+  async function fetchPlayers() {
+    const { data } = await supabase.from("players").select();
+    setPlayers(data);
+  }
 
 
 
@@ -47,6 +45,11 @@ function Stats() {
     const { data } = await supabase.from("teams").select();
     setTeams(data);
   }
+
+  var PlayersName = players.reduce(function (result, currentObject) {
+    result[currentObject.id] = currentObject.PlayerName;
+    return result;
+  }, {});
 
   var TeamsName = teams.reduce(function (result, currentObject) {
     result[currentObject.id] = currentObject.TeamName;
@@ -68,11 +71,11 @@ function Stats() {
   });
 
   return (
-    <div className="grid divide-x mt-12">
+    <div className="grid divide-x mt-1">
       <div className="grid grid-cols-5 divide-x w-full h-auto border">
         <div className="col-span-2 h-48 border"></div>
         <div className="col-span-3 border">
-          <h1>Jacob Ratima</h1>
+          <h1 className="text-xl"><b>{PlayersName[params.id]}</b></h1>
           <p>Warriors #30 PG</p>
           <p>HT/WT  6'2'', 185lbs</p>
           <p>Birthdate 24/07/1997(25)</p>
@@ -109,54 +112,55 @@ function Stats() {
         </div>
       </div>
 
-      
-      <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 w-full">
-        <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-          <div className="container overflow-hidden w-full bg-gray-300">
-              <ul className="fixed grid grid-cols-3 space-x-1 w-full h-12 bg-white">
-                <li className="w-full col-span-1 ml-1">
+      <ul className="flex overflow-x-auto w-screen h-auto bg-white">
+                <li className="w-auto">
                   <a
                     href="#/"
                     onClick={() => setOpenTab(1)}
                     className={` ${
-                      openTab === 1 ? "bg-blue-300 text-white" : ""
-                    } inline-block px-4 py-2 text-gray-600 bg-white rounded shadow`}
+                      openTab === 1 ? "border-b-2 border-red-600 text-white" : ""
+                    } inline-block px-2 py-1 text-black bg-white`}
                   >
-                    React Tabs 1
+                    Overview
                   </a>
                 </li>
-                <li className="w-full col-span-1">
+                <li className="w-auto">
                   <a
                     href="#/"
                     onClick={() => setOpenTab(2)}
                     className={` ${
-                      openTab === 2 ? "bg-blue-300 text-white" : ""
-                    } inline-block px-4 py-2 text-gray-600 bg-white rounded shadow`}
+                      openTab === 2 ? "border-b-2 border-red-600 text-white" : ""
+                    } inline-block px-2 py-1 text-black bg-white`}
                   >
-                    React Tabs 2
+                    Totals
                   </a>
                 </li>
-                <li className="w-full col-span-1">
+                <li className="w-auto">
                   <a
                     href="#/"
                     onClick={() => setOpenTab(3)}
                     className={` ${
-                      openTab === 3 ? "bg-blue-300 text-white" : ""
-                    } inline-block px-4 py-2 text-gray-600 bg-white rounded shadow`}
+                      openTab === 3 ? "border-b-2 border-red-600 text-white" : ""
+                    } inline-block px-2 py-1 text-black bg-white`}
                   >
-                    React Tabs 3
+                    Averages
                   </a>
-                </li>
+                </li>                
               </ul>
-              <div className="p-3 mt-16 bg-white border rounded-t-lg">
+
+      <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 w-full">
+        <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+          <div className="container overflow-hidden w-full bg-gray-300">
+              
+              <div className="relative p-3 mt-2 bg-white border rounded-t-lg whitespace-nowrap">
                 <div className={openTab === 1 ? "block" : "hidden"}>
                   {" "}
-                  <table class="min-w-full text-center border-t">
-                    <thead class="border-b bg-white">
+                  <table className="min-w-full text-center border-t">
+                    <thead className="border-b bg-white">
                       <tr>
                         <th
                           scope="col"
-                          className="text-xs font-bold text-gray-900 px-1 py-2"
+                          className="text-xs font-bold text-gray-900 px-1 py-2 border-r"
                         >
                           Team
                         </th>
@@ -236,8 +240,8 @@ function Stats() {
                     </thead>
                     <tbody>
                       {stats.map((stat) => (
-                        <tr key={stat.id} class="bg-white border-b">
-                          <td className="px-6 py-2 whitespace-nowrap text-xs font-medium text-gray-900">
+                        <tr key={stat.id} className="bg-white border-b">
+                          <td className="px-6 py-2 whitespace-nowrap text-xs font-medium text-gray-900 border-r">
                           {TeamsName[stat.TeamId]}
                           </td>
                           <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
@@ -280,8 +284,8 @@ function Stats() {
                       ))}
                     </tbody>
                   </table>
-                  <table class="min-w-full text-center border-t">
-                    <thead class="border-b bg-white">
+                  {/* <table className="min-w-full text-center border-t">
+                    <thead className="border-b bg-white">
                       <tr>
                         <th
                           scope="col"
@@ -359,7 +363,7 @@ function Stats() {
                     </thead>
                     <tbody>
                       {totalstats.map((stat) => (
-                        <tr key={stat.id} class="bg-white border-b">
+                        <tr key={stat.id} className="bg-white border-b">
                           <td className="px-6 py-2 whitespace-nowrap text-xs font-medium text-gray-900">
                           {TeamsName[stat.TeamId]}
                           </td>
@@ -399,7 +403,7 @@ function Stats() {
                         </tr>
                       ))}
                     </tbody>
-                  </table>
+                  </table> */}
                 </div>
                 <div className={openTab === 2 ? "block" : "hidden"}>
                   <h1>{points}</h1>
