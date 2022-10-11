@@ -108,28 +108,28 @@ function Stats() {
               <td className="py-2 px-2">
                 {TeamsName[stat.TeamId]}
               </td>
-              <td className="py-2 px-2 text-center">{stat.Points}</td>
-              <td className="py-2 px-2 text-center">{stat.Rebounds}</td>
-              <td className="py-2 px-2 text-center">{stat.Assists}</td>
-              <td className="py-2 px-2 text-center">{stat.Steals}</td>
-              <td className="py-2 px-2 text-center">{stat.Blocks}</td>
+              <td className="py-2 px-2 text-center">{stat.Points.toFixed(1)}</td>
+              <td className="py-2 px-2 text-center">{stat.Rebounds.toFixed(1)}</td>
+              <td className="py-2 px-2 text-center">{stat.Assists.toFixed(1)}</td>
+              <td className="py-2 px-2 text-center">{stat.Steals.toFixed(1)}</td>
+              <td className="py-2 px-2 text-center">{stat.Blocks.toFixed(1)}</td>
               <td className="py-2 px-2 text-center">
-                {stat.FeildGoalsAttempted}
+                {stat.FeildGoalsAttempted.toFixed(1)}
               </td>
               <td className="py-2 px-2 text-center">
-                {stat.FeildGoalsMade}
+                {stat.FeildGoalsMade.toFixed(1)}
               </td>
               <td className="py-2 px-2 text-center">
-                {stat.ThreePointersAttempted}
+                {stat.ThreePointersAttempted.toFixed(1)}
               </td>
               <td className="py-2 px-2 text-center">
-                {stat.ThreePointersMade}
+                {stat.ThreePointersMade.toFixed(1)}
               </td>
               <td className="py-2 px-2 text-center">
-                {stat.FreeThrowsAttempted}
+                {stat.FreeThrowsAttempted.toFixed(1)}
               </td>
               <td className="py-2 px-2 text-center">
-                {stat.FreeThrowsMade}
+                {stat.FreeThrowsMade.toFixed(1)}
               </td>
             </tr>
           ))}

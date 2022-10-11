@@ -104,13 +104,13 @@ function Stats() {
       <div className="grid grid-cols-5 divide-x w-full h-auto border">
         <div className="col-span-2 h-48 border"></div>
         <div className="col-span-3 border">
-          <h1 className="text-xl pb-5"><b>{PlayersName[params.id]}</b></h1>
-          <h2 className="text-md pb-2"><b>Club Totals</b></h2>
-          <p className="text-xs pb-1">Points: {points}</p>
-          <p className="text-xs pb-1">Rebounds: {rebounds}</p>
-          <p className="text-xs pb-1">Assists: {assists}</p>
-          <p className="text-xs pb-1">Steals: {steals}</p>
-          <p className="text-xs pb-1">Blocks: {blocks}</p>
+          <h1 className="text-xl pb-5 ml-2"><b>{PlayersName[params.id]}</b></h1>
+          <h2 className="text-md pb-2 ml-2"><b>Club Totals</b></h2>
+          <p className="text-xs pb-1 ml-2">Points: {points}</p>
+          <p className="text-xs pb-1 ml-2">Rebounds: {rebounds}</p>
+          <p className="text-xs pb-1 ml-2">Assists: {assists}</p>
+          <p className="text-xs pb-1 ml-2">Steals: {steals}</p>
+          <p className="text-xs pb-1 ml-2">Blocks: {blocks}</p>
           {/* <p>Warriors #30 PG</p>
           <p>HT/WT  6'2'', 185lbs</p>
           <p>Birthdate 24/07/1997(25)</p>
@@ -124,19 +124,19 @@ function Stats() {
             <div className="grid grid-cols-4 ml-6 my-1.5 h-15">
               <div className="w-12 h-12">
                 <p className="text-xs pb-1">PTS</p>
-                <h3 className="text-s"><b>{averageSeasonPoints}</b></h3>
+                <h3 className="text-s"><b>{averageSeasonPoints.toFixed(1)}</b></h3>
               </div>
               <div className="w-12 h-12">
                 <p className="text-xs pb-1">REB</p>
-                <h3 className="text-s"><b>{averageSeasonRebounds}</b></h3>
+                <h3 className="text-s"><b>{averageSeasonRebounds.toFixed(1)}</b></h3>
               </div>
               <div className="w-12 h-12">
                 <p className="text-xs pb-1">AST</p>
-                <h3 className="text-s"><b>{averageSeasonAssists}</b></h3>
+                <h3 className="text-s"><b>{averageSeasonAssists.toFixed(1)}</b></h3>
               </div>
               <div className="w-12 h-12">
                 <p className="text-xs pb-1">STL</p>
-                <h3 className="text-s"><b>{averageSeasonSteals}</b></h3>
+                <h3 className="text-s"><b>{averageSeasonSteals.toFixed(1)}</b></h3>
               </div>
             </div>
           </div>
