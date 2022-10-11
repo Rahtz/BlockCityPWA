@@ -53,7 +53,6 @@ function Stats() {
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
             <th scope="col" className="py-2 px-2">Player</th>
-            <th scope="col" className="py-2 px-2">Team</th>
             <th scope="col" className="py-2 px-2 text-center">Points</th>
             <th scope="col" className="py-2 px-2 text-center">Rebounds</th>
             <th scope="col" className="py-2 px-2 text-center">Assists</th>
@@ -73,9 +72,6 @@ function Stats() {
               <th scope="row" className="py-2 px-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {PlayersName[stat.PlayerId]}
               </th>
-              <td className="py-2 px-2">
-                {TeamsName[stat.TeamId]}
-              </td>
               <td className="py-2 px-2 text-center">{stat.Points}</td>
               <td className="py-2 px-2 text-center">{stat.Rebounds}</td>
               <td className="py-2 px-2 text-center">{stat.Assists}</td>

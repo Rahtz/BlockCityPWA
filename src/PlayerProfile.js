@@ -84,7 +84,7 @@ function Stats() {
     assists += item.Assists;
     steals += item.Steals;
     blocks += item.Blocks;
-    if(item.Season === 2021){
+    if(item.Season === 2022){
       seasonPoints += item.Points;
       seasonRebounds += item.Rebounds;
       seasonAssists += item.Assists;
@@ -120,7 +120,7 @@ function Stats() {
       <div className="w-full h-28 border">
         <div className="mx-5 my-3.5 h-20 border rounded-xl">
           <div className="w-full h-4 bg-blue-800 rounded-t-lg text-center">
-            <p className="text-white text-xs ">2021 SEASON AVERAGES</p>
+            <p className="text-white text-xs ">2022 SEASON AVERAGES</p>
             <div className="grid grid-cols-4 ml-6 my-1.5 h-15">
               <div className="w-12 h-12">
                 <p className="text-xs pb-1">PTS</p>
