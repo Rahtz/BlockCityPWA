@@ -62,12 +62,41 @@ function Stats() {
   let steals = 0;
   let blocks = 0;
 
+  let seasonPoints = 0;
+  let seasonRebounds = 0;
+  let seasonAssists = 0;
+  let seasonSteals = 0;
+  let seasonBlocks = 0;
+  let seasonGames = 0;
+
+  let averageSeasonPoints = 0;
+  let averageSeasonRebounds = 0;
+  let averageSeasonAssists = 0;
+  let averageSeasonSteals = 0;
+  let averageSeasonBlocks = 0;
+
+  
+  
+
   stats.forEach((item) => {
     points += item.Points;
     rebounds += item.Rebounds;
     assists += item.Assists;
     steals += item.Steals;
     blocks += item.Blocks;
+    if(item.Season === 2021){
+      seasonPoints += item.Points;
+      seasonRebounds += item.Rebounds;
+      seasonAssists += item.Assists;
+      seasonSteals += item.Steals;
+      seasonBlocks += item.Blocks;
+      seasonGames += 1;
+    }
+    averageSeasonPoints = seasonPoints / seasonGames;
+    averageSeasonRebounds = seasonRebounds / seasonGames;
+    averageSeasonAssists = seasonAssists / seasonGames;
+    averageSeasonSteals = seasonSteals / seasonGames;
+    averageSeasonBlocks = seasonBlocks / seasonGames;
   });
 
   return (
@@ -75,37 +104,39 @@ function Stats() {
       <div className="grid grid-cols-5 divide-x w-full h-auto border">
         <div className="col-span-2 h-48 border"></div>
         <div className="col-span-3 border">
-          <h1 className="text-xl"><b>{PlayersName[params.id]}</b></h1>
-          <p>Warriors #30 PG</p>
+          <h1 className="text-xl pb-5"><b>{PlayersName[params.id]}</b></h1>
+          <h2 className="text-md pb-2"><b>Club Totals</b></h2>
+          <p className="text-xs pb-1">Points: {points}</p>
+          <p className="text-xs pb-1">Rebounds: {rebounds}</p>
+          <p className="text-xs pb-1">Assists: {assists}</p>
+          <p className="text-xs pb-1">Steals: {steals}</p>
+          <p className="text-xs pb-1">Blocks: {blocks}</p>
+          {/* <p>Warriors #30 PG</p>
           <p>HT/WT  6'2'', 185lbs</p>
           <p>Birthdate 24/07/1997(25)</p>
-          <p>College PNBHS</p>
+          <p>College PNBHS</p> */}
         </div>
       </div>
       <div className="w-full h-28 border">
         <div className="mx-5 my-3.5 h-20 border rounded-xl">
           <div className="w-full h-4 bg-blue-800 rounded-t-lg text-center">
-            <p className="text-white text-xs ">2021-22 SEASON STATS</p>
+            <p className="text-white text-xs ">2021 SEASON AVERAGES</p>
             <div className="grid grid-cols-4 ml-6 my-1.5 h-15">
               <div className="w-12 h-12">
-                <p className="text-xs">PTS</p>
-                <h3 className="text-xs">25.5</h3>
-                <p className="text-xs">10th</p>
+                <p className="text-xs pb-1">PTS</p>
+                <h3 className="text-s"><b>{averageSeasonPoints}</b></h3>
               </div>
               <div className="w-12 h-12">
-                <p className="text-xs">REB</p>
-                <h3 className="text-xs">5.2</h3>
-                <p className="text-xs">73rd</p>
+                <p className="text-xs pb-1">REB</p>
+                <h3 className="text-s"><b>{averageSeasonRebounds}</b></h3>
               </div>
               <div className="w-12 h-12">
-                <p className="text-xs">AST</p>
-                <h3 className="text-xs">6.3</h3>
-                <p className="text-xs">15th</p>
+                <p className="text-xs pb-1">AST</p>
+                <h3 className="text-s"><b>{averageSeasonAssists}</b></h3>
               </div>
               <div className="w-12 h-12">
-                <p className="text-xs">PER</p>
-                <h3 className="text-xs">21.47</h3>
-                <p className="text-xs">21st</p>
+                <p className="text-xs pb-1">STL</p>
+                <h3 className="text-s"><b>{averageSeasonSteals}</b></h3>
               </div>
             </div>
           </div>
@@ -155,7 +186,7 @@ function Stats() {
               <div className="relative p-3 mt-2 bg-white border rounded-t-lg whitespace-nowrap">
                 <div className={openTab === 1 ? "block" : "hidden"}>
                   {" "}
-                  <table className="min-w-full text-center border-t">
+                  <table className=" relative text-center border-t overflow-x-auto overflow-y-hidden whitespace-nowrap">
                     <thead className="border-b bg-white">
                       <tr>
                         <th
