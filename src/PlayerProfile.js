@@ -2,6 +2,9 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { supabase } from "./client";
 import { useParams } from "react-router-dom";
+import Blockcity from "./images/Blockcity.png";
+import jacob from "./images/jacob.png";
+import jacob1 from "./images/jacob1.png";
 
 function Stats() {
   const [openTab, setOpenTab] = useState(1);
@@ -102,7 +105,7 @@ function Stats() {
   return (
     <div className="grid divide-x mt-1">
       <div className="grid grid-cols-5 divide-x w-full h-auto border">
-        <div className="col-span-2 h-48 border"></div>
+        <div className="col-span-2 h-48 border"> <img src= {Blockcity} alt="pi" /></div>
         <div className="col-span-3 border">
           <h1 className="text-xl pb-5 ml-2"><b>{PlayersName[params.id]}</b></h1>
           <h2 className="text-md pb-2 ml-2"><b>Club Totals</b></h2>
@@ -273,7 +276,8 @@ function Stats() {
                       {stats.map((stat) => (
                         <tr key={stat.id} className="bg-white border-b">
                           <td className="px-6 py-2 whitespace-nowrap text-xs font-medium text-gray-900 border-r">
-                          {TeamsName[stat.TeamId]}
+                          <span>{TeamsName[stat.TeamId]}</span>
+                          {/* <img className="w-3" src = {Blockcity} alt="BC" /> */}
                           </td>
                           <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                             {stat.YourDate}
