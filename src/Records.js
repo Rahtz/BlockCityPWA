@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "./client";
+import { Link } from "react-router-dom";
 
 
 function Records() {
@@ -103,7 +104,9 @@ function Records() {
     <div className="bg-gray-200 h-auto border divide-x">
         <div className="">
             <div className="mt-5 lg:ml-36 lg:my-5">
-                <h1 className="text-xl font-bold ml-5">Block City Stat Records Per Game</h1>
+                <div>
+                  <h1 className="text-xl font-bold ml-5">Block City Stat Records Per Game</h1>
+                </div>
                 <div className="lg:grid grid-cols-3 h-auto my-5 px-5">
                     <div className="col-span-1 bg-white rounded-lg py-5 shadow-lg">
                         {/* <h2 className="my-5 text-md font-bold text-gray-800">Points Per Game</h2> */}
@@ -121,9 +124,11 @@ function Records() {
                           </thead>
                           <tbody>
                           {toppoints.map((item) => (
-                            <tr className="even:bg-gray-100">
-                              <td className="text-sm pl-5 py-2 border-t border-b">{PlayersName[item.PlayerId]}</td>
-                              <td className="text-sm pl-5 py-2 border-t border-b">{item.Points}</td>
+                            <tr className="even:bg-gray-100 border-t border-b">
+                              <Link to={`/stats/${item.PlayerId}`}>
+                                <td className="text-sm pl-5 py-2">{PlayersName[item.PlayerId]}</td>
+                              </Link>
+                              <td className="text-sm pl-5 py-2">{item.Points}</td>
                             </tr>
                             ))}
                           </tbody>
@@ -146,8 +151,10 @@ function Records() {
                           <tbody>
                           {toprebounds.map((item) => (
                             <tr className="even:bg-gray-100">
-                              <td className="text-sm pl-5 py-2 border-t border-b">{PlayersName[item.PlayerId]}</td>
-                              <td className="text-sm pl-5 py-2 border-t border-b">{item.Rebounds}</td>
+                              <Link to={`/stats/${item.PlayerId}`}>
+                                <td className="text-sm pl-5 py-2">{PlayersName[item.PlayerId]}</td>
+                              </Link>
+                              <td className="text-sm pl-5 py-2">{item.Rebounds}</td>
                             </tr>
                             ))}
                           </tbody>
@@ -170,8 +177,10 @@ function Records() {
                           <tbody>
                           {topassists.map((item) => (
                             <tr className="even:bg-gray-100">
-                              <td className="text-sm pl-5 py-2 border-t border-b">{PlayersName[item.PlayerId]}</td>
-                              <td className="text-sm pl-5 py-2 border-t border-b">{item.Assists}</td>
+                              <Link to={`/stats/${item.PlayerId}`}>
+                                <td className="text-sm pl-5 py-2">{PlayersName[item.PlayerId]}</td>
+                              </Link>
+                              <td className="text-sm pl-5 py-2">{item.Assists}</td>
                             </tr>
                             ))}
                           </tbody>
@@ -196,8 +205,10 @@ function Records() {
                           <tbody>
                           {topsteals.map((item) => (
                             <tr className="even:bg-gray-100">
-                              <td className="text-sm pl-5 py-2 border-t border-b">{PlayersName[item.PlayerId]}</td>
-                              <td className="text-sm pl-5 py-2 border-t border-b">{item.Steals}</td>
+                              <Link to={`/stats/${item.PlayerId}`}>
+                                <td className="text-sm pl-5 py-2">{PlayersName[item.PlayerId]}</td>
+                              </Link>
+                              <td className="text-sm pl-5 py-2">{item.Steals}</td>
                             </tr>
                             ))}
                           </tbody>
@@ -220,8 +231,10 @@ function Records() {
                           <tbody>
                           {topblocks.map((item) => (
                             <tr className="even:bg-gray-100">
-                              <td className="text-sm pl-5 py-2 border-t border-b">{PlayersName[item.PlayerId]}</td>
-                              <td className="text-sm pl-5 py-2 border-t border-b">{item.Blocks}</td>
+                              <Link to={`/stats/${item.PlayerId}`}>
+                                <td className="text-sm pl-5 py-2">{PlayersName[item.PlayerId]}</td>
+                              </Link>
+                              <td className="text-sm pl-5 py-2">{item.Blocks}</td>
                             </tr>
                             ))}
                           </tbody>
@@ -244,8 +257,10 @@ function Records() {
                           <tbody>
                           {topfgm.map((item) => (
                             <tr className="even:bg-gray-100">
-                              <td className="text-sm pl-5 py-2 border-t border-b">{PlayersName[item.PlayerId]}</td>
-                              <td className="text-sm pl-5 py-2 border-t border-b">{item.FeildGoalsMade}</td>
+                              <Link to={`/stats/${item.PlayerId}`}>
+                                <td className="text-sm pl-5 py-2">{PlayersName[item.PlayerId]}</td>
+                              </Link>
+                              <td className="text-sm pl-5 py-2">{item.FeildGoalsMade}</td>
                             </tr>
                             ))}
                           </tbody>
@@ -270,8 +285,10 @@ function Records() {
                           <tbody>
                           {toptpm.map((item) => (
                             <tr className="even:bg-gray-100">
-                              <td className="text-sm pl-5 py-2 border-t border-b">{PlayersName[item.PlayerId]}</td>
-                              <td className="text-sm pl-5 py-2 border-t border-b">{item.ThreePointersMade}</td>
+                              <Link to={`/stats/${item.PlayerId}`}>
+                                <td className="text-sm pl-5 py-2">{PlayersName[item.PlayerId]}</td>
+                              </Link>
+                              <td className="text-sm pl-5 py-2">{item.ThreePointersMade}</td>
                             </tr>
                             ))}
                           </tbody>
@@ -296,8 +313,8 @@ function Records() {
                           <tbody>
                           {toppoints.map((item) => (
                             <tr className="even:bg-gray-100">
-                              <td className="text-sm pl-5 py-2 border-t border-b">Test</td>
-                              <td className="text-sm pl-5 py-2 border-t border-b">Test</td>
+                              <td className="text-sm pl-5 py-2">Test</td>
+                              <td className="text-sm pl-5 py-2">Test</td>
                             </tr>
                             ))}
                           </tbody>
@@ -322,8 +339,8 @@ function Records() {
                           <tbody>
                           {toppoints.map((item) => (
                             <tr className="even:bg-gray-100">
-                              <td className="text-sm pl-5 py-2 border-t border-b">Test</td>
-                              <td className="text-sm pl-5 py-2 border-t border-b">Test</td>
+                              <td className="text-sm pl-5 py-2">Test</td>
+                              <td className="text-sm pl-5 py-2">Test</td>
                             </tr>
                             ))}
                           </tbody>
