@@ -3,12 +3,12 @@ import { supabase } from "./client";
 
 function Stats() {
   const [players, setPlayers] = useState([]);
-  const [teams, setTeams] = useState([]);
+  // const [teams, setTeams] = useState([]);
   const [totalstats, setTotalStats] = useState([]);
 
   useEffect(() => {
     fetchPlayers();
-    fetchTeams();
+    // fetchTeams();
     fetchTotalStats()
   }, []);
 
@@ -27,10 +27,10 @@ function Stats() {
     setPlayers(data);
   }
 
-  async function fetchTeams() {
-    const { data } = await supabase.from("teams").select();
-    setTeams(data);
-  }
+  // async function fetchTeams() {
+  //   const { data } = await supabase.from("teams").select();
+  //   setTeams(data);
+  // }
 
 
   var PlayersName = players.reduce(function (result, currentObject) {
@@ -38,10 +38,10 @@ function Stats() {
     return result;
   }, {});
 
-  var TeamsName = teams.reduce(function (result, currentObject) {
-    result[currentObject.id] = currentObject.TeamName;
-    return result;
-  }, {});
+  // var TeamsName = teams.reduce(function (result, currentObject) {
+  //   result[currentObject.id] = currentObject.TeamName;
+  //   return result;
+  // }, {});
 
   
   

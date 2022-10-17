@@ -3,15 +3,15 @@ import { useState, useEffect } from "react";
 import { supabase } from "./client";
 import { useParams } from "react-router-dom";
 import Blockcity from "./images/Blockcity.png";
-import jacob from "./images/jacob.png";
-import jacob1 from "./images/jacob1.png";
+// import jacob from "./images/jacob.png";
+// import jacob1 from "./images/jacob1.png";
 
 function Stats() {
   const [openTab, setOpenTab] = useState(1);
   const [players, setPlayers] = useState([]);
   const [teams, setTeams] = useState([]);
   const [stats, setStats] = useState([]);
-  const [totalstats, setTotalStats] = useState([]);
+  // const [totalstats, setTotalStats] = useState([]);
   const params = useParams();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ function Stats() {
     //eslint-disable-next-line
     fetchStatsById();
     //eslint-disable-next-line
-    fetchTotalStats();
+    // fetchTotalStats();
   }, []);
 
   async function fetchStatsById() {
@@ -31,11 +31,11 @@ function Stats() {
     setStats(data);
   }
 
-  async function fetchTotalStats() {
-    const { data } = await supabase.rpc('totalstat');
-    setTotalStats(data);
+  // async function fetchTotalStats() {
+  //   const { data } = await supabase.rpc('totalstat');
+  //   setTotalStats(data);
     
-  }
+  // }
 
   async function fetchPlayers() {
     const { data } = await supabase.from("players").select();
@@ -69,14 +69,14 @@ function Stats() {
   let seasonRebounds = 0;
   let seasonAssists = 0;
   let seasonSteals = 0;
-  let seasonBlocks = 0;
+  // let seasonBlocks = 0;
   let seasonGames = 0;
 
   let averageSeasonPoints = 0;
   let averageSeasonRebounds = 0;
   let averageSeasonAssists = 0;
   let averageSeasonSteals = 0;
-  let averageSeasonBlocks = 0;
+  // let averageSeasonBlocks = 0;
 
   
   
@@ -92,14 +92,14 @@ function Stats() {
       seasonRebounds += item.Rebounds;
       seasonAssists += item.Assists;
       seasonSteals += item.Steals;
-      seasonBlocks += item.Blocks;
+      // seasonBlocks += item.Blocks;
       seasonGames += 1;
     }
     averageSeasonPoints = seasonPoints / seasonGames;
     averageSeasonRebounds = seasonRebounds / seasonGames;
     averageSeasonAssists = seasonAssists / seasonGames;
     averageSeasonSteals = seasonSteals / seasonGames;
-    averageSeasonBlocks = seasonBlocks / seasonGames;
+    // averageSeasonBlocks = seasonBlocks / seasonGames;
   });
 
   return (
@@ -319,126 +319,6 @@ function Stats() {
                       ))}
                     </tbody>
                   </table>
-                  {/* <table className="min-w-full text-center border-t">
-                    <thead className="border-b bg-white">
-                      <tr>
-                        <th
-                          scope="col"
-                          className="text-xs font-bold text-gray-900 px-1 py-2"
-                        >
-                          Team
-                        </th>
-                        <th
-                          scope="col"
-                          className="text-xs font-bold text-gray-900 px-1 py-2"
-                        >
-                          PTS
-                        </th>
-                        <th
-                          scope="col"
-                          className="text-xs font-bold text-gray-900 px-1 py-2"
-                        >
-                          RBS
-                        </th>
-                        <th
-                          scope="col"
-                          className="text-xs font-bold text-gray-900 px-1 py-2"
-                        >
-                          AST
-                        </th>
-                        <th
-                          scope="col"
-                          className="text-xs font-bold text-gray-900 px-1 py-2"
-                        >
-                          STL
-                        </th>
-                        <th
-                          scope="col"
-                          className="text-xs font-bold text-gray-900 px-1 py-2"
-                        >
-                          BLK
-                        </th>
-                        <th
-                          scope="col"
-                          className="text-xs font-bold text-gray-900 px-1 py-2"
-                        >
-                          FGA
-                        </th>
-                        <th
-                          scope="col"
-                          className="text-xs font-bold text-gray-900 px-1 py-2"
-                        >
-                          FGM
-                        </th>
-                        <th
-                          scope="col"
-                          className="text-xs font-bold text-gray-900 px-1 py-2"
-                        >
-                          3PA
-                        </th>
-                        <th
-                          scope="col"
-                          className="text-xs font-bold text-gray-900 px-1 py-2"
-                        >
-                          3PM
-                        </th>
-                        <th
-                          scope="col"
-                          className="text-xs font-bold text-gray-900 px-1 py-2"
-                        >
-                          FTA
-                        </th>
-                        <th
-                          scope="col"
-                          className="text-xs font-bold text-gray-900 px-1 py-2"
-                        >
-                          FTM
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {totalstats.map((stat) => (
-                        <tr key={stat.id} className="bg-white border-b">
-                          <td className="px-6 py-2 whitespace-nowrap text-xs font-medium text-gray-900">
-                          {TeamsName[stat.TeamId]}
-                          </td>
-                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                            {stat.Points}
-                          </td>
-                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                            {stat.Rebounds}
-                          </td>
-                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                            {stat.Assists}
-                          </td>
-                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                            {stat.Steals}
-                          </td>
-                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                            {stat.Blocks}
-                          </td>
-                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                            {stat.FeildGoalsAttempted}
-                          </td>
-                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                            {stat.FeildGoalsMade}
-                          </td>
-                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                            {stat.ThreePointersAttempted}
-                          </td>
-                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                            {stat.ThreePointersMade}
-                          </td>
-                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                            {stat.FreeThrowsAttempted}
-                          </td>
-                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                            {stat.FreeThrowsMade}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table> */}
                 </div>
                 <div className={openTab === 2 ? "block" : "hidden"}>
                   <h1>{points}</h1>
@@ -448,7 +328,6 @@ function Stats() {
                   <h1>{blocks}</h1>
                 </div>
                 <div className={openTab === 3 ? "block" : "hidden"}>
-                  React JS with Tailwind CSS Tab 3 Content show
                 </div>
               </div>
           </div>
