@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { supabase } from "./client";
 import { Link } from "react-router-dom";
+import Pagination from './Pagination';
 
 function Stats() {
   const [players, setPlayers] = useState([]);
   const [teams, setTeams] = useState([]);
   const [stats, setStats] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(15);
   const [stat, setStat] = useState({
     YourDate: "",
     PlayerId: "",
@@ -126,6 +129,13 @@ function Stats() {
     result[currentObject.id] = currentObject.TeamName;
     return result;
   }, {});
+
+
+
+
+  const lastPostIndex = currentPage * postsPerPage;
+  const firstPostIndex = lastPostIndex - postsPerPage;
+  const currentPosts = stats.slice(firstPostIndex, lastPostIndex);
 
 
 
@@ -270,9 +280,9 @@ function Stats() {
       </div>
       <div className="overflow-x-auto overflow-y-auto h-screen relative shadow-md sm:rounded-lg mx-1 col-span-3">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400 sticky top-0 z-10">
             <tr>
-              <th scope="col" className="py-3 px-1">
+              <th scope="col" className="py-3 px-1 sticky left-0 bg-gray-200">
                 Player
               </th>
               <th scope="col" className="py-3 px-1">
@@ -323,14 +333,14 @@ function Stats() {
             </tr>
           </thead>
           <tbody>
-            {stats.map((stat) => (
+            {currentPosts.map((stat) => (
               <tr
                 key={stat.id}
                 className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 text-xs"
               >
                 <th
                   scope="row"
-                  className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  className="sticky left-0 bg-white py-4 pl-5 font-medium text-gray-900 whitespace-nowrap dark:text-white "
                 >
                   <Link to={`/stats/${stat.PlayerId}`}>
                     {PlayersName[stat.PlayerId]}
@@ -362,7 +372,9 @@ function Stats() {
             ))}
           </tbody>
         </table>
+        
       </div>
+      <Pagination totalPosts={stats.length} postsPerPage={postsPerPage} setCurrentPage={setCurrentPage}/>
 
       
     </div>
