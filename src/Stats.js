@@ -374,7 +374,11 @@ function Stats() {
         </table>
         
       </div>
-      <Pagination totalPosts={stats.length} postsPerPage={postsPerPage} setCurrentPage={setCurrentPage}/>
+
+      <ul className="w-screen inline-flex">
+      <li><Pagination totalPosts={stats.length} postsPerPage={postsPerPage} setCurrentPage={setCurrentPage}/></li>
+      </ul>
+      
 
       
     </div>
