@@ -7,7 +7,7 @@ import { useState } from "react";
 const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
   return (
-     <nav className="sticky w-full bg-gray-800 shadow">
+     <nav className="sticky w-full bg-gray-800 rounded-b-xl shadow">
             <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
                 <div>
                     <div className="flex items-center justify-between py-3 md:py-5 md:block ">
@@ -57,6 +57,9 @@ const Navbar = () => {
                         }`}
                     >
                         <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
+                            <li className="text-white hover:text-blue-600" onClick={() => setNavbar(!navbar)}>
+                              <Link to="/">Home</Link>
+                            </li>
                             <li className="text-white hover:text-blue-600" onClick={() => setNavbar(!navbar)}>
                               <Link to="/stats">Stats</Link>
                             </li>

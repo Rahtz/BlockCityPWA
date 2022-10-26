@@ -371,13 +371,16 @@ function Stats() {
               </tr>
             ))}
           </tbody>
+          <tfoot className="border border-red-500">
+            <div className="inline-flex">
+              <Pagination totalPosts={stats.length} postsPerPage={postsPerPage} setCurrentPage={setCurrentPage}/>
+            </div>
+          </tfoot>
         </table>
         
       </div>
 
-      <ul className="w-screen inline-flex">
-      <li><Pagination totalPosts={stats.length} postsPerPage={postsPerPage} setCurrentPage={setCurrentPage}/></li>
-      </ul>
+      
       
 
       
