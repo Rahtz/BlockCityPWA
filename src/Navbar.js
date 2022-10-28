@@ -58,7 +58,7 @@ const Navbar = () => {
                     >
                         <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
                             <li className="text-white hover:text-blue-600" onClick={() => setNavbar(!navbar)}>
-                              <Link to="/">Home</Link>
+                              <Link to="/home">Home</Link>
                             </li>
                             <li className="text-white hover:text-blue-600" onClick={() => setNavbar(!navbar)}>
                               <Link to="/stats">Stats</Link>

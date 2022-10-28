@@ -8,8 +8,10 @@ const Home = () => {
         
             <div className="flex container relative top-10 w-screen h-[200px] overflow-x-auto scrollbar-hide pt-12">
                     <div className="-mt-11">
-                        <h1 className="pl-7 pb-5">Week 1</h1>
-                        <div className="grid grid-cols-2 w-[112px] h-[150px] ml-[30px] bg-gray-800 rounded-lg">
+                        <div className="bg-white w-[80px] h-[30px] pl-[12px] pt-[3px] ml-[35px] mb-[20px] rounded shadow-lg">
+                            <h1 className="">Week 2</h1>
+                        </div>
+                        <div className="grid grid-cols-2 w-[112px] h-[150px] ml-[30px] -mt-[5px] bg-gray-800 rounded-lg">
                             <img className="ml-[5px] mt-[30px] col-span-1 w-[39px] h-[39px]" src={Blockcity} alt="BC"/>
                             <img className="-ml-[2px] mt-[30px] col-span-1 w-[65px] h-[39px]" src={Highflyers} alt="HF"/>
                             {/* <div className="w-[112px]">
@@ -31,8 +33,10 @@ const Home = () => {
                         <div className="w-[112px] h-[150px] ml-[314px] -mt-[150px] bg-blue-500 rounded-lg"></div>
                     </div>
                     <div className="-mt-11">
-                        <h1 className="pl-7 pb-5">Week 2</h1>
-                        <div className="grid grid-cols-2 w-[112px] h-[150px] ml-[30px] bg-gray-800 rounded-lg">
+                        <div className="bg-white w-[80px] h-[30px] pl-[12px] pt-[3px] ml-[35px] mb-[20px] rounded shadow-lg">
+                            <h1 className="">Week 1</h1>
+                        </div>
+                        <div className="grid grid-cols-2 w-[112px] h-[150px] ml-[30px] -mt-[5px] bg-gray-800 rounded-lg">
                             <img className="ml-[5px] mt-[30px] col-span-1 w-[39px] h-[39px]" src={Blockcity} alt="BC"/>
                             <img className="-ml-[2px] mt-[30px] col-span-1 w-[65px] h-[39px]" src={Highflyers} alt="HF"/>
                             {/* <div className="w-[112px]">
