@@ -60,7 +60,7 @@ const Home = () => {
             </div>
 
         <div className="relative top-16 mx-5 h-auto py-5 border bg-white rounded-lg drop-shadow-lg">
-            {/* <table>
+            <table>
                 <thead>
                     <tr>
                         <th>P</th>
@@ -89,7 +89,7 @@ const Home = () => {
                         <td>5</td>
                     </tr>
                 </tbody>
-            </table> */}
+            </table>
         </div>
 
     </div>
