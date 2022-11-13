@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { supabase } from "./client";
 import { Link } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 function Stats() {
+  const [loading, setLoading] = useState(false);
     const [players, setPlayers] = useState([]);
   const [teams, setTeams] = useState([]);
   const [stats, setStats] = useState([]);
@@ -28,6 +30,10 @@ function Stats() {
     getSeasonSteals();
     getSeasonBlocks();
     getSeasonTPM();
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false)
+    }, 1000)
   }, []);
 
   async function fetchStats() {
@@ -105,7 +111,14 @@ function Stats() {
   return (
     <div className="bg-gray-200 h-auto border divide-x">
         <div className="">
-            <div className="mt-5 lg:ml-36 lg:my-5">
+        {
+      loading ?(
+        <div className="grid h-screen place-items-center">
+      <ClipLoader size={30} color={"#F37A24"} loading={loading} className="mb-24"/>
+        </div>
+      )
+      :
+      (<div className="mt-5 lg:ml-36 lg:my-5">
                 <h1 className="text-xl font-bold ml-5">Season Leaders</h1>
                 <div className="lg:grid grid-cols-3 h-auto my-5 px-5">
                     <div className="col-span-1 bg-white rounded-lg py-5 shadow-lg">
@@ -317,7 +330,7 @@ function Stats() {
                         </table>
                     </div>
                 </div>
-                </div>
+                </div>)}
         </div>
     </div>
   );

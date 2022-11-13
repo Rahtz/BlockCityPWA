@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { supabase } from "./client";
 import { Link } from "react-router-dom";
 import Pagination from './Pagination';
+import ClipLoader from "react-spinners/ClipLoader";
 
 function Stats() {
+  const [loading, setLoading] = useState(false);
   const [players, setPlayers] = useState([]);
   const [teams, setTeams] = useState([]);
   const [stats, setStats] = useState([]);
@@ -48,6 +50,10 @@ function Stats() {
     fetchStats();
     fetchPlayers();
     fetchTeams();
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false)
+    }, 1000)
   }, []);
 
   async function fetchStats() {
@@ -130,6 +136,7 @@ function Stats() {
     return result;
   }, {});
 
+  
 
 
 
@@ -141,7 +148,12 @@ function Stats() {
 
   return (
     <div className="divide-x mt-2 lg:grid grid-cols-4 ">
-      <div className="hidden lg:grid grid-cols-3 divide-x col-span-1">
+
+
+
+
+
+    <div className="hidden lg:grid grid-cols-3 divide-x col-span-1">
         <div className="col-span-3">
         <div className="grid grid-cols-2 mt-2">
           <input
@@ -279,7 +291,14 @@ function Stats() {
         </div>
       </div>
       <div className="overflow-x-auto overflow-y-auto h-screen relative shadow-md sm:rounded-lg mx-1 col-span-3">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      {
+      loading ?(
+        <div className="grid h-screen place-items-center">
+      <ClipLoader size={30} color={"#F37A24"} loading={loading} className="mb-24"/>
+        </div>
+      )
+      :
+      (<table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400 sticky top-0 z-10">
             <tr>
               <th scope="col" className="py-3 px-1 sticky left-0 bg-gray-200">
@@ -376,12 +395,10 @@ function Stats() {
               <Pagination totalPosts={stats.length} postsPerPage={postsPerPage} setCurrentPage={setCurrentPage}/>
             </div>
           </tfoot>
-        </table>
+        </table>)}
+        
         
       </div>
-
-      
-      
 
       
     </div>

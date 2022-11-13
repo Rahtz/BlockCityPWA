@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { supabase } from "./client";
 import { Link } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 function Records() {
+  const [loading, setLoading] = useState(false);
     const [players, setPlayers] = useState([]);
   // const [teams, setTeams] = useState([]);
   // const [stats, setStats] = useState([]);
@@ -30,6 +32,10 @@ function Records() {
     getTopBlocks();
     getTopTPM();
     getTopFGM();
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false)
+    }, 1000)
   }, []);
 
   // async function fetchStats() {
@@ -103,7 +109,14 @@ function Records() {
   return (
     <div className="bg-gray-200 h-auto border divide-x">
         <div className="">
-            <div className="mt-5 lg:ml-36 lg:my-5">
+        {
+      loading ?(
+        <div className="grid h-screen place-items-center">
+      <ClipLoader size={30} color={"#F37A24"} loading={loading} className="mb-24"/>
+        </div>
+      )
+      :
+      (<div className="mt-5 lg:ml-36 lg:my-5">
                 <div>
                   <h1 className="text-xl font-bold ml-5">Block City Stat Records Per Game</h1>
                 </div>
@@ -347,7 +360,7 @@ function Records() {
                         </table>
                     </div>
                 </div>
-                </div>
+                </div>)}
         </div>
     </div>
   );

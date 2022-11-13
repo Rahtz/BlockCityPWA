@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Message = () => {
   return (
-    <div className="flex justify-center items-center -mt-5 w-full h-screen bg-gray-500">
+    <div className="flex justify-center items-center -mt-5 w-full h-screen bg-gray-500 px-[30px]">
         <div className=" h-auto w-auto py-[30px] -mt-20 bg-white rounded-lg shadow-lg text-center">
             <p className="px-[10px] font-sans pt-3">Our Web App is still under development</p>
             <p className="px-[10px] mt-10">Press the button below to enter the site</p>

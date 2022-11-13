@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { supabase } from "./client";
+import ClipLoader from "react-spinners/ClipLoader";
 
 function Stats() {
+  const [loading, setLoading] = useState(false);
   const [players, setPlayers] = useState([]);
   const [teams, setTeams] = useState([]);
   const [averagestats, setAverageStats] = useState([]);
@@ -41,7 +43,11 @@ function Stats() {
   useEffect(() => {
     fetchPlayers();
     fetchTeams();
-    fetchAverageStats()
+    fetchAverageStats();
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false)
+    }, 1000)
   }, []);
 
   
@@ -81,7 +87,14 @@ function Stats() {
   return (
     <div className="lg:grid grid-cols-4 divide-x mt-2">
         <div className="overflow-x-auto relative shadow-md sm:rounded-lg w-full col-span-3">
-      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        {
+      loading ?(
+        <div className="grid h-screen place-items-center">
+      <ClipLoader size={30} color={"#F37A24"} loading={loading} className="mb-24"/>
+        </div>
+      )
+      :
+      (<table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
             <th scope="col" className="py-2 px-2">Player</th>
@@ -134,7 +147,7 @@ function Stats() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table>)}
       </div>
     </div>
   );
