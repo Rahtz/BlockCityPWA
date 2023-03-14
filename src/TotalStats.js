@@ -22,8 +22,7 @@ function Stats() {
 
 
   async function fetchTotalStats() {
-    const { data } = await supabase.rpc('totalstat');
-    console.log(data);
+    const { data } = await supabase.rpc('totals');
     setTotalStats(data);
     
   }
@@ -65,7 +64,7 @@ function Stats() {
       (<table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-            <th scope="col" className="py-2 px-2">Player</th>
+            <th scope="col" className="py-2 px-2 sticky left-0 bg-gray-50">Player</th>
             <th scope="col" className="py-2 px-2 text-center">Points</th>
             <th scope="col" className="py-2 px-2 text-center">Rebounds</th>
             <th scope="col" className="py-2 px-2 text-center">Assists</th>
@@ -82,7 +81,7 @@ function Stats() {
           <tbody>
           {totalstats.map((stat) => (
             <tr key={stat.id} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 text-xs">
-              <th scope="row" className="py-2 px-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              <th scope="row" className="py-2 px-2 font-medium text-gray-900 whitespace-nowrap dark:text-white sticky left-0 bg-white">
                 {PlayersName[stat.PlayerId]}
               </th>
               <td className="py-2 px-2 text-center">{stat.Points}</td>

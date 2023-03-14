@@ -208,13 +208,13 @@ function Stats() {
                           scope="col"
                           className="text-xs font-bold text-gray-900 px-1 py-2"
                         >
-                          RBS
+                          PTS
                         </th>
                         <th
                           scope="col"
                           className="text-xs font-bold text-gray-900 px-1 py-2"
                         >
-                          PTS
+                          RBS
                         </th>
                         <th
                           scope="col"
