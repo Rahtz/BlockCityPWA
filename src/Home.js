@@ -1,75 +1,45 @@
 import React from "react";
 import Blockcity from "./images/Blockcity.png";
 import Highflyers from "./images/Highflyers.png";
+import Pirates from "./images/Pirates.png";
 import CountUp from "react-countup";
 import { BsFillPersonFill } from 'react-icons/bs';
+import WeekGames from './WeekGames';
 
 const Home = () => {
   return (
     <div className="-mt-5 bg-gray-200 h-screen">
       <div className="flex container relative top-10 w-screen h-[200px] overflow-x-auto scrollbar-hide pt-12">
-        <div className="-mt-11">
-          <div className="bg-white w-[80px] h-[30px] pl-[12px] pt-[3px] ml-[35px] mb-[20px] rounded shadow-lg">
-            <h1 className="">Week 2</h1>
-          </div>
-          <div className="grid grid-cols-2 w-[112px] h-[150px] ml-[30px] -mt-[5px] bg-gray-800 rounded-lg">
-            <img
-              className="ml-[5px] mt-[30px] col-span-1 w-[39px] h-[39px]"
-              src={Blockcity}
-              alt="BC"
-            />
-            <img
-              className="-ml-[2px] mt-[30px] col-span-1 w-[65px] h-[39px]"
-              src={Highflyers}
-              alt="HF"
-            />
-            <table className="w-[112px]">
-              <tr>
-                <th className="text-white text-[12px]">Block City</th>
-                <th className="text-white text-[12px] pr-[5px]">98</th>
-              </tr>
-              <tr>
-                <th className="text-white text-[12px]">High Flyers</th>
-                <th className="text-white text-[12px] pr-[5px]">69</th>
-              </tr>
-            </table>
-          </div>
-          <div className="w-[112px] h-[150px] ml-[172px] -mt-[150px] bg-blue-500 rounded-lg"></div>
-          <div className="w-[112px] h-[150px] ml-[314px] -mt-[150px] bg-blue-500 rounded-lg"></div>
-        </div>
-        <div className="-mt-11">
+      <div className="-mt-11">
           <div className="bg-white w-[80px] h-[30px] pl-[12px] pt-[3px] ml-[35px] mb-[20px] rounded shadow-lg">
             <h1 className="">Week 1</h1>
           </div>
-          <div className="grid grid-cols-2 w-[112px] h-[150px] ml-[30px] -mt-[5px] bg-gray-800 rounded-lg">
-            <img
-              className="ml-[5px] mt-[30px] col-span-1 w-[39px] h-[39px]"
-              src={Blockcity}
-              alt="BC"
+          <div className="w-[112px] h-[150px] ml-[30px] -mt-[5px] bg-gray-800 rounded-lg">
+            <WeekGames 
+              team1 = "High Flyers"
+              team1Icon = {Highflyers}
+              team1Score = "90"
+              team2 = "The Pirates"
+              team2Icon = {Pirates}
+              team2Score = "70"
             />
-            <img
-              className="-ml-[2px] mt-[30px] col-span-1 w-[65px] h-[39px]"
-              src={Highflyers}
-              alt="HF"
-            />
-            <table className="w-[112px]">
-              <tr>
-                <th className="text-white text-[12px]">Block City</th>
-                <th className="text-white text-[12px] pr-[5px]">98</th>
-              </tr>
-              <tr>
-                <th className="text-white text-[12px]">High Flyers</th>
-                <th className="text-white text-[12px] pr-[5px]">69</th>
-              </tr>
-            </table>
           </div>
-          <div className="w-[112px] h-[150px] ml-[172px] -mt-[150px] bg-blue-500 rounded-lg"></div>
-          <div className="w-[112px] h-[150px] ml-[314px] -mt-[150px] bg-blue-500 rounded-lg"></div>
+          <div className="w-[112px] h-[150px] ml-[172px] -mt-[150px] bg-gray-800 rounded-lg">
+          <WeekGames 
+              team1 = "The Jokers"
+              team1Icon = {""}
+              team1Score = "80"
+              team2 = "Block City"
+              team2Icon = {Blockcity}
+              team2Score = "74"
+            />
+          </div>
         </div>
       </div>
 
       <div className="relative top-16 mx-5 h-auto py-2 border bg-white rounded-lg drop-shadow-lg">
-        <table className="w-full">
+      <h1 className="text-[30px] text-center py-2">Points Table</h1>
+        <table className="w-4/5 mx-10">
           <thead className="bg-red-500 w-full">
             <tr className="border border-gray-3 h-10">
               <th className="w-10">Team</th>
@@ -78,20 +48,50 @@ const Home = () => {
             </tr>
           </thead>
           <tbody>
+          <tr className="border border-gray-3 h-10">
+              <td className="w-10 text-center">PNBHS</td>
+              <td className="w-6 text-center">5</td>
+              <td className="w-6 text-center">2</td>
+            </tr>
+          <tr className="border border-gray-3 h-10 bg-gray-200">
+              <td className="w-10 text-center">The Jokers</td>
+              <td className="w-6 text-center">5</td>
+              <td className="w-6 text-center">2</td>
+            </tr>
             <tr className="border border-gray-3 h-10">
               <td className="w-10 text-center">Block City</td>
               <td className="w-6 text-center">5</td>
               <td className="w-6 text-center">2</td>
             </tr>
-            <tr className="bg-gray-200 h-10">
+            <tr className="border border-gray-3 h-10 bg-gray-200">
+              <td className="w-10 text-center">Its Up</td>
+              <td className="w-6 text-center">5</td>
+              <td className="w-6 text-center">2</td>
+            </tr>
+            <tr className="border border-gray-3 h-10">
               <td className="w-10 text-center">High Flyers</td>
               <td className="w-6 text-center">2</td>
               <td className="w-6 text-center">5</td>
             </tr>
+            <tr className="border border-gray-3 h-10 bg-gray-200">
+              <td className="w-10 text-center">Slow Break</td>
+              <td className="w-6 text-center">5</td>
+              <td className="w-6 text-center">2</td>
+            </tr>
             <tr className="border border-gray-3 h-10">
+              <td className="w-10 text-center">Manukura</td>
+              <td className="w-6 text-center">5</td>
+              <td className="w-6 text-center">2</td>
+            </tr>
+            <tr className="border border-gray-3 h-10 bg-gray-200">
               <td className="w-10 text-center">The Pirates</td>
               <td className="w-6 text-center">0</td>
               <td className="w-6 text-center">5</td>
+            </tr>
+            <tr className="border border-gray-3 h-10">
+              <td className="w-10 text-center">Shannon Four Square</td>
+              <td className="w-6 text-center">5</td>
+              <td className="w-6 text-center">2</td>
             </tr>
           </tbody>
         </table>
