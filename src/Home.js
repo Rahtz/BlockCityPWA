@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <div className="-mt-5 bg-gray-200 h-screen">
       <div className="flex container relative top-10 w-screen h-[200px] overflow-x-auto scrollbar-hide pt-12">
-      <div className="-mt-11">
+      <div id="Week 1" className="-mt-11">
           <div className="bg-white w-[80px] h-[30px] pl-[12px] pt-[3px] ml-[35px] mb-[20px] rounded shadow-lg">
             <h1 className="">Week 1</h1>
           </div>
@@ -32,6 +32,66 @@ const Home = () => {
               team2 = "Block City"
               team2Icon = {Blockcity}
               team2Score = "74"
+            />
+          </div>
+        </div>
+        <div id="Week 2" className="-mt-11">
+          <div className="bg-white w-[80px] h-[30px] pl-[12px] pt-[3px] ml-[35px] mb-[20px] rounded shadow-lg">
+            <h1 className="">Week 2</h1>
+          </div>
+          <div className="w-[112px] h-[150px] ml-[30px] -mt-[5px] bg-gray-800 rounded-lg">
+            <WeekGames 
+              team1 = "Block City"
+              team1Icon = {Blockcity}
+              team1Score = "108"
+              team2 = "High Flyers"
+              team2Icon = {Highflyers}
+              team2Score = "82"
+            />
+          </div>
+          <div className="w-[112px] h-[150px] ml-[172px] -mt-[150px] bg-gray-800 rounded-lg">
+          <WeekGames 
+              team1 = "The Pirates"
+              team1Icon = {Pirates}
+              team1Score = "49"
+              team2 = "Slow Break"
+              team2Icon = {""}
+              team2Score = "101"
+            />
+          </div>
+        </div>
+        <div id="Week 3" className="-mt-11">
+          <div className="bg-white w-[80px] h-[30px] pl-[12px] pt-[3px] ml-[35px] mb-[20px] rounded shadow-lg">
+            <h1 className="">Week 3</h1>
+          </div>
+          <div className="w-[112px] h-[150px] ml-[30px] -mt-[5px] bg-gray-800 rounded-lg">
+            <WeekGames 
+              team1 = "Block City"
+              team1Icon = {Blockcity}
+              team1Score = "80"
+              team2 = "Slow Break"
+              team2Icon = {""}
+              team2Score = "70"
+            />
+          </div>
+          <div className="w-[112px] h-[150px] ml-[172px] -mt-[150px] bg-gray-800 rounded-lg">
+          <WeekGames 
+              team1 = "The Pirates"
+              team1Icon = {Pirates}
+              team1Score = "45"
+              team2 = "Zayfrogs"
+              team2Icon = {""}
+              team2Score = "51"
+            />
+          </div>
+          <div className="w-[112px] h-[150px] ml-[314px] -mt-[150px] bg-gray-800 rounded-lg">
+          <WeekGames 
+              team1 = "High Flyers"
+              team1Icon = {Highflyers}
+              team1Score = "78"
+              team2 = "Manukura"
+              team2Icon = {""}
+              team2Score = "91"
             />
           </div>
         </div>
