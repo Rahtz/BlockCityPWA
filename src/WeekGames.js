@@ -1,30 +1,32 @@
-import React from 'react'
+import React from "react";
 
 const WeekGames = (props) => {
   return (
-    <div>
-    <table className="w-[112px] text-center">
-            <img
-              className="ml-[22px] mt-[5px] w-[75px] h-[45px]"
-              src={props.team1Icon}
-              alt="BC"
-            />
-              <tr>
-                <th className="text-white text-[12px]">{props.team1}</th>
-                <th className="text-white text-[12px] pr-[13px]">{props.team1Score}</th>
-              </tr>
-              <img
-              className="ml-[24px] mt-[5px] col-span-1 w-[60px] h-[45px]"
-              src={props.team2Icon}
-              alt="HF"
-            />
-              <tr>
-                <th className="text-white text-[12px]">{props.team2}</th>
-                <th className="text-white text-[12px] pr-[13px]">{props.team2Score}</th>
-              </tr>
-            </table>
-    </div>
-  )
-}
+    <div className="text-center pt-2">
+      <div className="flex justify-center">
+        <img
+          className="w-[65px] h-[45px]"
+          src={props.team1Icon}
+          alt="BC"
+        />
+      </div>
 
-export default WeekGames
+      <div className="text-white text-[12px]">
+        {props.team1} {props.team1Score}
+      </div>
+      <div className="flex justify-center">
+        <img
+          className="w-[65px] h-[45px]"
+          src={props.team2Icon}
+          alt="HF"
+        />
+      </div>
+
+      <div className="text-white text-[12px]">
+        {props.team2} {props.team2Score}
+      </div>
+    </div>
+  );
+};
+
+export default WeekGames;
