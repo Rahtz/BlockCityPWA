@@ -2,8 +2,8 @@ import React from "react";
 import Blockcity from "./images/Blockcity.png";
 import Highflyers from "./images/Highflyers.png";
 import Pirates from "./images/Pirates.png";
+import Jokers from "./images/Jokers.png";
 import CountUp from "react-countup";
-import { BsFillPersonFill } from 'react-icons/bs';
 import WeekGames from './WeekGames';
 
 const Home = () => {
@@ -27,7 +27,7 @@ const Home = () => {
           <div className="w-[112px] h-[150px] ml-[172px] -mt-[150px] bg-gray-800 rounded-lg">
           <WeekGames 
               team1 = "The Jokers"
-              team1Icon = {""}
+              team1Icon = {Jokers}
               team1Score = "80"
               team2 = "Block City"
               team2Icon = {Blockcity}
