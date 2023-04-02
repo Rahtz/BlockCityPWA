@@ -160,7 +160,7 @@ const Home = () => {
       <div className="relative top-20 mx-5 h-screen py-5 text-center border bg-gray-700 rounded-lg drop-shadow-lg">
         <div className="py-12">
           <span className="text-white text-[45px]">
-            <CountUp end={5} duration={2.5} />
+            <CountUp end={5} duration={2.5} redraw={true}/>
           </span>
           <h1 className="text-gray-400">Seasons</h1>
         </div>

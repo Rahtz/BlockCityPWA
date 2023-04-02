@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "./client";
 import { useParams } from "react-router-dom";
 import Blockcity from "./images/Blockcity.png";
+import sengun from "./images/sengun.png";
 // import jacob from "./images/jacob.png";
 // import jacob1 from "./images/jacob1.png";
 
@@ -103,56 +104,87 @@ function Stats() {
   });
 
   return (
-    <div className="grid divide-x mt-1">
-      <div className="grid grid-cols-5 divide-x w-full h-auto border">
-        <div className="col-span-2 h-48 border"> <img src= {Blockcity} alt="pi" /></div>
-        <div className="col-span-3 border">
-          <h1 className="text-xl pb-5 ml-2"><b>{PlayersName[params.id]}</b></h1>
-          <h2 className="text-md pb-2 ml-2"><b>Club Totals</b></h2>
-          <p className="text-xs pb-1 ml-2">Points: {points}</p>
-          <p className="text-xs pb-1 ml-2">Rebounds: {rebounds}</p>
-          <p className="text-xs pb-1 ml-2">Assists: {assists}</p>
-          <p className="text-xs pb-1 ml-2">Steals: {steals}</p>
-          <p className="text-xs pb-1 ml-2">Blocks: {blocks}</p>
-          {/* <p>Warriors #30 PG</p>
-          <p>HT/WT  6'2'', 185lbs</p>
-          <p>Birthdate 24/07/1997(25)</p>
-          <p>College PNBHS</p> */}
+    <div>
+    <div className="w-full bg-gray-800">
+      <div className="flex w-full h-auto border">
+        <div className="block w-3/6">
+          <div className="flex items-end w-[150px] h-40 ml-10"> <img className="object-bottom" src= {sengun} alt="pi" /></div>
         </div>
-      </div>
-      <div className="w-full h-28 border">
-        <div className="mx-5 my-3.5 h-20 border rounded-xl">
-          <div className="w-full h-4 bg-blue-800 rounded-t-lg text-center">
-            <p className="text-white text-xs ">2022 SEASON AVERAGES</p>
-            <div className="grid grid-cols-4 ml-6 my-1.5 h-15">
-              <div className="w-12 h-12">
-                <p className="text-xs pb-1">PTS</p>
-                <h3 className="text-s"><b>{averageSeasonPoints.toFixed(1)}</b></h3>
-              </div>
-              <div className="w-12 h-12">
-                <p className="text-xs pb-1">REB</p>
-                <h3 className="text-s"><b>{averageSeasonRebounds.toFixed(1)}</b></h3>
-              </div>
-              <div className="w-12 h-12">
-                <p className="text-xs pb-1">AST</p>
-                <h3 className="text-s"><b>{averageSeasonAssists.toFixed(1)}</b></h3>
-              </div>
-              <div className="w-12 h-12">
-                <p className="text-xs pb-1">STL</p>
-                <h3 className="text-s"><b>{averageSeasonSteals.toFixed(1)}</b></h3>
-              </div>
-            </div>
+        <div className="w-3/6 flex flex-col justify-center items-start">
+          <div className="flex flex-col text-white">
+            <p className="font-sans font-normal text-xs">Block City | #69 | Forward</p>
+            <p className="font-display font-normal text-xl uppercase">Jacob</p>
+            <p className="font-display font-normal text-xl uppercase -mt-1">Ratima</p>
           </div>
         </div>
       </div>
-
-      <ul className="flex overflow-x-auto w-screen h-auto bg-white">
+      <div className="w-full h-16 bg-gray-800 border">
+        <div className="flex justify-center space-x-[15px] py-[1px] min-w-2/5">
+        <div className="pt-[10px] flex flex-col justify-center text-center">
+          <p className="font-sans font-normal text-xs leading-tight text-white">PPG</p>
+          <p className="uppercase font-display font-normal text-lg leading-none text-white">8.6</p>
+        </div>
+        <div className="border border-white mt-[10px] "></div>
+        <div className="pt-[10px] flex flex-col justify-center text-center">
+          <p className="font-sans font-normal text-xs leading-tight text-white">RPG</p>
+          <p className="uppercase font-display font-normal text-lg leading-none text-white">11.5</p>
+        </div>
+        <div className="border border-white mt-[10px] "></div>
+        <div className="pt-[10px] flex flex-col justify-center text-center">
+          <p className="font-sans font-normal text-xs leading-tight text-white">APG</p>
+          <p className="uppercase font-display font-normal text-lg leading-none text-white">2.3</p>
+        </div>
+        <div className="border border-white mt-[10px] "></div>
+        <div className="pt-[10px] flex flex-col justify-center text-center">
+          <p className="font-sans font-normal text-xs leading-tight text-white">SPG</p>
+          <p className="uppercase font-display font-normal text-lg leading-none text-white">1.2</p>
+        </div>
+        </div>
+      </div>
+      <div className="w-full h-16 bg-gray-800 border">
+        <div className="flex justify-center space-x-[100px] py-[1px] min-w-2/5">
+          <div className="text-white text-center flex flex-col justify-center text-sm pt-[15px]">
+            <p>6'3" | 95kg | 25 years</p>
+          </div>
+          <div className="text-white text-center flex flex-col justify-center pt-[10px]">
+            <p className="text-xs">DRAFT</p>
+            <p>2013 R1 Pick 12</p>
+          </div>
+        </div>
+      </div>
+      <div className="w-full h-16 bg-gray-800 border">
+        <div className="flex justify-center space-x-[100px] py-[1px] min-w-2/5">
+          <div className="text-white text-center flex flex-col justify-center pt-[10px]">
+            <p className="text-xs">BIRTHDATE</p>
+            <p>July 24, 1997</p>
+          </div>
+          <div className="text-white text-center flex flex-col justify-center pt-[10px]">
+            <p className="text-xs">Country</p>
+            <p>New Zealand</p>
+          </div>
+        </div>
+      </div>
+      <div className="w-full h-16 bg-gray-800 border">
+        <div className="flex justify-center space-x-[100px] py-[1px] min-w-2/5">
+          <div className="text-white text-center flex flex-col justify-center pt-[10px]">
+            <p className="text-xs">Last Attended</p>
+            <p>PNBHS</p>
+          </div>
+          <div className="text-white text-center flex flex-col justify-center pt-[10px]">
+            <p className="text-xs">Club Experience</p>
+            <p>4 Seasons</p>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div>
+        <ul className="flex overflow-x-auto justify-center items-center space-x-[50px] w-screen h-[40px] bg-white">
                 <li className="w-auto">
                   <a
                     href="#/"
                     onClick={() => setOpenTab(1)}
                     className={` ${
-                      openTab === 1 ? "border-b-2 border-red-600 text-white" : ""
+                      openTab === 1 ? "border-b-4 border-black text-white" : ""
                     } inline-block px-2 py-1 text-black bg-white`}
                   >
                     Overview
@@ -163,7 +195,7 @@ function Stats() {
                     href="#/"
                     onClick={() => setOpenTab(2)}
                     className={` ${
-                      openTab === 2 ? "border-b-2 border-red-600 text-white" : ""
+                      openTab === 2 ? "border-b-4 border-black text-white" : ""
                     } inline-block px-2 py-1 text-black bg-white`}
                   >
                     Totals
@@ -174,14 +206,14 @@ function Stats() {
                     href="#/"
                     onClick={() => setOpenTab(3)}
                     className={` ${
-                      openTab === 3 ? "border-b-2 border-red-600 text-white" : ""
+                      openTab === 3 ? "border-b-4 border-black text-white" : ""
                     } inline-block px-2 py-1 text-black bg-white`}
                   >
                     Averages
                   </a>
                 </li>                
               </ul>
-
+        </div>
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 w-full">
         <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
           <div className="container overflow-hidden w-full bg-gray-300">
@@ -334,6 +366,7 @@ function Stats() {
         </div>
       </div>
     </div>
+    
   );
 }
 
