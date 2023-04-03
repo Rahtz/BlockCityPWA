@@ -11,7 +11,7 @@ const Navbar = () => {
             <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
                 <div>
                     <div className="flex items-center justify-between py-3 md:py-5 md:block ">
-                    <img src={Blockcity} alt="BC" className="w-14" />
+                    <img src={Blockcity} alt="BC" className="w-8" />
                         <div className="md:hidden">
                             <button
                                 className="p-2 text-white rounded-md outline-none focus:border-gray-400 focus:border"

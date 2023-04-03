@@ -4,9 +4,27 @@ import { Link } from "react-router-dom";
 
 function Players() {
   const [players, setPlayers] = useState([]);
-  const [player, setPlayer] = useState({ PlayerName: "" });
+  const [player, setPlayer] = useState({ 
+    PlayerName: "",
+    birthdate: "",
+    position: "",
+    number: "",
+    highSchool: "", 
+    weight: "",
+    heightFeet: "",
+    heightInches: "",
+  });
   // const [editplayer, setEditPlayer] = useState({ PlayerName: ""});
-  const { PlayerName } = player;
+  const { 
+    PlayerName,
+    birthdate,
+    position,
+    number,
+    highSchool,
+    weight,
+    heightFeet,
+    heightInches, 
+  } = player;
   // const { EditName } = editplayer;
 
   useEffect(() => {
@@ -20,8 +38,29 @@ function Players() {
   }
 
   async function createPlayer() {
-    await supabase.from("players").insert([{ PlayerName }]).single();
-    setPlayer({ PlayerName: "" });
+    await supabase
+    .from("players")
+    .insert([
+      { 
+        PlayerName,
+        birthdate,
+        position,
+        number,
+        highSchool,
+        weight,
+        heightFeet,
+        heightInches, 
+      }]).single();
+    setPlayer({ 
+      PlayerName: "",
+      birthdate: "",
+      position: "",
+      number: "",
+      highSchool: "",
+      weight: "",
+      heightFeet: "",
+      heightInches: "", 
+    });
     fetchPlayers();
   }
 
@@ -65,6 +104,49 @@ function Players() {
         placeholder="Name"
         value={PlayerName}
         onChange={(e) => setPlayer({ ...player, PlayerName: e.target.value })}
+      />
+      <input
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        type="date"
+        placeholder="date"
+        value={birthdate}
+        onChange={(e) => setPlayer({ ...player, birthdate: e.target.value })}
+      />
+      <input
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="position"
+        value={position}
+        onChange={(e) => setPlayer({ ...player, position: e.target.value })}
+      />
+      <input
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="number"
+        value={number}
+        onChange={(e) => setPlayer({ ...player, number: e.target.value })}
+      />
+      <input
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="highSchool"
+        value={highSchool}
+        onChange={(e) => setPlayer({ ...player, highSchool: e.target.value })}
+      />
+      <input
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="weight"
+        value={weight}
+        onChange={(e) => setPlayer({ ...player, weight: e.target.value })}
+      />
+      <input
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="heightFeet"
+        value={heightFeet}
+        onChange={(e) => setPlayer({ ...player, heightFeet: e.target.value })}
+      />
+      <input
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="heightInches"
+        value={heightInches}
+        onChange={(e) => setPlayer({ ...player, heightInches: e.target.value })}
       />
     </div>
     <div className="col-span-1">
