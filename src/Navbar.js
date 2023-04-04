@@ -50,11 +50,11 @@ const Navbar = () => {
                         </div>
                         <img src={Blockcity} alt="BC" className="w-8" />
                         </div>
-                        <div className="flex mr-[100px] space-x-[20px]">
-                            <p className="text-white text-sm">Home</p>
-                            <p className="text-white text-sm">Stats</p>
-                            <p className="text-white text-sm">Players</p>
-                            <p className="text-white text-sm">Teams</p>
+                        <div className="flex mr-[90px] space-x-[20px]">
+                            <p className="text-white text-sm"><Link to="/home">Home</Link></p>
+                            <p className="text-white text-sm"><Link to="/stat">Stats</Link></p>
+                            <p className="text-white text-sm"><Link to="/players">Players</Link></p>
+                            <p className="text-white text-sm"><Link to="/teams">Teams</Link></p>
                         </div>
                     </div>
                 </div>
