@@ -109,29 +109,29 @@ function Records() {
  
   return (
     <div className="h-auto bg-gray-200">
-        <div className="flex items-center justify-center space-x-[20px] bg-white h-[50px]">
+        <div className="flex items-center justify-center space-x-[20px] bg-white h-[40px]">
             <div>
-                <p className="font-display">STATS</p>
+                <p className="font-display -ml-[50px]">STATS</p>
             </div>
             <div className="border border-black h-[25px]"></div>
             <div>
                 <Link to={`/stat/`}>
-                    <p>Leaders</p>
+                    <p className="text-sm">Leaders</p>
                 </Link>
             </div>
             <div>
             <Link to={`/records/`}>
-                <p>Records</p>
+                <p className="text-sm">Records</p>
                 </Link>
             </div>
             <div>
             <Link to={`/totalstats/`}>
-                <p>Totals</p>
+                <p className="text-sm">Totals</p>
                 </Link>
             </div>
             <div>
             <Link to={`/averagestats/`}>
-                <p>Averages</p>
+                <p className="text-sm">Averages</p>
                 </Link>
             </div>
         </div>
