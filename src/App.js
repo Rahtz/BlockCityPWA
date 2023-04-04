@@ -6,7 +6,6 @@ import Teams from './Teams';
 import TotalStats from './TotalStats';
 import AverageStats from './AverageStats';
 import PlayerProfile from './PlayerProfile';
-import SeasonLeaders from './SeasonLeaders';
 import Records from './Records';
 import Home from './Home';
 import Message from './Message';
@@ -29,7 +28,6 @@ function App() {
           <Route path="/totalstats" element={<TotalStats />}/>
           <Route path="/averagestats" element={<AverageStats />}/>
           <Route path="/stats/:id" element={<PlayerProfile />}/>
-          <Route path="/seasonleaders" element={<SeasonLeaders />}/>
           <Route path="/records" element={<Records />}/>
           <Route path="/stat" element={<Stat />}/>
           <Route path="*" element={<NotFound />} />            

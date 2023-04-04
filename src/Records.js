@@ -53,6 +53,7 @@ function Records() {
   async function getTopPoints(){
     const { data } = await supabase.rpc('gettoppoints');
     setTopPoints(data);
+    console.log(data);
   }
 
   async function getTopRebounds(){
@@ -107,7 +108,35 @@ function Records() {
 
  
   return (
-    <div className="bg-gray-200 h-auto border divide-x">
+    <div className="h-auto bg-gray-200">
+        <div className="flex items-center justify-center space-x-[20px] bg-white h-[50px]">
+            <div>
+                <p className="font-display">STATS</p>
+            </div>
+            <div className="border border-black h-[25px]"></div>
+            <div>
+                <Link to={`/stat/`}>
+                    <p>Leaders</p>
+                </Link>
+            </div>
+            <div>
+            <Link to={`/records/`}>
+                <p>Records</p>
+                </Link>
+            </div>
+            <div>
+            <Link to={`/totalstats/`}>
+                <p>Totals</p>
+                </Link>
+            </div>
+            <div>
+            <Link to={`/averagestats/`}>
+                <p>Averages</p>
+                </Link>
+            </div>
+        </div>
+        
+        <div className="bg-gray-200 h-auto border divide-x">
         <div className="">
         {
       loading ?(
@@ -116,252 +145,100 @@ function Records() {
         </div>
       )
       :
-      (<div className="mt-5 lg:ml-36 lg:my-5">
-                <div>
-                  <h1 className="text-xl font-bold ml-5">Block City Stat Records Per Game</h1>
+      (<div>
+            <div className="mt-6 bg-white">
+                <h1 className="pl-6 font-display text-xl">CLUB RECORDS</h1>
+                <hr/>
+            </div>
+            <div className="bg-white">
+                <p className="text-blue-600 font-display pl-8 py-2">POINTS</p>
+                <hr/>
+                <div className="flex flex-col -space-y-[12px]">
+                    {toppoints.map((item, index) => (
+                        <div className="flex items-center justify-between py-2">
+                        <div className="flex items-center">
+                            <p className={`text-sm pl-10 ${index === 0 ? 'font-bold' : ''}`}>{index + 1}.</p>
+                            <Link to={`/stats/${item.PlayerId}`}>
+                            <p className={`text-sm pl-2 ${index === 0 ? 'font-bold' : ''}`}>{PlayersName[item.PlayerId]}</p>
+                            </Link>
+                        </div>
+                        <p className={`text-sm pr-10 ${index === 0 ? 'font-bold' : ''}`}>{(item.Points)}</p>
+                        </div>
+                    ))}
                 </div>
-                <div className="lg:grid grid-cols-3 h-auto my-5 px-5">
-                    <div className="col-span-1 bg-white rounded-lg py-5 shadow-lg">
-                        {/* <h2 className="my-5 text-md font-bold text-gray-800">Points Per Game</h2> */}
-                        {/* <ol className="ml-5 list-decimal">
-                        {toppoints.map((item) => (
-                          <li>{PlayersName[item.PlayerId]} <span>{item.Points}</span> <span>{item.YourDate}</span></li>
-                        ))}                  
-                        </ol> */}
-                        <table className="w-full text-left">
-                          <thead className="border-t border-b">
-                            <tr>
-                              <th className="text-sm text-gray-800 pl-5">Points Per Game</th>
-                              <th className="text-sm text-gray-800 pl-5">PTS</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                          {toppoints.map((item) => (
-                            <tr className="even:bg-gray-100 border-t border-b">
-                              <Link to={`/stats/${item.PlayerId}`}>
-                                <td className="text-sm pl-5 py-2">{PlayersName[item.PlayerId]}</td>
-                              </Link>
-                              <td className="text-sm pl-5 py-2">{item.Points}</td>
-                            </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                    </div>
-                    <div className="col-span-1 bg-white rounded-lg py-5 mt-5 shadow-lg">
-                    {/* <h2 className="my-5 text-md font-bold text-gray-800">Rebounds Per Game</h2>
-                    <ol className="ml-5 list-decimal">
-                        {toprebounds.map((item) => (
-                          <li>{PlayersName[item.PlayerId]} <span>{item.Rebounds}</span></li>
-                        ))}                  
-                        </ol> */}
-                        <table className="w-full text-left">
-                          <thead className="border-t border-b">
-                            <tr>
-                              <th className="text-sm text-gray-800 pl-5">Rebounds Per Game</th>
-                              <th className="text-sm text-gray-800 pl-5">PTS</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                          {toprebounds.map((item) => (
-                            <tr className="even:bg-gray-100">
-                              <Link to={`/stats/${item.PlayerId}`}>
-                                <td className="text-sm pl-5 py-2">{PlayersName[item.PlayerId]}</td>
-                              </Link>
-                              <td className="text-sm pl-5 py-2">{item.Rebounds}</td>
-                            </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                    </div>
-                    <div className="col-span-1 bg-white rounded-lg py-5 mt-5 shadow-lg">
-                    {/* <h2 className="my-5 text-md font-bold text-gray-800">Assists Per Game</h2>
-                    <ol className="ml-5 list-decimal">
-                        {topassists.map((item) => (
-                          <li>{PlayersName[item.PlayerId]} <span>{item.Assists}</span></li>
-                        ))}                  
-                        </ol> */}
-                        <table className="w-full text-left">
-                          <thead className="border-t border-b">
-                            <tr>
-                              <th className="text-sm text-gray-800 pl-5">Assists Per Game</th>
-                              <th className="text-sm text-gray-800 pl-5">AST</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                          {topassists.map((item) => (
-                            <tr className="even:bg-gray-100">
-                              <Link to={`/stats/${item.PlayerId}`}>
-                                <td className="text-sm pl-5 py-2">{PlayersName[item.PlayerId]}</td>
-                              </Link>
-                              <td className="text-sm pl-5 py-2">{item.Assists}</td>
-                            </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                    </div>
+            </div>
+            <div className="bg-white">
+                <p className="text-blue-600 font-display pl-8 py-2">REBOUNDS</p>
+                <hr/>
+                <div className="flex flex-col -space-y-[12px]">
+                    {toprebounds.map((item, index) => (
+                        <div className="flex items-center justify-between py-2">
+                        <div className="flex items-center">
+                            <p className={`text-sm pl-10 ${index === 0 ? 'font-bold' : ''}`}>{index + 1}.</p>
+                            <Link to={`/stats/${item.PlayerId}`}>
+                            <p className={`text-sm pl-2 ${index === 0 ? 'font-bold' : ''}`}>{PlayersName[item.PlayerId]}</p>
+                            </Link>
+                        </div>
+                        <p className={`text-sm pr-10 ${index === 0 ? 'font-bold' : ''}`}>{(item.Rebounds)}</p>
+                        </div>
+                    ))}
                 </div>
-                <div className="lg:grid grid-cols-3 h-auto my-5 px-5">
-                    <div className="col-span-1 bg-white rounded-lg py-5 mt-5 shadow-lg">
-                    {/* <h2 className="my-5 text-md font-bold text-gray-800">Steals Per Game</h2>
-                    <ol className="ml-5 list-decimal">
-                        {topsteals.map((item) => (
-                          <li>{PlayersName[item.PlayerId]} <span>{item.Steals}</span></li>
-                        ))}                  
-                        </ol> */}
-                        <table className="w-full text-left">
-                          <thead className="border-t border-b">
-                            <tr>
-                              <th className="text-sm text-gray-800 pl-5">Steals Per Game</th>
-                              <th className="text-sm text-gray-800 pl-5">STL</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                          {topsteals.map((item) => (
-                            <tr className="even:bg-gray-100">
-                              <Link to={`/stats/${item.PlayerId}`}>
-                                <td className="text-sm pl-5 py-2">{PlayersName[item.PlayerId]}</td>
-                              </Link>
-                              <td className="text-sm pl-5 py-2">{item.Steals}</td>
-                            </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                    </div>
-                    <div className="col-span-1 bg-white rounded-lg py-5 mt-5 shadow-lg">
-                    {/* <h2 className="my-5 text-md font-bold text-gray-800">Blocks Per Game</h2>
-                    <ol className="ml-5 list-decimal">
-                        {topblocks.map((item) => (
-                          <li>{PlayersName[item.PlayerId]} <span>{item.Blocks}</span></li>
-                        ))}                  
-                        </ol> */}
-                        <table className="w-full text-left">
-                          <thead className="border-t border-b">
-                            <tr>
-                              <th className="text-sm text-gray-800 pl-5">Blocks Per Game</th>
-                              <th className="text-sm text-gray-800 pl-5">BLK</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                          {topblocks.map((item) => (
-                            <tr className="even:bg-gray-100">
-                              <Link to={`/stats/${item.PlayerId}`}>
-                                <td className="text-sm pl-5 py-2">{PlayersName[item.PlayerId]}</td>
-                              </Link>
-                              <td className="text-sm pl-5 py-2">{item.Blocks}</td>
-                            </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                    </div>
-                    <div className="col-span-1 bg-white rounded-lg py-5 mt-5 shadow-lg">
-                    {/* <h2 className="my-5 text-md font-bold text-gray-800">Feild Goals Made</h2>
-                    <ol className="ml-5 list-decimal">
-                        {topfgm.map((item) => (
-                          <li>{PlayersName[item.PlayerId]} <span>{item.FeildGoalsMade}</span></li>
-                        ))}                  
-                        </ol> */}
-                        <table className="w-full text-left">
-                          <thead className="border-t border-b">
-                            <tr>
-                              <th className="text-sm text-gray-800 pl-5">Feild Goals Made</th>
-                              <th className="text-sm text-gray-800 pl-5">FGM</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                          {topfgm.map((item) => (
-                            <tr className="even:bg-gray-100">
-                              <Link to={`/stats/${item.PlayerId}`}>
-                                <td className="text-sm pl-5 py-2">{PlayersName[item.PlayerId]}</td>
-                              </Link>
-                              <td className="text-sm pl-5 py-2">{item.FeildGoalsMade}</td>
-                            </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                    </div>
+            </div>
+            <div className="bg-white">
+                <p className="text-blue-600 font-display pl-8 py-2">ASSISTS</p>
+                <hr/>
+                <div className="flex flex-col -space-y-[12px]">
+                    {topassists.map((item, index) => (
+                        <div className="flex items-center justify-between py-2">
+                        <div className="flex items-center">
+                            <p className={`text-sm pl-10 ${index === 0 ? 'font-bold' : ''}`}>{index + 1}.</p>
+                            <Link to={`/stats/${item.PlayerId}`}>
+                            <p className={`text-sm pl-2 ${index === 0 ? 'font-bold' : ''}`}>{PlayersName[item.PlayerId]}</p>
+                            </Link>
+                        </div>
+                        <p className={`text-sm pr-10 ${index === 0 ? 'font-bold' : ''}`}>{(item.Assists)}</p>
+                        </div>
+                    ))}
                 </div>
-                <div className="lg:grid grid-cols-3 h-auto my-5 px-5">
-                    <div className="col-span-1 bg-white rounded-lg py-5 mt-5 shadow-lg">
-                    {/* <h2 className="my-5 text-md font-bold text-gray-800">Three Pointers Made</h2>
-                    <ol className="ml-5 list-decimal">
-                        {toptpm.map((item) => (
-                          <li>{PlayersName[item.PlayerId]} <span>{item.ThreePointersMade}</span></li>
-                        ))}                  
-                        </ol> */}
-                        <table className="w-full text-left">
-                          <thead className="border-t border-b">
-                            <tr>
-                              <th className="text-sm text-gray-800 pl-5">Three Pointers Made</th>
-                              <th className="text-sm text-gray-800 pl-5">3PM</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                          {toptpm.map((item) => (
-                            <tr className="even:bg-gray-100">
-                              <Link to={`/stats/${item.PlayerId}`}>
-                                <td className="text-sm pl-5 py-2">{PlayersName[item.PlayerId]}</td>
-                              </Link>
-                              <td className="text-sm pl-5 py-2">{item.ThreePointersMade}</td>
-                            </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                    </div>
-                    <div className="col-span-1 bg-white rounded-lg py-5 mt-5 shadow-lg">
-                    {/* <h2 className="my-5 text-md font-bold text-gray-800">Three Points Percentage</h2>
-                    <ol className="ml-5 list-decimal">
-                            <b><li>Test <span className="pl-16">24.0</span></li></b>
-                            <li>Test <span className="pl-16">24.0</span></li>
-                            <li>Test <span className="pl-16">24.0</span></li>
-                            <li>Test <span className="pl-16">24.0</span></li>
-                            <li>Test <span className="pl-16">24.0</span></li>
-                        </ol> */}
-                        <table className="w-full text-left">
-                          <thead className="border-t border-b">
-                            <tr>
-                              <th className="text-sm text-gray-800 pl-5">Three Point Percentage</th>
-                              <th className="text-sm text-gray-800 pl-5">PTS</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                          {toppoints.map((item) => (
-                            <tr className="even:bg-gray-100">
-                              <td className="text-sm pl-5 py-2">Test</td>
-                              <td className="text-sm pl-5 py-2">Test</td>
-                            </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                    </div>
-                    <div className="col-span-1 bg-white rounded-lg py-5 mt-5 shadow-lg">
-                    {/* <h2 className="my-5 text-md font-bold text-gray-800">MVP Points</h2>
-                    <ol className="ml-5 list-decimal">
-                            <b><li>Test <span className="pl-16">24.0</span></li></b>
-                            <li>Test <span className="pl-16">24.0</span></li>
-                            <li>Test <span className="pl-16">24.0</span></li>
-                            <li>Test <span className="pl-16">24.0</span></li>
-                            <li>Test <span className="pl-16">24.0</span></li>
-                        </ol> */}
-                        <table className="w-full text-left">
-                          <thead className="border-t border-b">
-                            <tr>
-                              <th className="text-sm text-gray-800 pl-5">MVP Points</th>
-                              <th className="text-sm text-gray-800 pl-5">PTS</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                          {toppoints.map((item) => (
-                            <tr className="even:bg-gray-100">
-                              <td className="text-sm pl-5 py-2">Test</td>
-                              <td className="text-sm pl-5 py-2">Test</td>
-                            </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                    </div>
+            </div>
+            <div className="bg-white">
+                <p className="text-blue-600 font-display pl-8 py-2">STEALS</p>
+                <hr/>
+                <div className="flex flex-col -space-y-[12px]">
+                    {topsteals.map((item, index) => (
+                        <div className="flex items-center justify-between py-2">
+                        <div className="flex items-center">
+                            <p className={`text-sm pl-10 ${index === 0 ? 'font-bold' : ''}`}>{index + 1}.</p>
+                            <Link to={`/stats/${item.PlayerId}`}>
+                            <p className={`text-sm pl-2 ${index === 0 ? 'font-bold' : ''}`}>{PlayersName[item.PlayerId]}</p>
+                            </Link>
+                        </div>
+                        <p className={`text-sm pr-10 ${index === 0 ? 'font-bold' : ''}`}>{(item.Steals)}</p>
+                        </div>
+                    ))}
                 </div>
-                </div>)}
+            </div>
+            <div className="bg-white">
+                <p className="text-blue-600 font-display pl-8 py-2">BLOCKS</p>
+                <hr/>
+                <div className="flex flex-col -space-y-[12px]">
+                    {topblocks.map((item, index) => (
+                        <div className="flex items-center justify-between py-2">
+                        <div className="flex items-center">
+                            <p className={`text-sm pl-10 ${index === 0 ? 'font-bold' : ''}`}>{index + 1}.</p>
+                            <Link to={`/stats/${item.PlayerId}`}>
+                            <p className={`text-sm pl-2 ${index === 0 ? 'font-bold' : ''}`}>{PlayersName[item.PlayerId]}</p>
+                            </Link>
+                        </div>
+                        <p className={`text-sm pr-10 ${index === 0 ? 'font-bold' : ''}`}>{(item.Blocks)}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>)}
         </div>
+    </div>
+        
     </div>
   );
 }

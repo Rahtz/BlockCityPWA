@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "./client";
+import { Link } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 
 function Stats() {
@@ -53,9 +54,40 @@ function Stats() {
 
   return (
     <div className="lg:grid grid-cols-4 divide-x mt-2">
+    <div className="flex items-center justify-center space-x-[20px] bg-white h-[50px]">
+            <div>
+                <p className="font-display">STATS</p>
+            </div>
+            <div className="border border-black h-[25px]"></div>
+            <div>
+                <Link to={`/stat/`}>
+                    <p>Leaders</p>
+                </Link>
+            </div>
+            <div>
+            <Link to={`/records/`}>
+                <p>Records</p>
+                </Link>
+            </div>
+            <div>
+            <Link to={`/totalstats/`}>
+                <p>Totals</p>
+                </Link>
+            </div>
+            <div>
+            <Link to={`/averagestats/`}>
+                <p>Averages</p>
+                </Link>
+            </div>
+        </div>
+        <div className="mt-6 bg-white">
+                <h1 className="pl-6 font-display text-xl">CLUB Totals</h1>
+                <hr/>
+            </div>
         <div className="overflow-x-auto relative shadow-md sm:rounded-lg w-full col-span-3">
         {
       loading ?(
+        
         <div className="grid h-screen place-items-center">
       <ClipLoader size={30} color={"#F37A24"} loading={loading} className="mb-24"/>
         </div>

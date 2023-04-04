@@ -27,7 +27,55 @@ const Home = () => {
         
       </div>
 
-      <div className="relative top-16 mx-5 h-auto py-2 border bg-white rounded-lg drop-shadow-lg">
+
+      <div className="mt-10">
+      <table className="w-full relative text-sm bg-white border-collapse">
+  <thead>
+    <tr>
+      <th className="sticky left-0 z-5 border">TEAM</th>
+      <th className="border">W</th>
+      <th className="border">L</th>
+      <th className="border">WIN%</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td className="border">Block City</td>
+      <td className="border">10</td>
+      <td className="border">5</td>
+      <td className="border">{(10/15).toFixed(3)}</td>
+    </tr>
+    <tr>
+      <td className="border">The Jokers</td>
+      <td className="border">8</td>
+      <td className="border">7</td>
+      <td className="border">{(8/15).toFixed(3)}</td>
+    </tr>
+    <tr>
+      <td className="border">PNBHS</td>
+      <td className="border">7</td>
+      <td className="border">8</td>
+      <td className="border">{(7/15).toFixed(3)}</td>
+    </tr>
+    <tr>
+      <td className="border">High Flyers</td>
+      <td className="border">3</td>
+      <td className="border">12</td>
+      <td className="border">{(3/15).toFixed(3)}</td>
+    </tr>
+    <tr>
+      <td className="border">Manukura</td>
+      <td className="border">2</td>
+      <td className="border">13</td>
+      <td className="border">{(2/15).toFixed(3)}</td>
+    </tr>
+  </tbody>
+</table>
+      </div>
+
+
+
+      {/* <div className="relative top-16 mx-5 h-auto py-2 border bg-white rounded-lg drop-shadow-lg">
       <h1 className="text-[30px] text-center py-2">Points Table</h1>
         <table className="w-4/5 mx-10">
           <thead className="bg-red-500 w-full">
@@ -85,7 +133,7 @@ const Home = () => {
             </tr>
           </tbody>
         </table>
-      </div>
+      </div> */}
 
       {/* <div className="relative top-20 mx-5 h-screen py-5 text-center border bg-gray-700 rounded-lg drop-shadow-lg">
         <div className="py-12">
@@ -114,9 +162,9 @@ const Home = () => {
         </div>
       </div> */}
 
-      <div className="relative top-24 mx-5 h-screen py-5 border bg-white rounded-lg drop-shadow-lg">
+      {/* <div className="relative top-24 mx-5 h-screen py-5 border bg-white rounded-lg drop-shadow-lg">
       
-      </div>
+      </div> */}
     </div>
   );
 };

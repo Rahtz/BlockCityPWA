@@ -64,18 +64,6 @@ const Navbar = () => {
                               <Link to="/stat">Stats</Link>
                             </li>
                             <li className="text-white hover:text-blue-600" onClick={() => setNavbar(!navbar)}>
-                              <Link to="/totalstats">Total Stats</Link>
-                            </li>
-                            <li className="text-white hover:text-blue-600" onClick={() => setNavbar(!navbar)}>
-                              <Link to="/averagestats">Average Stats</Link>
-                            </li>
-                            <li className="text-white hover:text-blue-600" onClick={() => setNavbar(!navbar)}>
-                              <Link to="/seasonleaders">Season Leaders</Link>
-                            </li>
-                            <li className="text-white hover:text-blue-600" onClick={() => setNavbar(!navbar)}>
-                              <Link to="/records">Records</Link>
-                            </li>
-                            <li className="text-white hover:text-blue-600" onClick={() => setNavbar(!navbar)}>
                               <Link to="/players">Players</Link>
                             </li>
                             <li className="text-white hover:text-blue-600" onClick={() => setNavbar(!navbar)}>
