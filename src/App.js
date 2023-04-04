@@ -10,6 +10,7 @@ import SeasonLeaders from './SeasonLeaders';
 import Records from './Records';
 import Home from './Home';
 import Message from './Message';
+import Stat from './Stat';
 import NotFound from './NotFound';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/stats/:id" element={<PlayerProfile />}/>
           <Route path="/seasonleaders" element={<SeasonLeaders />}/>
           <Route path="/records" element={<Records />}/>
+          <Route path="/stat" element={<Stat />}/>
           <Route path="*" element={<NotFound />} />            
         </Routes>
         </div>

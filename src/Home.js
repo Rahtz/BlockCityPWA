@@ -9,92 +9,22 @@ import WeekGames from './WeekGames';
 const Home = () => {
   return (
     <div className="-mt-5 bg-gray-200 h-screen">
-      <div className="flex container relative top-10 w-screen h-[200px] overflow-x-auto scrollbar-hide pt-12">
-      <div id="Week 1" className="-mt-11">
-          <div className="bg-white w-[80px] h-[30px] pl-[12px] pt-[3px] ml-[35px] mb-[20px] rounded shadow-lg">
-            <h1 className="">Week 1</h1>
-          </div>
-          <div className="w-[112px] h-[150px] ml-[30px] -mt-[5px] bg-gray-800 rounded-lg">
-            <WeekGames 
-              team1 = "High Flyers"
+      <div className="flex container relative top-5 w-screen h-[80px] overflow-x-auto scrollbar-hide border border-gray-500">
+      
+      <div className="w-[120px] border border-gray-500">
+
+      </div>
+
+      <WeekGames 
+              team1 = "HF"
               team1Icon = {Highflyers}
               team1Score = "90"
-              team2 = "The Pirates"
+              team2 = "P"
               team2Icon = {Pirates}
               team2Score = "70"
             />
-          </div>
-          <div className="w-[112px] h-[150px] ml-[172px] -mt-[150px] bg-gray-800 rounded-lg">
-          <WeekGames 
-              team1 = "The Jokers"
-              team1Icon = {Jokers}
-              team1Score = "80"
-              team2 = "Block City"
-              team2Icon = {Blockcity}
-              team2Score = "74"
-            />
-          </div>
-        </div>
-        <div id="Week 2" className="-mt-11">
-          <div className="bg-white w-[80px] h-[30px] pl-[12px] pt-[3px] ml-[35px] mb-[20px] rounded shadow-lg">
-            <h1 className="">Week 2</h1>
-          </div>
-          <div className="w-[112px] h-[150px] ml-[30px] -mt-[5px] bg-gray-800 rounded-lg">
-            <WeekGames 
-              team1 = "Block City"
-              team1Icon = {Blockcity}
-              team1Score = "108"
-              team2 = "High Flyers"
-              team2Icon = {Highflyers}
-              team2Score = "82"
-            />
-          </div>
-          <div className="w-[112px] h-[150px] ml-[172px] -mt-[150px] bg-gray-800 rounded-lg">
-          <WeekGames 
-              team1 = "The Pirates"
-              team1Icon = {Pirates}
-              team1Score = "49"
-              team2 = "Slow Break"
-              team2Icon = {""}
-              team2Score = "101"
-            />
-          </div>
-        </div>
-        <div id="Week 3" className="-mt-11">
-          <div className="bg-white w-[80px] h-[30px] pl-[12px] pt-[3px] ml-[35px] mb-[20px] rounded shadow-lg">
-            <h1 className="">Week 3</h1>
-          </div>
-          <div className="w-[112px] h-[150px] ml-[30px] -mt-[5px] bg-gray-800 rounded-lg">
-            <WeekGames 
-              team1 = "Block City"
-              team1Icon = {Blockcity}
-              team1Score = "80"
-              team2 = "Slow Break"
-              team2Icon = {""}
-              team2Score = "70"
-            />
-          </div>
-          <div className="w-[112px] h-[150px] ml-[172px] -mt-[150px] bg-gray-800 rounded-lg">
-          <WeekGames 
-              team1 = "The Pirates"
-              team1Icon = {Pirates}
-              team1Score = "45"
-              team2 = "Zayfrogs"
-              team2Icon = {""}
-              team2Score = "51"
-            />
-          </div>
-          <div className="w-[112px] h-[150px] ml-[314px] -mt-[150px] bg-gray-800 rounded-lg">
-          <WeekGames 
-              team1 = "High Flyers"
-              team1Icon = {Highflyers}
-              team1Score = "78"
-              team2 = "Manukura"
-              team2Icon = {""}
-              team2Score = "91"
-            />
-          </div>
-        </div>
+        
+        
       </div>
 
       <div className="relative top-16 mx-5 h-auto py-2 border bg-white rounded-lg drop-shadow-lg">
@@ -157,7 +87,7 @@ const Home = () => {
         </table>
       </div>
 
-      <div className="relative top-20 mx-5 h-screen py-5 text-center border bg-gray-700 rounded-lg drop-shadow-lg">
+      {/* <div className="relative top-20 mx-5 h-screen py-5 text-center border bg-gray-700 rounded-lg drop-shadow-lg">
         <div className="py-12">
           <span className="text-white text-[45px]">
             <CountUp end={5} duration={2.5} redraw={true}/>
@@ -165,7 +95,6 @@ const Home = () => {
           <h1 className="text-gray-400">Seasons</h1>
         </div>
         <div className="py-12">
-        {/* <span className="text-white"><BsFillPersonFill /></span> */}
           <span className="text-white text-[45px]">
             <CountUp end={3} duration={2.5} />
           </span>
@@ -183,7 +112,7 @@ const Home = () => {
           </span>
           <h1 className="text-gray-400">Sponsors</h1>
         </div>
-      </div>
+      </div> */}
 
       <div className="relative top-24 mx-5 h-screen py-5 border bg-white rounded-lg drop-shadow-lg">
       

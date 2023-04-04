@@ -2,28 +2,27 @@ import React from "react";
 
 const WeekGames = (props) => {
   return (
-    <div className="text-center pt-2">
-      <div className="flex justify-center">
-        <img
-          className="w-[65px] h-[45px]"
-          src={props.team1Icon}
-          alt="BC"
-        />
-      </div>
+    <div className="flex items-center justify-center border border-gray-500 bg-white">
+      <div className="w-[120px] text-center">
+          
 
-      <div className="text-white text-[12px]">
-        {props.team1} {props.team1Score}
-      </div>
-      <div className="flex justify-center">
+        <div className="text-[12px] flex">
         <img
-          className="w-[65px] h-[45px]"
-          src={props.team2Icon}
-          alt="HF"
-        />
-      </div>
+            className="w-[25px] h-[25px]"
+            src={props.team1Icon}
+            alt="BC"
+          />
+          <p>{props.team1} {props.team1Score}</p>
+        </div>          
 
-      <div className="text-white text-[12px]">
-        {props.team2} {props.team2Score}
+        <div className="text-[12px] flex">
+        <img
+            className="w-[25px] h-[25px]"
+            src={props.team2Icon}
+            alt="HF"
+          />
+          <p>{props.team2} {props.team2Score}</p>
+        </div>
       </div>
     </div>
   );
