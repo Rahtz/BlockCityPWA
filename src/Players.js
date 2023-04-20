@@ -89,6 +89,7 @@ function Players() {
       team_id: "",
     });
     fetchPlayers();
+    setShowCreate(false)
   }
 
   async function deletePlayer(id) {
