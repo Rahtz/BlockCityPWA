@@ -23,6 +23,7 @@ function Stats() {
     //eslint-disable-next-line
     // fetchTotalStats();
   }, []);
+  
 
   async function fetchStatsById() {
     const { data } = await supabase
@@ -46,6 +47,15 @@ function Stats() {
   async function fetchTeams() {
     const { data } = await supabase.from("teams").select();
     setTeams(data);
+  }
+
+  function getTeamName(playerId) {
+    const player = players.find((player) => player.id === playerId);
+    if (!player) {
+      return "Unknown Player";
+    }
+    const team = teams.find((team) => team.id === player.team_id);
+    return team ? team.TeamName : "Unknown Team";
   }
 
   var PlayersName = players.reduce(function (result, currentObject) {
@@ -216,8 +226,8 @@ function Stats() {
               <p>{PlayersBirthdate[params.id]}</p>
             </div>
             <div className="text-white text-center flex flex-col justify-center pt-[10px]">
-              <p className="text-xs">Country</p>
-              <p>New Zealand</p>
+              <p className="text-xs">Team</p>
+              <p>{getTeamName(parseInt(params.id))}</p>
             </div>
           </div>
         </div>

@@ -1,4 +1,3 @@
-import React from 'react';
 import Navbar from './Navbar';
 import Players from './Players';
 import Stats from './Stats';
@@ -14,6 +13,8 @@ import NotFound from './NotFound';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
+
+
   return (
     <Router>
       <div className="App">

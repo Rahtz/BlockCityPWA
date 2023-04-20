@@ -15,8 +15,8 @@ function Records() {
   const [topassists, setTopAssists] = useState([]);
   const [topsteals, setTopSteals] = useState([]);
   const [topblocks, setTopBlocks] = useState([]);
-  const [toptpm, setTopTpm] = useState([]);
-  const [topfgm, setTopFgm] = useState([]); 
+  // const [toptpm, setTopTpm] = useState([]);
+  // const [topfgm, setTopFgm] = useState([]); 
 
   
 
@@ -30,8 +30,8 @@ function Records() {
     getTopAssists();
     getTopSteals();
     getTopBlocks();
-    getTopTPM();
-    getTopFGM();
+    // getTopTPM();
+    // getTopFGM();
     setLoading(true);
     setTimeout(() => {
       setLoading(false)
@@ -76,15 +76,15 @@ function Records() {
     setTopBlocks(data);
   }
 
-  async function getTopTPM(){
-    const { data } = await supabase.rpc('gettoptpm');
-    setTopTpm(data);
-  }
+  // async function getTopTPM(){
+  //   const { data } = await supabase.rpc('gettoptpm');
+  //   setTopTpm(data);
+  // }
 
-  async function getTopFGM() {
-    const { data } = await supabase.rpc("gettopfgm").select();
-    setTopFgm(data);
-  }
+  // async function getTopFGM() {
+  //   const { data } = await supabase.rpc("gettopfgm").select();
+  //   setTopFgm(data);
+  // }
 
   async function fetchPlayers() {
     const { data } = await supabase.from("players").select();

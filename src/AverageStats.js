@@ -81,8 +81,6 @@ function Stats() {
     result[currentObject.id] = currentObject.TeamName;
     return result;
   }, {});
-
-  
   
 
   return (
