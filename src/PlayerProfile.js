@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { differenceInYears } from "date-fns";
 import { supabase } from "./client";
 import { useParams } from "react-router-dom";
 import Blockcity from "./images/Blockcity.png";
@@ -12,6 +13,7 @@ function Stats() {
   const [players, setPlayers] = useState([]);
   const [teams, setTeams] = useState([]);
   const [stats, setStats] = useState([]);
+  const [selectedYear, setSelectedYear] = useState(null);
   // const [totalstats, setTotalStats] = useState([]);
   const params = useParams();
 
@@ -23,7 +25,6 @@ function Stats() {
     //eslint-disable-next-line
     // fetchTotalStats();
   }, []);
-  
 
   async function fetchStatsById() {
     const { data } = await supabase
@@ -31,6 +32,7 @@ function Stats() {
       .select()
       .eq("PlayerId", params.id);
     setStats(data);
+    console.log(data);
   }
 
   // async function fetchTotalStats() {
@@ -122,13 +124,15 @@ function Stats() {
   let averageSeasonSteals = 0;
   // let averageSeasonBlocks = 0;
 
+  const latestYear = Math.max(...stats.map(item => item.Season));
+
   stats.forEach((item) => {
     points += item.Points;
     rebounds += item.Rebounds;
     assists += item.Assists;
     steals += item.Steals;
     blocks += item.Blocks;
-    if (item.Season === 2022) {
+    if (item.Season === latestYear) {
       seasonPoints += item.Points;
       seasonRebounds += item.Rebounds;
       seasonAssists += item.Assists;
@@ -142,6 +146,65 @@ function Stats() {
     averageSeasonSteals = seasonSteals / seasonGames;
     // averageSeasonBlocks = seasonBlocks / seasonGames;
   });
+
+  const playerBirthdate = PlayersBirthdate[params.id];
+  const playerAge =
+    differenceInYears(new Date(playerBirthdate), new Date()) * -1;
+
+  const years = [
+    ...new Set(stats.map((item) => parseInt(item.YourDate.substring(0, 4)))),
+  ].sort((a, b) => a - b);
+
+
+  
+    let maxAssists = -Infinity;
+    let maxBlocks = -Infinity;
+    let maxFGAttempted = -Infinity;
+    let maxFGMade = -Infinity;
+    let maxFTAttempted = -Infinity;
+    let maxFTMade = -Infinity;
+    let maxPoints = -Infinity;
+    let maxRebounds = -Infinity;
+    let maxSteals = -Infinity;
+    let maxThreeAttempted = -Infinity;
+    let maxThreeMade = -Infinity;
+    
+    stats.forEach(stat => {
+      if (stat.Assists > maxAssists) {
+        maxAssists = stat.Assists;
+      }
+      if (stat.Blocks > maxBlocks) {
+        maxBlocks = stat.Blocks;
+      }
+      if (stat.FeildGoalsAttempted > maxFGAttempted) {
+        maxFGAttempted = stat.FeildGoalsAttempted;
+      }
+      if (stat.FeildGoalsMade > maxFGMade) {
+        maxFGMade = stat.FeildGoalsMade;
+      }
+      if (stat.FreeThrowsAttempted > maxFTAttempted) {
+        maxFTAttempted = stat.FreeThrowsAttempted;
+      }
+      if (stat.FreeThrowsMade > maxFTMade) {
+        maxFTMade = stat.FreeThrowsMade;
+      }
+      if (stat.Points > maxPoints) {
+        maxPoints = stat.Points;
+      }
+      if (stat.Rebounds > maxRebounds) {
+        maxRebounds = stat.Rebounds;
+      }
+      if (stat.Steals > maxSteals) {
+        maxSteals = stat.Steals;
+      }
+      if (stat.ThreePointersAttempted > maxThreeAttempted) {
+        maxThreeAttempted = stat.ThreePointersAttempted;
+      }
+      if (stat.ThreePointersMade > maxThreeMade) {
+        maxThreeMade = stat.ThreePointersMade;
+      }
+    });
+
 
   return (
     <div>
@@ -166,7 +229,7 @@ function Stats() {
             </div>
           </div>
         </div>
-        <div className="w-full h-16 bg-gray-800 border">
+        <div className="w-full h-18 bg-gray-800 border">
           <div className="flex justify-center space-x-[15px] py-[1px] min-w-2/5">
             <div className="pt-[10px] flex flex-col justify-center text-center">
               <p className="font-sans font-normal text-xs leading-tight text-white">
@@ -202,32 +265,74 @@ function Stats() {
               <p className="uppercase font-display font-normal text-lg leading-none text-white">
                 {averageSeasonSteals.toFixed(1)}
               </p>
+            </div>            
+          </div>
+          <div className="flex justify-center text-white">
+            <h4 className="text-sm">{latestYear} Season Averages</h4>
+          </div>
+        </div>
+        <div className="w-full h-18 bg-gray-800 border">
+          <div className="flex justify-center space-x-[15px] py-[1px] min-w-2/5">
+            <div className="pt-[10px] flex flex-col justify-center text-center">
+              <p className="font-sans font-normal text-xs leading-tight text-white">
+                PTS
+              </p>
+              <p className="uppercase font-display font-normal text-lg leading-none text-white">
+                {maxPoints}
+              </p>
             </div>
+            <div className="border border-white mt-[10px] "></div>
+            <div className="pt-[10px] flex flex-col justify-center text-center">
+              <p className="font-sans font-normal text-xs leading-tight text-white">
+                RBD
+              </p>
+              <p className="uppercase font-display font-normal text-lg leading-none text-white">
+                {maxRebounds}
+              </p>
+            </div>
+            <div className="border border-white mt-[10px] "></div>
+            <div className="pt-[10px] flex flex-col justify-center text-center">
+              <p className="font-sans font-normal text-xs leading-tight text-white">
+                AST
+              </p>
+              <p className="uppercase font-display font-normal text-lg leading-none text-white">
+                {maxAssists}
+              </p>
+            </div>
+            <div className="border border-white mt-[10px] "></div>
+            <div className="pt-[10px] flex flex-col justify-center text-center">
+              <p className="font-sans font-normal text-xs leading-tight text-white">
+                STL
+              </p>
+              <p className="uppercase font-display font-normal text-lg leading-none text-white">
+                {maxSteals}
+              </p>
+            </div>  
+            <div className="border border-white mt-[10px] "></div>
+            <div className="pt-[10px] flex flex-col justify-center text-center">
+              <p className="font-sans font-normal text-xs leading-tight text-white">
+                BLK
+              </p>
+              <p className="uppercase font-display font-normal text-lg leading-none text-white">
+                {maxBlocks}
+              </p>
+            </div>          
+          </div>
+          <div className="flex justify-center text-white">
+            <h4 className="text-sm">Player Single Game Records</h4>
           </div>
         </div>
         <div className="w-full h-16 bg-gray-800 border">
           <div className="flex justify-center space-x-[100px] py-[1px] min-w-2/5">
-            <div className="text-white text-center flex flex-col justify-center text-sm pt-[15px]">
-              <p>
+            <div className="text-white text-center flex flex-col justify-center pt-[10px]">
+            <p>
                 {PlayersHeightFeet[params.id]}'{PlayersHeightInches[params.id]}"
-                | {PlayersWeight[params.id]}kg | 25 years
+                | {PlayersWeight[params.id]}kg | {playerAge} years
               </p>
             </div>
             <div className="text-white text-center flex flex-col justify-center pt-[10px]">
-              <p className="text-xs">DRAFT</p>
-              <p>2013 R1 Pick 12</p>
-            </div>
-          </div>
-        </div>
-        <div className="w-full h-16 bg-gray-800 border">
-          <div className="flex justify-center space-x-[100px] py-[1px] min-w-2/5">
-            <div className="text-white text-center flex flex-col justify-center pt-[10px]">
-              <p className="text-xs">BIRTHDATE</p>
+            <p className="text-xs">BIRTHDATE</p>
               <p>{PlayersBirthdate[params.id]}</p>
-            </div>
-            <div className="text-white text-center flex flex-col justify-center pt-[10px]">
-              <p className="text-xs">Team</p>
-              <p>{getTeamName(parseInt(params.id))}</p>
             </div>
           </div>
         </div>
@@ -238,8 +343,8 @@ function Stats() {
               <p>{PlayersHighSchool[params.id]}</p>
             </div>
             <div className="text-white text-center flex flex-col justify-center pt-[10px]">
-              <p className="text-xs">Club Experience</p>
-              <p>4 Seasons</p>
+            <p className="text-xs">Team</p>
+              <p>{getTeamName(parseInt(params.id))}</p>
             </div>
           </div>
         </div>
@@ -287,6 +392,17 @@ function Stats() {
             <div className="relative p-3 mt-2 bg-white border rounded-t-lg whitespace-nowrap">
               <div className={openTab === 1 ? "block" : "hidden"}>
                 {" "}
+                <select
+                  value={selectedYear || years[years.length - 1]} // Set default value to highest year
+                  onChange={(e) => setSelectedYear(e.target.value)}
+                  className="border border-gray-500 rounded-xl p-1 mb-3"
+                >
+                  {years.map((year) => (
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
+                  ))}
+                </select>
                 <table className=" relative text-center border-t overflow-x-auto overflow-y-hidden whitespace-nowrap">
                   <thead className="border-b bg-white">
                     <tr>
@@ -371,50 +487,80 @@ function Stats() {
                     </tr>
                   </thead>
                   <tbody>
-                    {stats.map((stat) => (
-                      <tr key={stat.id} className="bg-white border-b">
-                        <td className="px-6 py-2 whitespace-nowrap text-xs font-medium text-gray-900 border-r">
-                          <span>{TeamsName[stat.TeamId]}</span>
-                          {/* <img className="w-3" src = {Blockcity} alt="BC" /> */}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {stat.YourDate}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {stat.Points}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {stat.Rebounds}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {stat.Assists}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {stat.Steals}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {stat.Blocks}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {stat.FeildGoalsAttempted}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {stat.FeildGoalsMade}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {stat.ThreePointersAttempted}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {stat.ThreePointersMade}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {stat.FreeThrowsAttempted}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {stat.FreeThrowsMade}
-                        </td>
-                      </tr>
-                    ))}
+                    {stats
+                      .sort(
+                        (a, b) => new Date(b.YourDate) - new Date(a.YourDate)
+                      )
+                      .filter((item) => {
+                        const currentYear = new Date().getFullYear();
+                        const latestYear = new Date(
+                          stats[0].YourDate
+                        ).getFullYear();
+                        if (selectedYear) {
+                          const selectedYearStart = new Date(
+                            `${selectedYear}-01-01`
+                          );
+                          const selectedYearEnd = new Date(
+                            `${selectedYear}-12-31`
+                          );
+                          const itemDate = new Date(item.YourDate);
+                          return (
+                            itemDate >= selectedYearStart &&
+                            itemDate <= selectedYearEnd
+                          );
+                        } else {
+                          const itemYear = new Date(
+                            item.YourDate
+                          ).getFullYear();
+                          return (
+                            itemYear === latestYear || itemYear === currentYear
+                          );
+                        }
+                      })
+                      .map((stat) => (
+                        <tr key={stat.id} className="bg-white border-b">
+                          <td className="px-6 py-2 whitespace-nowrap text-xs font-medium text-gray-900 border-r">
+                            <span>{TeamsName[stat.TeamId]}</span>
+                            {/* <img className="w-3" src = {Blockcity} alt="BC" /> */}
+                          </td>
+                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                            {stat.YourDate}
+                          </td>
+                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                            {stat.Points}
+                          </td>
+                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                            {stat.Rebounds}
+                          </td>
+                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                            {stat.Assists}
+                          </td>
+                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                            {stat.Steals}
+                          </td>
+                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                            {stat.Blocks}
+                          </td>
+                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                            {stat.FeildGoalsAttempted}
+                          </td>
+                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                            {stat.FeildGoalsMade}
+                          </td>
+                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                            {stat.ThreePointersAttempted}
+                          </td>
+                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                            {stat.ThreePointersMade}
+                          </td>
+                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                            {stat.FreeThrowsAttempted}
+                          </td>
+                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                            {stat.FreeThrowsMade}
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
