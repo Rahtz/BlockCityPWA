@@ -99,6 +99,9 @@ function Players() {
   }
 
   async function deletePlayer(id) {
+    const confirmed = window.confirm('Are you sure you want to delete this player?');
+
+    if (confirmed){
     const { data, error } = await supabase
       .from("players")
       .delete()
@@ -113,6 +116,7 @@ function Players() {
 
     fetchPlayers();
   }
+}
 
   function getTeamName(playerId) {
     const player = players.find((player) => player.id === playerId);
@@ -438,11 +442,12 @@ function Players() {
                 }
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               >
-                {teams.map((team) => (
-                  <option key={team.id} value={team.id}>
-                    {team.TeamName}
-                  </option>
-                ))}
+                <option value="">--Select a team--</option>
+                  {teams.map((team) => (
+                    <option key={team.id} value={team.id}>
+                      {team.TeamName}
+                    </option>
+                  ))}
               </select>
             </div>
             <label className="flex flex-col">
