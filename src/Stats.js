@@ -11,6 +11,7 @@ function Stats() {
   const [stats, setStats] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(15);
+  const [searchTerm, setSearchTerm] = useState('');
   const [stat, setStat] = useState({
     YourDate: "",
     PlayerId: "",
@@ -144,6 +145,18 @@ function Stats() {
   const firstPostIndex = lastPostIndex - postsPerPage;
   const currentPosts = stats.slice(firstPostIndex, lastPostIndex);
 
+  const filteredPlayers = players.filter(player =>
+    player.PlayerName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const sortedPlayers = filteredPlayers.sort((a, b) =>
+    a.PlayerName.localeCompare(b.PlayerName)
+  );
+
+  const handleInputChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
 
 
   return (
@@ -172,15 +185,27 @@ function Stats() {
         </div>
           {/* <input type="number" placeholder="PlayerId" value={PlayerId} onChange={e => setStat({ ...stat, PlayerId: e.target.value})} /> */}
           <select
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-3 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            value={PlayerId}
-            onChange={(e) => setStat({ ...stat, PlayerId: e.target.value })}
-          >
-            <option></option>
-            {players.map((player) => (
-              <option value={player.id}>{player.PlayerName}</option>
-            ))}
-          </select>
+      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-3 mx-5 w-3/4 relative dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      value={stat.PlayerId}
+      onChange={(e) => setStat({ ...stat, PlayerId: e.target.value })}
+    >
+      <option></option>
+      <div className="absolute top-0 left-0 right-0">
+        <input
+          type="text"
+          placeholder="Search players"
+          value={searchTerm}
+          onChange={handleInputChange}
+          className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        />
+      </div>
+      {sortedPlayers.map((player) => (
+        <option key={player.id} value={player.id}>
+          {player.PlayerName}
+        </option>
+      ))}
+    </select>
+
           {/* <input type="number" placeholder="TeamId" value={TeamId} onChange={e => setStat({ ...stat, TeamId: e.target.value})} /> */}
           <select
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-3 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
