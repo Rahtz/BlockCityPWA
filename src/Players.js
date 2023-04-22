@@ -182,13 +182,16 @@ function Players() {
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="py-3 px-6">
+            <th scope="col" className="py-3 px-2">
+                Club Number
+              </th>
+              <th scope="col" className="py-3 px-2">
                 Player Name
               </th>
-              <th scope="col" className="py-3 px-6">
+              <th scope="col" className="py-3 px-2">
                 Team
               </th>
-              <th scope="col" className="hidden lg:block py-3 px-6">
+              <th scope="col" className="py-3 px-2">
                 Options
               </th>
             </tr>
@@ -201,15 +204,21 @@ function Players() {
                   key={player.id}
                   className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 text-xs"
                 >
+                <th
+                    scope="row"
+                    className="py-4 px-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    {player.clubNumber}
+                  </th>
                   <th
                     scope="row"
-                    className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    className="py-4 px-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
                     <Link to={`/stats/${player.id}`}>{player.PlayerName}</Link>
                   </th>
                   <th
                     scope="row"
-                    className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    className="py-4 px-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
                     {getTeamName(player.id)}
                   </th>
