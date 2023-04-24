@@ -5,14 +5,17 @@ import { Link } from "react-router-dom";
 function Players() {
   const [teams, setTeams] = useState([]);
   const [players, setPlayers] = useState([]);
+  const [sexs, setSexs] = useState([]);
   const [data, setData] = useState([]);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [showCreate, setShowCreate] = useState(false);
   const [searchText, setSearchText] = useState("");
+  const [activeTab, setActiveTab] = useState("all");
   const [updatedPlayer, setUpdatedPlayer] = useState({
     PlayerName: "",
     team_id: "",
+    sex_id: "",
     birthdate: "",
     position: "",
     number: "",
@@ -33,6 +36,7 @@ function Players() {
     heightFeet: "",
     heightInches: "",
     team_id: "",
+    sex_id: "",
     clubNumber: "",
   });
   const {
@@ -45,12 +49,14 @@ function Players() {
     heightFeet,
     heightInches,
     team_id,
+    sex_id,
     clubNumber,
   } = player;
 
   useEffect(() => {
     fetchPlayers();
     fetchTeams();
+    fetchSexs() ;
   }, []);
 
   async function fetchTeams() {
@@ -62,6 +68,12 @@ function Players() {
   async function fetchPlayers() {
     const { data } = await supabase.from("players").select();
     setPlayers(data);
+    console.log(data);
+  }
+
+  async function fetchSexs() {
+    const { data } = await supabase.from("Sex").select();
+    setSexs(data);
   }
 
   async function createPlayer() {
@@ -78,6 +90,7 @@ function Players() {
           heightFeet,
           heightInches,
           team_id,
+          sex_id,
           clubNumber,
         },
       ])
@@ -92,6 +105,7 @@ function Players() {
       heightFeet: "",
       heightInches: "",
       team_id: "",
+      sex_id: "",
       clubNumber: "",
     });
     fetchPlayers();
@@ -159,11 +173,26 @@ function Players() {
     setShowModal(true);
   };
 
-  const filteredPlayers = players.filter((player) =>
-    player.PlayerName.toLowerCase().includes(searchText.toLowerCase())
-  );
+  const filteredPlayers = players.filter((player) => {
+    const isNameMatched = player.PlayerName.toLowerCase().includes(searchText.toLowerCase());
+    const isMale = player.sex_id === 1;
+    const isFemale = player.sex_id === 2;
+    const isOther = !player.sex_id;
+  
+    if (activeTab === "male") {
+      return isNameMatched && isMale;
+    } else if (activeTab === "female") {
+      return isNameMatched && isFemale;
+    } else if (activeTab === "other") {
+      return isNameMatched && isOther;
+    } else {
+      return isNameMatched;
+    }
+  });
 
-
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
 
   return (
     <div className="lg:grid divide-x mt-1">
@@ -174,6 +203,7 @@ function Players() {
         >
           Create Player
         </button>
+        <div className="flex">
         <input
           type="text"
           placeholder="Search players"
@@ -181,6 +211,31 @@ function Players() {
           onChange={(e) => setSearchText(e.target.value)}
           className="w-5/6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 md:w-auto md:ml-5"
         />
+        <button
+          className={`${
+            activeTab === "all" ? "bg-gray-900 text-white" : "bg-gray-200"
+          } py-2 px-4 font-semibold rounded-l-lg`}
+          onClick={() => handleTabClick("all")}
+        >
+          All
+        </button>
+        <button
+          className={`${
+            activeTab === "male" ? "bg-gray-900 text-white" : "bg-gray-200"
+          } py-2 px-4 font-semibold`}
+          onClick={() => handleTabClick("male")}
+        >
+          Mens
+        </button>
+        <button
+          className={`${
+            activeTab === "female" ? "bg-gray-900 text-white" : "bg-gray-200"
+          } py-2 px-4 font-semibold rounded-r-lg`}
+          onClick={() => handleTabClick("female")}
+        >
+          Womens
+        </button>
+        </div>
       </div>
       <div className="overflow-x-auto relative shadow-md sm:rounded-lg w-full col-span-7">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -202,7 +257,7 @@ function Players() {
           </thead>
           <tbody>
             {filteredPlayers
-              .sort((a, b) => a.PlayerName.localeCompare(b.PlayerName))
+              .sort((a, b) => a.clubNumber - b.clubNumber)
               .map((player) => (
                 <tr
                   key={player.id}
@@ -220,11 +275,17 @@ function Players() {
                   >
                     <Link to={`/stats/${player.id}`}>{player.PlayerName}</Link>
                   </th>
-                  <th
+                  {/* <th
                     scope="row"
                     className="py-4 px-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
                     {getTeamName(player.id)}
+                  </th> */}
+                  <th
+                    scope="row"
+                    className="py-4 px-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    {player.sex_id}
                   </th>
                   <td className="py-4 px-6">
                     <button
@@ -377,6 +438,26 @@ function Players() {
               />
             </label>
             </div>
+            <div className="flex">
+            <div className="flex flex-col">
+              <h3>Team:</h3>
+              <form
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5  w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onChange={(e) =>
+                  setPlayer({ ...player, sex_id: e.target.value })
+                }
+              >
+                <select name="sex_id">
+                  <option value="">--Select a team--</option>
+                  {sexs.map((team) => (
+                    <option key={team.id} value={team.id}>
+                      {team.Sex}
+                    </option>
+                  ))}
+                </select>
+              </form>
+            </div>
+            </div>
             <div className="flex justify-center">
               <button
                 className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-[120px] sm:w-auto px-5 py-2.5 mb-1 mx-5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
@@ -431,7 +512,7 @@ function Players() {
             </div>
             <div className="flex">
             <div className="flex flex-col">
-              <h3>Team:</h3>
+              <h3>Sex:</h3>
               <select
                 value={updatedPlayer.team_id}
                 onChange={(e) =>
@@ -442,7 +523,7 @@ function Players() {
                 }
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               >
-                <option value="">--Select a team--</option>
+                <option value="">--Select a sex--</option>
                   {teams.map((team) => (
                     <option key={team.id} value={team.id}>
                       {team.TeamName}
@@ -548,6 +629,28 @@ function Players() {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
             </label>
+            </div>
+            <div className="flex">
+            <div className="flex flex-col">
+              <h3>Sex:</h3>
+              <select
+                value={updatedPlayer.sex_id}
+                onChange={(e) =>
+                  setUpdatedPlayer({
+                    ...updatedPlayer,
+                    sex_id: e.target.value,
+                  })
+                }
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              >
+                <option value="">--Select a sex--</option>
+                  {sexs.map((team) => (
+                    <option key={team.id} value={team.id}>
+                      {team.Sex}
+                    </option>
+                  ))}
+              </select>
+            </div>
             </div>
             <div className="flex justify-center">
               <button
