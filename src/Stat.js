@@ -13,7 +13,7 @@ const Stat = () => {
 
   useEffect(() => {
     fetchPlayers();
-        fetchAverageStats();
+    fetchAverageStats();
     setLoading(true);
     setTimeout(() => {
       setLoading(false)
@@ -26,6 +26,8 @@ const Stat = () => {
     setAverageStats(data);
     
   }
+
+  
 
   async function fetchPlayers() {
     const { data } = await supabase.from("players").select();

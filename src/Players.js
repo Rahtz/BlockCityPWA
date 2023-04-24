@@ -204,13 +204,16 @@ function Players() {
           Create Player
         </button>
         <div className="flex">
+        <div className="ml-2">
         <input
           type="text"
           placeholder="Search players"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
-          className="w-5/6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 md:w-auto md:ml-5"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 md:w-auto md:ml-5"
         />
+        </div>
+        <div className="flex mx-2">
         <button
           className={`${
             activeTab === "all" ? "bg-gray-900 text-white" : "bg-gray-200"
@@ -235,6 +238,7 @@ function Players() {
         >
           Womens
         </button>
+        </div>
         </div>
       </div>
       <div className="overflow-x-auto relative shadow-md sm:rounded-lg w-full col-span-7">
@@ -275,17 +279,11 @@ function Players() {
                   >
                     <Link to={`/stats/${player.id}`}>{player.PlayerName}</Link>
                   </th>
-                  {/* <th
-                    scope="row"
-                    className="py-4 px-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    {getTeamName(player.id)}
-                  </th> */}
                   <th
                     scope="row"
                     className="py-4 px-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {player.sex_id}
+                    {getTeamName(player.id)}
                   </th>
                   <td className="py-4 px-6">
                     <button
