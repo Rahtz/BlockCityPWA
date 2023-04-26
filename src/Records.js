@@ -7,16 +7,8 @@ import ClipLoader from "react-spinners/ClipLoader";
 function Records() {
   const [loading, setLoading] = useState(false);
     const [players, setPlayers] = useState([]);
-  // const [teams, setTeams] = useState([]);
-  // const [stats, setStats] = useState([]);
-  // const [totalstats, setTotalStats] = useState([]);
-  const [toppoints, setTopPoints] = useState([]);
-  const [toprebounds, setTopRebounds] = useState([]);
-  const [topassists, setTopAssists] = useState([]);
-  const [topsteals, setTopSteals] = useState([]);
-  const [topblocks, setTopBlocks] = useState([]);
-  // const [toptpm, setTopTpm] = useState([]);
-  // const [topfgm, setTopFgm] = useState([]); 
+  const [stats, setStats] = useState([]);
+  const [showMen, setShowMen] = useState(true);
 
   
 
@@ -24,12 +16,7 @@ function Records() {
     fetchPlayers();
     // fetchTeams();
     // fetchTotalStats()
-    // fetchStats();
-    getTopPoints();
-    getTopRebounds();
-    getTopAssists();
-    getTopSteals();
-    getTopBlocks();
+    fetchStats();
     // getTopTPM();
     // getTopFGM();
     setLoading(true);
@@ -38,74 +25,78 @@ function Records() {
     }, 1000)
   }, []);
 
-  // async function fetchStats() {
-  //   const { data } = await supabase
-  //     .from("stats")
-  //     .select()
-  //   setStats(data);
-  // }
-
-  // async function fetchTotalStats() {
-  //   const { data } = await supabase.rpc('totalstat');
-  //   setTotalStats(data);    
-  // }
-
-  async function getTopPoints(){
-    const { data } = await supabase.rpc('gettoppoints');
-    setTopPoints(data);
-    console.log(data);
+  async function fetchStats() {
+    const { data } = await supabase
+      .from("stats")
+      .select()
+    setStats(data);
   }
-
-  async function getTopRebounds(){
-    const { data } = await supabase.rpc('gettoprebounds');
-    setTopRebounds(data);
-  }
-
-  async function getTopAssists(){
-    const { data } = await supabase.rpc('gettopassists');
-    setTopAssists(data);
-  }
-
-  async function getTopSteals(){
-    const { data } = await supabase.rpc('gettopsteals');
-    setTopSteals(data);
-  }
-
-  async function getTopBlocks(){
-    const { data } = await supabase.rpc('gettopblocks');
-    setTopBlocks(data);
-  }
-
-  // async function getTopTPM(){
-  //   const { data } = await supabase.rpc('gettoptpm');
-  //   setTopTpm(data);
-  // }
-
-  // async function getTopFGM() {
-  //   const { data } = await supabase.rpc("gettopfgm").select();
-  //   setTopFgm(data);
-  // }
-
   async function fetchPlayers() {
     const { data } = await supabase.from("players").select();
     setPlayers(data);
-  }
-
-  // async function fetchTeams() {
-  //   const { data } = await supabase.from("teams").select();
-  //   setTeams(data);
-  // }
+  } 
 
   var PlayersName = players.reduce(function (result, currentObject) {
     result[currentObject.id] = currentObject.PlayerName;
     return result;
   }, {});
 
-  // var TeamsName = teams.reduce(function (result, currentObject) {
-  //   result[currentObject.id] = currentObject.TeamName;
-  //   return result;
-  // }, {});
 
+  function getTop5PlayersByStat(playersArray, stat, sex_id) {
+    // First, filter the players by sex_id
+    const filteredPlayers = playersArray.filter(player => player.sex_id === sex_id);
+  
+    // Then, sort the filtered players by the specified stat in descending order
+    const sortedPlayers = filteredPlayers.sort((a, b) => b[stat] - a[stat]);
+  
+    // Finally, get the top 5 players (if there are at least 5 players)
+    const top5Players = sortedPlayers.slice(0, 5);
+  
+    // Return an array of objects with the playerId and the specified stat
+    return top5Players.map(player => {
+      return {
+        playerId: player.PlayerId,
+        [stat]: player[stat]
+      }
+    });
+  }
+
+    const top5PointsM = getTop5PlayersByStat(stats, "Points", 1);
+    const top5AssistsM = getTop5PlayersByStat(stats, "Assists", 1);
+    const top5ReboundsM = getTop5PlayersByStat(stats, "Rebounds", 1);
+    const top5StealsM = getTop5PlayersByStat(stats, "Steals", 1);
+    const top5BlocksM = getTop5PlayersByStat(stats, "Blocks", 1);
+
+    const top5PointsW = getTop5PlayersByStat(stats, "Points", 2);
+    const top5AssistsW = getTop5PlayersByStat(stats, "Assists", 2);
+    const top5ReboundsW = getTop5PlayersByStat(stats, "Rebounds", 2);
+    const top5StealsW = getTop5PlayersByStat(stats, "Steals", 2);
+    const top5BlocksW = getTop5PlayersByStat(stats, "Blocks", 2);
+
+
+    const handleMenClick = () => {
+        setShowMen(true);
+      };
+    
+      const handleWomenClick = () => {
+        setShowMen(false);
+      };
+    
+      const statsToDisplay = showMen
+        ? {
+            points: top5PointsM,
+            rebounds: top5ReboundsM,
+            assists: top5AssistsM,
+            steals: top5StealsM,
+            blocks: top5BlocksM,
+          }
+        : {
+            points: top5PointsW,
+            rebounds: top5ReboundsW,
+            assists: top5AssistsW,
+            steals: top5StealsW,
+            blocks: top5BlocksW,
+          };
  
   return (
     <div className="h-auto bg-gray-200">
@@ -146,6 +137,24 @@ function Records() {
       )
       :
       (<div>
+        <div className="flex mb-4">
+        <button
+          className={`${
+            showMen ? "bg-gray-900 text-white" : "bg-gray-200"
+          } py-2 px-4 font-semibold rounded-l-lg`}
+          onClick={handleMenClick}
+        >
+          Men's Stats
+        </button>
+        <button
+          className={`${
+            !showMen ? "bg-gray-900 text-white" : "bg-gray-200"
+          } py-2 px-4 font-semibold rounded-l-lg`}
+          onClick={handleWomenClick}
+        >
+          Women's Stats
+        </button>
+      </div>
             <div className="mt-6 bg-white">
                 <h1 className="pl-6 font-display text-xl">CLUB RECORDS</h1>
                 <hr/>
@@ -154,12 +163,12 @@ function Records() {
                 <p className="text-blue-600 font-display pl-8 py-2">POINTS</p>
                 <hr/>
                 <div className="flex flex-col -space-y-[12px]">
-                    {toppoints.map((item, index) => (
-                        <div className="flex items-center justify-between py-2">
+                    {statsToDisplay.points.map((item, index) => (
+                        <div key={index} className="flex items-center justify-between py-2">
                         <div className="flex items-center">
                             <p className={`text-sm pl-10 ${index === 0 ? 'font-bold' : ''}`}>{index + 1}.</p>
-                            <Link to={`/stats/${item.PlayerId}`}>
-                            <p className={`text-sm pl-2 ${index === 0 ? 'font-bold' : ''}`}>{PlayersName[item.PlayerId]}</p>
+                            <Link to={`/stats/${item.playerId}`}>
+                            <p className={`text-sm pl-2 ${index === 0 ? 'font-bold' : ''}`}>{PlayersName[item.playerId]}</p>
                             </Link>
                         </div>
                         <p className={`text-sm pr-10 ${index === 0 ? 'font-bold' : ''}`}>{(item.Points)}</p>
@@ -171,12 +180,12 @@ function Records() {
                 <p className="text-blue-600 font-display pl-8 py-2">REBOUNDS</p>
                 <hr/>
                 <div className="flex flex-col -space-y-[12px]">
-                    {toprebounds.map((item, index) => (
-                        <div className="flex items-center justify-between py-2">
+                    {statsToDisplay.rebounds.map((item, index) => (
+                        <div key={index} className="flex items-center justify-between py-2">
                         <div className="flex items-center">
                             <p className={`text-sm pl-10 ${index === 0 ? 'font-bold' : ''}`}>{index + 1}.</p>
-                            <Link to={`/stats/${item.PlayerId}`}>
-                            <p className={`text-sm pl-2 ${index === 0 ? 'font-bold' : ''}`}>{PlayersName[item.PlayerId]}</p>
+                            <Link to={`/stats/${item.playerId}`}>
+                            <p className={`text-sm pl-2 ${index === 0 ? 'font-bold' : ''}`}>{PlayersName[item.playerId]}</p>
                             </Link>
                         </div>
                         <p className={`text-sm pr-10 ${index === 0 ? 'font-bold' : ''}`}>{(item.Rebounds)}</p>
@@ -188,12 +197,12 @@ function Records() {
                 <p className="text-blue-600 font-display pl-8 py-2">ASSISTS</p>
                 <hr/>
                 <div className="flex flex-col -space-y-[12px]">
-                    {topassists.map((item, index) => (
-                        <div className="flex items-center justify-between py-2">
+                    {statsToDisplay.assists.map((item, index) => (
+                        <div key={index} className="flex items-center justify-between py-2">
                         <div className="flex items-center">
                             <p className={`text-sm pl-10 ${index === 0 ? 'font-bold' : ''}`}>{index + 1}.</p>
-                            <Link to={`/stats/${item.PlayerId}`}>
-                            <p className={`text-sm pl-2 ${index === 0 ? 'font-bold' : ''}`}>{PlayersName[item.PlayerId]}</p>
+                            <Link to={`/stats/${item.playerId}`}>
+                            <p className={`text-sm pl-2 ${index === 0 ? 'font-bold' : ''}`}>{PlayersName[item.playerId]}</p>
                             </Link>
                         </div>
                         <p className={`text-sm pr-10 ${index === 0 ? 'font-bold' : ''}`}>{(item.Assists)}</p>
@@ -205,12 +214,12 @@ function Records() {
                 <p className="text-blue-600 font-display pl-8 py-2">STEALS</p>
                 <hr/>
                 <div className="flex flex-col -space-y-[12px]">
-                    {topsteals.map((item, index) => (
-                        <div className="flex items-center justify-between py-2">
+                    {statsToDisplay.steals.map((item, index) => (
+                        <div key={index} className="flex items-center justify-between py-2">
                         <div className="flex items-center">
                             <p className={`text-sm pl-10 ${index === 0 ? 'font-bold' : ''}`}>{index + 1}.</p>
-                            <Link to={`/stats/${item.PlayerId}`}>
-                            <p className={`text-sm pl-2 ${index === 0 ? 'font-bold' : ''}`}>{PlayersName[item.PlayerId]}</p>
+                            <Link to={`/stats/${item.playerId}`}>
+                            <p className={`text-sm pl-2 ${index === 0 ? 'font-bold' : ''}`}>{PlayersName[item.playerId]}</p>
                             </Link>
                         </div>
                         <p className={`text-sm pr-10 ${index === 0 ? 'font-bold' : ''}`}>{(item.Steals)}</p>
@@ -222,12 +231,12 @@ function Records() {
                 <p className="text-blue-600 font-display pl-8 py-2">BLOCKS</p>
                 <hr/>
                 <div className="flex flex-col -space-y-[12px]">
-                    {topblocks.map((item, index) => (
-                        <div className="flex items-center justify-between py-2">
+                    {statsToDisplay.blocks.map((item, index) => (
+                        <div key={index} className="flex items-center justify-between py-2">
                         <div className="flex items-center">
                             <p className={`text-sm pl-10 ${index === 0 ? 'font-bold' : ''}`}>{index + 1}.</p>
-                            <Link to={`/stats/${item.PlayerId}`}>
-                            <p className={`text-sm pl-2 ${index === 0 ? 'font-bold' : ''}`}>{PlayersName[item.PlayerId]}</p>
+                            <Link to={`/stats/${item.playerId}`}>
+                            <p className={`text-sm pl-2 ${index === 0 ? 'font-bold' : ''}`}>{PlayersName[item.playerId]}</p>
                             </Link>
                         </div>
                         <p className={`text-sm pr-10 ${index === 0 ? 'font-bold' : ''}`}>{(item.Blocks)}</p>
