@@ -96,11 +96,6 @@ const Stat = () => {
   }
   
   const year = latestYear;
-  const top5PointsAverages = getTop5AverageStatsByPlayerId(stats, year, "Points");  
-  const top5ReboundsAverages = getTop5AverageStatsByPlayerId(stats, year, "Rebounds");  
-  const top5AssistsAverages = getTop5AverageStatsByPlayerId(stats, year, "Assists");  
-  const top5StealsAverages = getTop5AverageStatsByPlayerId(stats, year, "Steals");  
-  const top5BlocksAverages = getTop5AverageStatsByPlayerId(stats, year, "Blocks");
 
   const top5PointsAveragesM = getTop5AverageStatsByPlayerId(stats, year, "Points", 1);  
   const top5ReboundsAveragesM = getTop5AverageStatsByPlayerId(stats, year, "Rebounds", 1);  
