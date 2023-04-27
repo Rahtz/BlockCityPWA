@@ -60,7 +60,7 @@ const Navbar = () => {
                             <p className="text-white text-sm"><Link to="/stat">Stats</Link></p>
                             <p className="text-white text-sm"><Link to="/players">Players</Link></p>
                             <p className="text-white text-sm"><Link to="/teams">Teams</Link></p>
-                            <p className="text-white text-sm" onClick={login}>Login</p>
+                            <button className="text-white text-sm" onClick={login}>Login</button>
                         </div>
                     </div>
                 </div>
