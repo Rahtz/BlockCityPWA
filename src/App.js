@@ -9,21 +9,28 @@ import Records from './Records';
 import Home from './Home';
 import Message from './Message';
 import Stat from './Stat';
+import Login from './Login';
 import NotFound from './NotFound';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useState } from "react";
 
 function App() {
+  const [session, setSession] = useState(localStorage.getItem("session") || ""); // session object after registration / login
 
+  const handleSessionChange = (newSession) => {
+    setSession(newSession);
+    localStorage.setItem("session", newSession);
+  };
 
   return (
     <Router>
       <div className="App">
-      <Navbar />
+      <Navbar  session={session} handleSessionChange={handleSessionChange}/>
         <div className="content">
         <Routes>
           <Route path="/" element={<Message/>}/>
           <Route path="/home" element={<Home/>}/>
-          <Route path="/players" element={<Players />}/>
+          <Route path="/players" element={<Players  session={session}/>}/>
           <Route path="/stats" element={<Stats />}/>
           <Route path="/teams" element={<Teams />}/>
           <Route path="/totalstats" element={<TotalStats />}/>
@@ -31,6 +38,7 @@ function App() {
           <Route path="/stats/:id" element={<PlayerProfile />}/>
           <Route path="/records" element={<Records />}/>
           <Route path="/stat" element={<Stat />}/>
+          <Route path="/login" element={<Login />}/>
           <Route path="*" element={<NotFound />} />            
         </Routes>
         </div>

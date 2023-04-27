@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "./client";
 import { Link } from "react-router-dom";
 
-function Players() {
+function Players({session}) {
   const [teams, setTeams] = useState([]);
   const [players, setPlayers] = useState([]);
   const [sexs, setSexs] = useState([]);
@@ -274,9 +274,10 @@ function Players() {
               <th scope="col" className="py-3 px-2">
                 Games Played
               </th>
-              <th scope="col" className="py-3 px-2">
+              {session ? <th scope="col" className="py-3 px-2">
                 Options
-              </th>
+              </th>: <></>}
+              
             </tr>
           </thead>
           <tbody>
@@ -311,7 +312,7 @@ function Players() {
                   >
                     {player.GamesPlayed + player.ExtraGames}
                   </th>
-                  <td className="py-4 px-6">
+                  {session ? <td className="py-4 px-6">
                     <button
                       className="lg:block font-medium text-blue-600 dark:text-blue-500 hover:underline"
                       onClick={() => showGamesModal1(player)}
@@ -330,7 +331,8 @@ function Players() {
                     >
                       Delete
                     </button>
-                  </td>
+                  </td> : <></>}
+                  
                 </tr>
               ))}
           </tbody>
