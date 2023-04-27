@@ -187,7 +187,7 @@ const Stat = () => {
         <button
           className={`${
             !showMen ? "bg-gray-900 text-white" : "bg-gray-200"
-          } py-2 px-4 font-semibold rounded-l-lg`}
+          } py-2 px-4 font-semibold rounded-r-lg`}
           onClick={handleWomenClick}
         >
           Women's Stats

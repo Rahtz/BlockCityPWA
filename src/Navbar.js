@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
 import Blockcity from "./images/Blockcity.png";
 import { useState } from "react";
+import { supabase } from "./client";
 
-
+const login = async () => {
+    supabase.auth.signIn({
+        povider: "github",
+    });
+}
 
 const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
@@ -50,11 +55,12 @@ const Navbar = () => {
                         </div>
                         <img src={Blockcity} alt="BC" className="w-8" />
                         </div>
-                        <div className="flex mr-[90px] space-x-[20px]">
+                        <div className="flex mr-[40px] space-x-[20px]">
                             <p className="text-white text-sm"><Link to="/home">Home</Link></p>
                             <p className="text-white text-sm"><Link to="/stat">Stats</Link></p>
                             <p className="text-white text-sm"><Link to="/players">Players</Link></p>
                             <p className="text-white text-sm"><Link to="/teams">Teams</Link></p>
+                            <p className="text-white text-sm" onClick={login}>Login</p>
                         </div>
                     </div>
                 </div>
