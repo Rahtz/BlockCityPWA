@@ -10,6 +10,7 @@ function Stats() {
   const [teams, setTeams] = useState([]);
   const [stats, setStats] = useState([]);
   const [sexs, setSexs] = useState([]);
+  const [showCreate, setShowCreate] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(15);
   const [searchTerm, setSearchTerm] = useState("");
@@ -101,7 +102,7 @@ function Stats() {
           FreeThrowsAttempted,
           FreeThrowsMade,
           Season,
-          sex_id
+          sex_id,
         },
       ])
       .single();
@@ -123,6 +124,7 @@ function Stats() {
       sex_id: "",
     });
     fetchStats();
+    setShowCreate(false)
   }
 
   async function deleteStat(id) {
@@ -164,167 +166,263 @@ function Stats() {
     setSearchTerm(e.target.value);
   };
 
+  const handleCreateClick = () => {
+    setShowCreate(true);
+  };
+
   return (
     <div className="divide-x mt-2 lg:grid grid-cols-4 ">
-      <div className="hidden lg:grid grid-cols-3 divide-x col-span-1">
+      <div className="grid grid-cols-3 divide-x col-span-1">
         <div className="col-span-3">
           <div className="grid grid-cols-2 mt-2">
-            <input
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-3 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              type="date"
-              placeholder="YourDate"
-              value={YourDate}
-              onChange={(e) => setStat({ ...stat, YourDate: e.target.value })}
-            />
             <button
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 mb-5 mx-5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              onClick={createStat}
+              onClick={handleCreateClick}
             >
               Create Stat
             </button>
           </div>
           {/* <input type="number" placeholder="PlayerId" value={PlayerId} onChange={e => setStat({ ...stat, PlayerId: e.target.value})} /> */}
-          <select
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-3 mx-5 w-3/4 relative dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            value={stat.PlayerId}
-            onChange={(e) => setStat({ ...stat, PlayerId: e.target.value })}
-          >
-            <option></option>
-            <div className="absolute top-0 left-0 right-0">
-              <input
-                type="text"
-                placeholder="Search players"
-                value={searchTerm}
-                onChange={handleInputChange}
-                className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              />
-            </div>
-            {sortedPlayers.map((player) => (
-              <option key={player.id} value={player.id}>
-                {player.PlayerName}
-              </option>
-            ))}
-          </select>
 
           {/* <input type="number" placeholder="TeamId" value={TeamId} onChange={e => setStat({ ...stat, TeamId: e.target.value})} /> */}
-          <select
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-3 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            value={TeamId}
-            onChange={(e) => setStat({ ...stat, TeamId: e.target.value })}
-          >
-            <option></option>
-            {teams.map((team) => (
-              <option value={team.id}>{team.TeamName}</option>
-            ))}
-          </select>
-          <select
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-3 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            value={sex_id}
-            onChange={(e) => setStat({ ...stat, sex_id: e.target.value })}
-          >
-            <option></option>
-            {sexs.map((sex) => (
-              <option value={sex.id}>{sex.Sex}</option>
-            ))}
-          </select>
-          <input
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-3 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="number"
-            placeholder="Points"
-            value={Points}
-            onChange={(e) => setStat({ ...stat, Points: e.target.value })}
-          />
-          <input
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-3 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="number"
-            placeholder="Rebounds"
-            value={Rebounds}
-            onChange={(e) => setStat({ ...stat, Rebounds: e.target.value })}
-          />
-          <input
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-3 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="number"
-            placeholder="Assists"
-            value={Assists}
-            onChange={(e) => setStat({ ...stat, Assists: e.target.value })}
-          />
-          <input
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-3 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="number"
-            placeholder="Steals"
-            value={Steals}
-            onChange={(e) => setStat({ ...stat, Steals: e.target.value })}
-          />
-          <input
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-3 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="number"
-            placeholder="Blocks"
-            value={Blocks}
-            onChange={(e) => setStat({ ...stat, Blocks: e.target.value })}
-          />
-          <input
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-3 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="number"
-            placeholder="FeildGoalsAttempted"
-            value={FeildGoalsAttempted}
-            onChange={(e) =>
-              setStat({ ...stat, FeildGoalsAttempted: e.target.value })
-            }
-          />
-          <input
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-3 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="number"
-            placeholder="FeildGoalsMade"
-            value={FeildGoalsMade}
-            onChange={(e) =>
-              setStat({ ...stat, FeildGoalsMade: e.target.value })
-            }
-          />
-          <input
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-3 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="number"
-            placeholder="ThreePointersAttempted"
-            value={ThreePointersAttempted}
-            onChange={(e) =>
-              setStat({ ...stat, ThreePointersAttempted: e.target.value })
-            }
-          />
-          <input
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-3 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="number"
-            placeholder="ThreePointersMade"
-            value={ThreePointersMade}
-            onChange={(e) =>
-              setStat({ ...stat, ThreePointersMade: e.target.value })
-            }
-          />
-          <input
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-3 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="number"
-            placeholder="FreeThrowsAttempted"
-            value={FreeThrowsAttempted}
-            onChange={(e) =>
-              setStat({ ...stat, FreeThrowsAttempted: e.target.value })
-            }
-          />
-          <input
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-3 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="number"
-            placeholder="FreeThrowsMade"
-            value={FreeThrowsMade}
-            onChange={(e) =>
-              setStat({ ...stat, FreeThrowsMade: e.target.value })
-            }
-          />
-          <input
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-3 mx-5 w-3/4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="number"
-            placeholder="Season"
-            value={Season}
-            onChange={(e) => setStat({ ...stat, Season: e.target.value })}
-          />
         </div>
       </div>
+      {showCreate && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity opacity-100 z-50">
+          <div className="bg-white rounded-lg p-3 h-auto w-auto">
+            <div className="flex">
+              <label className="flex flex-col">
+                <h3>Date</h3>
+                <input
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  type="date"
+                  placeholder="YourDate"
+                  value={YourDate}
+                  onChange={(e) =>
+                    setStat({ ...stat, YourDate: e.target.value })
+                  }
+                />
+              </label>
+              <label className="flex flex-col">
+                <h3>Player</h3>
+                <select
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  value={stat.PlayerId}
+                  onChange={(e) =>
+                    setStat({ ...stat, PlayerId: e.target.value })
+                  }
+                >
+                  <option></option>
+                  <div className="absolute top-0 left-0 right-0">
+                    <input
+                      type="text"
+                      placeholder="Search players"
+                      value={searchTerm}
+                      onChange={handleInputChange}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    />
+                  </div>
+                  {sortedPlayers.map((player) => (
+                    <option key={player.id} value={player.id}>
+                      {player.PlayerName}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+            <div className="flex">
+              <label className="flex flex-col">
+                <h3>Team</h3>
+                <select
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  value={TeamId}
+                  onChange={(e) => setStat({ ...stat, TeamId: e.target.value })}
+                >
+                  <option></option>
+                  {teams.map((team) => (
+                    <option value={team.id}>{team.TeamName}</option>
+                  ))}
+                </select>
+              </label>
+              <label className="flex flex-col">
+                <h3>Sex</h3>
+                <select
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  value={sex_id}
+                  onChange={(e) => setStat({ ...stat, sex_id: e.target.value })}
+                >
+                  <option></option>
+                  {sexs.map((sex) => (
+                    <option value={sex.id}>{sex.Sex}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
+            <div className="flex">
+              <label className="flex flex-col">
+                <h3>Points</h3>
+                <input
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  type="number"
+                  placeholder="Points"
+                  value={Points}
+                  onChange={(e) => setStat({ ...stat, Points: e.target.value })}
+                />
+              </label>
+              <label className="flex flex-col">
+                <h3>Rebounds</h3>
+                <input
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  type="number"
+                  placeholder="Rebounds"
+                  value={Rebounds}
+                  onChange={(e) =>
+                    setStat({ ...stat, Rebounds: e.target.value })
+                  }
+                />
+              </label>
+            </div>
+            <div className="flex">
+              <label className="flex flex-col">
+                <h3>Assists</h3>
+                <input
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  type="number"
+                  placeholder="Assists"
+                  value={Assists}
+                  onChange={(e) =>
+                    setStat({ ...stat, Assists: e.target.value })
+                  }
+                />
+              </label>
+              <label className="flex flex-col">
+                <h3>Steals</h3>
+                <input
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  type="number"
+                  placeholder="Steals"
+                  value={Steals}
+                  onChange={(e) => setStat({ ...stat, Steals: e.target.value })}
+                />
+              </label>
+            </div>
+            <div className="flex">
+              <label className="flex flex-col">
+                <h3>Blocks</h3>
+                <input
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  type="number"
+                  placeholder="Blocks"
+                  value={Blocks}
+                  onChange={(e) => setStat({ ...stat, Blocks: e.target.value })}
+                />
+              </label>
+              <label className="flex flex-col">
+                <h3>FGA</h3>
+                <input
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  type="number"
+                  placeholder="FeildGoalsAttempted"
+                  value={FeildGoalsAttempted}
+                  onChange={(e) =>
+                    setStat({ ...stat, FeildGoalsAttempted: e.target.value })
+                  }
+                />
+              </label>
+            </div>
+            <div className="flex">
+              <label className="flex flex-col">
+                <h3>FGM</h3>
+                <input
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  type="number"
+                  placeholder="FeildGoalsMade"
+                  value={FeildGoalsMade}
+                  onChange={(e) =>
+                    setStat({ ...stat, FeildGoalsMade: e.target.value })
+                  }
+                />
+              </label>
+              <label className="flex flex-col">
+                <h3>3PA</h3>
+                <input
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  type="number"
+                  placeholder="ThreePointersAttempted"
+                  value={ThreePointersAttempted}
+                  onChange={(e) =>
+                    setStat({ ...stat, ThreePointersAttempted: e.target.value })
+                  }
+                />
+              </label>
+            </div>
+            <div className="flex">
+              <label className="flex flex-col">
+                <h3>3PM</h3>
+                <input
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  type="number"
+                  placeholder="ThreePointersMade"
+                  value={ThreePointersMade}
+                  onChange={(e) =>
+                    setStat({ ...stat, ThreePointersMade: e.target.value })
+                  }
+                />
+              </label>
+              <label className="flex flex-col">
+                <h3>FTA</h3>
+                <input
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  type="number"
+                  placeholder="FreeThrowsAttempted"
+                  value={FreeThrowsAttempted}
+                  onChange={(e) =>
+                    setStat({ ...stat, FreeThrowsAttempted: e.target.value })
+                  }
+                />
+              </label>
+            </div>
+            <div className="flex">
+              <label className="flex flex-col">
+                <h3>FTM</h3>
+                <input
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  type="number"
+                  placeholder="FreeThrowsMade"
+                  value={FreeThrowsMade}
+                  onChange={(e) =>
+                    setStat({ ...stat, FreeThrowsMade: e.target.value })
+                  }
+                />
+              </label>
+              <label className="flex flex-col">
+                <h3>Season</h3>
+                <input
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  type="number"
+                  placeholder="Season"
+                  value={Season}
+                  onChange={(e) => setStat({ ...stat, Season: e.target.value })}
+                />
+              </label>
+            </div>
+            <div className="flex justify-center">
+              <button
+                className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-[120px] sm:w-auto px-5 py-2.5 mb-1 mx-5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                onClick={() => setShowCreate(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-[120px] sm:w-auto px-5 py-2.5 mb-1 mx-5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                onClick={createStat}
+              >
+                Create Stat
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="overflow-x-auto overflow-y-auto h-screen relative shadow-md sm:rounded-lg mx-1 col-span-3">
         {loading ? (
           <div className="grid h-screen place-items-center">
@@ -386,7 +484,7 @@ function Stats() {
                 </th>
                 <th
                   scope="col"
-                  className="hidden md:block py-3 px-1 text-center"
+                  className="md:block py-3 px-1 text-center"
                 >
                   Options
                 </th>
@@ -434,7 +532,7 @@ function Stats() {
                   <td className="py-1 px-1 text-center">{stat.Season}</td>
                   <td className="py-1 px-1 text-center">
                     <button
-                      className="hidden md:block font-medium text-blue-600 dark:text-blue-500 hover:underline "
+                      className="md:block font-medium text-blue-600 dark:text-blue-500 hover:underline "
                       onClick={() => deleteStat(stat.id)}
                     >
                       Delete

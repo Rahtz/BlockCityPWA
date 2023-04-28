@@ -10,6 +10,7 @@ import Home from './Home';
 import Message from './Message';
 import Stat from './Stat';
 import Login from './Login';
+import AddToHomeScreen from './AddToHomeScreen';
 import NotFound from './NotFound';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useState } from "react";
@@ -26,6 +27,7 @@ function App() {
     <Router>
       <div className="App">
       <Navbar  session={session} handleSessionChange={handleSessionChange}/>
+      <AddToHomeScreen />
         <div className="content">
         <Routes>
           <Route path="/" element={<Message/>}/>

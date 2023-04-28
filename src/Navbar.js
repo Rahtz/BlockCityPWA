@@ -89,6 +89,16 @@ const Login = async () => {
             Teams
           </Link>
         </p>
+        {session ?<p
+          className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx ${
+            location.pathname === "/stats" ? "text-white" : ""
+          }`}
+        >
+          <Link to="/stats" onClick={() => setNavbar(false)}>
+            Add Stats
+          </Link>
+        </p> : <></>}
+        
       </div>
     </nav>
     <nav className="sticky top-0 w-full border-b-[1px] border-onyx bg-black shadow z-50">
