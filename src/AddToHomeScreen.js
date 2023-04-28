@@ -18,15 +18,20 @@ const AddToHomeScreen = () => {
       }, []);
     
       const handleClose = () => setShowModal(false);
-
+    
       const handleShare = () => {
         if (navigator.share) {
           navigator.share({
-            title: "Block City",
+            title: "My PWA",
             text: "Install this app on your home screen",
             url: window.location.href
           });
         }
+      };
+    
+      const redirectToSafari = () => {
+        window.location.href = "https://www.google.com";
+        // Replace "https://www.google.com" with your app's URL
       };
 
   return (
@@ -47,6 +52,17 @@ const AddToHomeScreen = () => {
             </div>
           </div>
         </div>
+        {/*
+          Add a button to redirect iOS users to Safari
+        */}
+        {window.navigator.userAgent.match(/(iPod|iPhone|iPad)/) && (
+          <button
+            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg"
+            onClick={redirectToSafari}
+          >
+            Open in Safari
+          </button>
+        )}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
