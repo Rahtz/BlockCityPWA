@@ -30,7 +30,7 @@ const AddToHomeScreen = () => {
       };
     
       const redirectToSafari = () => {
-        window.location.href = "https://www.google.com";
+        window.location.href = "https://blockcityapp.vercel.app/";
         // Replace "https://www.google.com" with your app's URL
       };
 
