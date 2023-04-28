@@ -8,8 +8,12 @@ module.exports = {
     },
     extend: {
       fontFamily:{
-      display:["Open Sans"]
-      }
+      display:["Open Sans"],
+      sans: ['Roboto', 'Arial', 'sans-serif'],
+      },
+      colors: {
+        onyx: '#252525',
+      },
     },
   },
   plugins: [

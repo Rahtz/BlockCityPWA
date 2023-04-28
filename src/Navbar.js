@@ -48,13 +48,13 @@ const Login = async () => {
   return (
     <>
       <nav
-      className={`fixed top-0 left-0 z-50 h-screen w-auto bg-white text-gray-500 transition-transform duration-300 ease-in-out transform ${
+      className={`fixed top-0 left-0 z-50 h-screen w-auto bg-white text-gray-500 transition-transform duration-500 ease-in-out transform ${
         navbar ? "translate-x-0" : "-translate-x-full"
       }`}
     >
-      <div className="flex flex-col items-start mt-[65px] w-[150px] h-full border-white border-x-[1px] bg-black">
+      <div className="flex flex-col items-start mt-[65px] w-[150px] h-full border-onyx border-x-[1px] bg-black">
         <p
-          className={`text-md font-bold py-2 pl-2 w-full border-b-[1px] border-white ${
+          className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx ${
             location.pathname === "/home" ? "text-white" : ""
           }`}
         >
@@ -63,7 +63,7 @@ const Login = async () => {
           </Link>
         </p>
         <p
-          className={`text-md font-bold py-2 pl-2 w-full border-b-[1px] border-white ${
+          className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx ${
             location.pathname === "/stat" ? "text-white" : ""
           }`}
         >
@@ -72,7 +72,7 @@ const Login = async () => {
           </Link>
         </p>
         <p
-          className={`text-md font-bold py-2 pl-2 w-full border-b-[1px] border-white ${
+          className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx ${
             location.pathname === "/players" ? "text-white" : ""
           }`}
         >
@@ -81,7 +81,7 @@ const Login = async () => {
           </Link>
         </p>
         <p
-          className={`text-md font-bold py-2 pl-2 w-full border-b-[1px] border-white ${
+          className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx ${
             location.pathname === "/teams" ? "text-white" : ""
           }`}
         >
@@ -91,7 +91,7 @@ const Login = async () => {
         </p>
       </div>
     </nav>
-    <nav className="sticky top-0 w-full border-b-[1px] border-white bg-black shadow z-50">
+    <nav className="sticky top-0 w-full border-b-[1px] border-onyx bg-black shadow z-50">
     <div className="flex justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
         <div>
             <div className="flex items-center py-3 md:py-5 md:block">
