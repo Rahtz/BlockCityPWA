@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Blockcity from "./images/Blockcity.png";
 import { useState } from "react";
 import { supabase } from "./client";
+import { BsPersonCircle } from 'react-icons/bs';
 
 const Navbar = ({ session, handleSessionChange }) => {
   const [navbar, setNavbar] = useState(false);
@@ -9,7 +10,10 @@ const Navbar = ({ session, handleSessionChange }) => {
   const [email, setEmail] = useState(""); // email of the user
   const [password, setPassword] = useState(""); // password of the user
   const [Lmsg, setLMsg] = useState(""); // Login message
-  const [user, setUser] = useState(""); // User object after registration / login
+  const [user, setUser] = useState(""); // User object after registration / login  
+  const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 //   const [session, setSession] = useState(localStorage.getItem("session") || ""); // session object after registration / login
 
 const Login = async () => {
@@ -42,94 +46,118 @@ const Login = async () => {
   };
 
   return (
-    <nav className="sticky top-0 w-full bg-black shadow z-50">
-      <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
-        <div>
-          <div className="flex items-center  py-3 md:py-5 md:block ">
-            <div className="flex items-center justify-center space-x-[3px] -ml-[14px]">
-              <div className="md:hidden">
-                <button
-                  className="p-2 text-white rounded-md outline-none focus:border-gray-400 focus:border"
-                  onClick={() => setNavbar(!navbar)}
-                >
-                  {navbar ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M4 6h16M4 12h16M4 18h16"
-                      />
-                    </svg>
-                  )}
-                </button>
-              </div>
-              <img src={Blockcity} alt="BC" className="w-8" />
-            </div>
-            <div className="flex ml-[20px] space-x-[20px]">
-              <p className="text-white text-sm">
-                <Link to="/home">Home</Link>
-              </p>
-              <p className="text-white text-sm">
-                <Link to="/stat">Stats</Link>
-              </p>
-                  <p className="text-white text-sm">
-                    <Link to="/players">Players</Link>
-                  </p>
-                  <p className="text-white text-sm">
-                    <Link to="/teams">Teams</Link>
-                  </p>
-              
-            </div>
-          </div>
-        </div>
-        <div>
-          <div
-            className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
-              navbar ? "block" : "hidden"
-            }`}
-          >
-            <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
-              <li
-                className="text-white hover:text-blue-600"
-                onClick={() => setNavbar(!navbar)}
-              >
-                {session ? (
-                <button className="text-white text-sm" onClick={logout}>
-                  Logout
-                </button>
-              ) : (
-                <button
-                  className="text-white text-sm"
-                  onClick={handleCreateClick}
-                >
-                  Login
-                </button>
-              )}
-              </li>
-            </ul>
-          </div>
-        </div>
+    <>
+      <nav
+      className={`fixed top-0 left-0 z-50 h-screen w-auto bg-white text-gray-500 transition-transform duration-300 ease-in-out transform ${
+        navbar ? "translate-x-0" : "-translate-x-full"
+      }`}
+    >
+      <div className="flex flex-col items-start mt-[65px] w-[150px] h-full border-white border-x-[1px] bg-black">
+        <p
+          className={`text-md font-bold py-2 pl-2 w-full border-b-[1px] border-white ${
+            location.pathname === "/home" ? "text-white" : ""
+          }`}
+        >
+          <Link to="/home" onClick={() => setNavbar(false)}>
+            Home
+          </Link>
+        </p>
+        <p
+          className={`text-md font-bold py-2 pl-2 w-full border-b-[1px] border-white ${
+            location.pathname === "/stat" ? "text-white" : ""
+          }`}
+        >
+          <Link to="/stat" onClick={() => setNavbar(false)}>
+            Stats
+          </Link>
+        </p>
+        <p
+          className={`text-md font-bold py-2 pl-2 w-full border-b-[1px] border-white ${
+            location.pathname === "/players" ? "text-white" : ""
+          }`}
+        >
+          <Link to="/players" onClick={() => setNavbar(false)}>
+            Players
+          </Link>
+        </p>
+        <p
+          className={`text-md font-bold py-2 pl-2 w-full border-b-[1px] border-white ${
+            location.pathname === "/teams" ? "text-white" : ""
+          }`}
+        >
+          <Link to="/teams" onClick={() => setNavbar(false)}>
+            Teams
+          </Link>
+        </p>
       </div>
+    </nav>
+    <nav className="sticky top-0 w-full border-b-[1px] border-white bg-black shadow z-50">
+    <div className="flex justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
+        <div>
+            <div className="flex items-center py-3 md:py-5 md:block">
+                <div className="flex items-center justify-center space-x-[3px] -ml-[14px]">
+                    <div className="md:hidden">
+                        <button
+                            className="p-2 text-white rounded-md outline-none focus:border-gray-400 focus:border"
+                            onClick={() => setNavbar(!navbar)}
+                        >
+                            {navbar ? (
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="w-6 h-6"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clipRule="evenodd"
+                                    />
+                                </svg>
+                            ) : (
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="w-6 h-6"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M4 6h16M4 12h16M4 18h16"
+                                    />
+                                </svg>
+                            )}
+                        </button>
+                    </div>
+                    <img src={Blockcity} alt="BC" className="w-8" />
+                </div>              
+            </div>
+        </div>
+        <div className="mt-4">
+  <BsPersonCircle className="text-white w-[50px] h-[30px]" onClick={() => setShowDropdown(!showDropdown)} />
+</div>
+    </div>
+    {showDropdown && (
+  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
+    <div className="py-1">
+      <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">
+        Profile
+      </a>
+      <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">
+        Settings
+      </a>{session ?<a onClick={logout} href="#" className="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">
+        Logout
+      </a> : <a onClick={handleCreateClick} href="#" className="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">
+        Login
+      </a>}
+      
+      
+    </div>
+  </div>
+)}
       {showCreate && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity opacity-100 z-50">
           <div className="bg-white rounded-lg p-3 h-auto w-auto">
@@ -174,7 +202,10 @@ const Login = async () => {
           </div>
         </div>
       )}
+
+      
     </nav>
+    </>
   );
 };
 
