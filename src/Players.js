@@ -215,12 +215,13 @@ function Players({session}) {
   return (
     <div className="lg:grid divide-x mt-1">
       <div className="flex flex-col items-center justify-center w-full my-2 md:flex-row md:items-center md:justify-between">
-        <button
+        {session ?<button
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-[370px] sm:w-auto px-5 py-2.5 mb-5 mx-5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 md:mb-0"
           onClick={handleCreateClick}
         >
           Create Player
-        </button>
+        </button> : <></>}
+        
         <div className="flex">
           <div className="ml-2">
             <input
