@@ -10,7 +10,10 @@ const AddToHomeScreen = () => {
           return /iphone|ipad|ipod/.test(userAgent);
         };
     
-        const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+        const isInStandaloneMode = () =>
+            ('standalone' in window.navigator) &&
+            window.navigator.standalone &&
+            window.navigator.userAgent.toLowerCase().includes('safari');
     
         if (isIos() && !isInStandaloneMode()) {
           setShowModal(true);
@@ -30,8 +33,31 @@ const AddToHomeScreen = () => {
       };
     
       const redirectToSafari = () => {
-        window.location.href = "https://blockcityapp.vercel.app/";
-        // Replace "https://www.google.com" with your app's URL
+        const isIos = () => {
+          const userAgent = window.navigator.userAgent.toLowerCase();
+          return /iphone|ipad|ipod/.test(userAgent);
+        };
+    
+        const iosVersion = () => {
+          const match = navigator.userAgent.match(/OS (\d+)_(\d+)_?(\d+)?/);
+          return match ? [parseInt(match[1], 10), parseInt(match[2], 10), parseInt(match[3] || 0, 10)] : null;
+        };
+    
+        const version = iosVersion();
+    
+        if (isIos()) {
+          // If the user is using iOS and the version is >= 14.0, use the `launchWebAuthFlow` method
+          if (version && version[0] >= 14) {
+            const redirectUrl = encodeURIComponent(window.location.href);
+            const schemeUrl = `https://example.com/redirect?url=${redirectUrl}`;
+            window.chrome.webstore.install(schemeUrl, () => {}, () => {});
+            return;
+          }
+    
+          // Otherwise, use the `location.href` method
+          window.location.href = "https://blockcityapp.vercel.app/";
+          // Replace "https://www.google.com" with your app's URL
+        }
       };
 
   return (
