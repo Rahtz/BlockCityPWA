@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { differenceInYears } from "date-fns";
 import { supabase } from "./client";
 import { useParams } from "react-router-dom";
-import Blockcity from "./images/Blockcity.png";
+// import Blockcity from "./images/Blockcity.png";
 import sengun from "./images/sengun.png";
 // import jacob from "./images/jacob.png";
 // import jacob1 from "./images/jacob1.png";

@@ -541,12 +541,13 @@ function Stats() {
                 </tr>
               ))}
             </tbody>
-            <tfoot className="border border-red-500">
-              <div className="inline-flex">
+            <tfoot className="bg-gray-100 border border-gray-300 py-2">
+              <div className="flex items-center justify-center">
                 <Pagination
                   totalPosts={stats.length}
                   postsPerPage={postsPerPage}
                   setCurrentPage={setCurrentPage}
+                  className="flex-shrink-0 mx-auto"
                 />
               </div>
             </tfoot>
