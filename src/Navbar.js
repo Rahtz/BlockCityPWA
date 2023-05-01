@@ -97,7 +97,20 @@ const Login = async () => {
           <Link to="/stats" onClick={() => setNavbar(false)}>
             Add Stats
           </Link>
-        </p> : <></>}
+        </p>
+        
+         : <></>}
+         {session ?<p
+          className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx ${
+            location.pathname === "/stats" ? "text-white" : ""
+          }`}
+        >
+          <Link to="/articles" onClick={() => setNavbar(false)}>
+            Add Articles
+          </Link>
+        </p>
+        
+         : <></>}
         
       </div>
     </nav>
