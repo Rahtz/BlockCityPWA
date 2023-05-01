@@ -30,7 +30,7 @@ function App() {
       {/* <AddToHomeScreen /> */}
         <div className="content">
         <Routes>
-          <Route path="/" element={<Message/>}/>
+          <Route path="/" element={<Home/>}/>
           <Route path="/home" element={<Home/>}/>
           <Route path="/players" element={<Players  session={session}/>}/>
           <Route path="/stats" element={<Stats />}/>
