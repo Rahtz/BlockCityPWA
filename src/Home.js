@@ -11,15 +11,15 @@ const Home = () => {
   const [latestArticles, setLatestArticles] = useState([]);
 
   useEffect(() => {
-    fetchArticles();
+    // fetchArticles();
     setLatestArticles(article.slice(0, 3));
   }, [article]);
 
-  async function fetchArticles() {
-    const { data } = await supabase.from("articles").select();
-    setArticles(data);
-    setLatestArticles(data.slice(0, 3));
-  }
+  // async function fetchArticles() {
+  //   const { data } = await supabase.from("articles").select();
+  //   setArticles(data);
+  //   setLatestArticles(data.slice(0, 3));
+  // }
 
   const handleLinkClick = () => {
     setShowModal(true);
