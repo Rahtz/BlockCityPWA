@@ -10,6 +10,7 @@ import Home from './Home';
 import Message from './Message';
 import Stat from './Stat';
 import Login from './Login';
+import Articles from './Articles';
 // import AddToHomeScreen from './AddToHomeScreen';
 import NotFound from './NotFound';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -40,6 +41,7 @@ function App() {
           <Route path="/stats/:id" element={<PlayerProfile />}/>
           <Route path="/records" element={<Records />}/>
           <Route path="/stat" element={<Stat />}/>
+          <Route path="/articles" element={<Articles />}/>
           <Route path="/login" element={<Login />}/>
           <Route path="*" element={<NotFound />} />            
         </Routes>
