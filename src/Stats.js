@@ -11,9 +11,30 @@ function Stats() {
   const [stats, setStats] = useState([]);
   const [sexs, setSexs] = useState([]);
   const [showCreate, setShowCreate] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(15);
+  const [showModal, setShowModal] = useState(false); 
+  const [searchText, setSearchText] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedStat, setSelectedStat] = useState(null);
+  const [updatedStat, setUpdatedStat] = useState({
+    YourDate: "",
+    PlayerId: "",
+    TeamId: "",
+    Points: "",
+    Rebounds: "",
+    Assists: "",
+    Steals: "",
+    Blocks: "",
+    FeildGoalsAttempted: "",
+    FeildGoalsMade: "",
+    ThreePointersAttempted: "",
+    ThreePointersMade: "",
+    FreeThrowsAttempted: "",
+    FreeThrowsMade: "",
+    Season: "",
+    sex_id: "",
+  });
+
   const [stat, setStat] = useState({
     YourDate: "",
     PlayerId: "",
@@ -140,6 +161,18 @@ function Stats() {
     fetchStats();
   }
 
+  const handleUpdate = async () => {
+    const { error } = await supabase
+      .from("stats")
+      .update(updatedStat)
+      .match({ id: selectedStat.id });
+    if (error) {
+      console.error(error);
+    } else {
+      window.location.reload();
+    }
+  };
+
   var PlayersName = players.reduce(function (result, currentObject) {
     result[currentObject.id] = currentObject.PlayerName;
     return result;
@@ -149,10 +182,6 @@ function Stats() {
     result[currentObject.id] = currentObject.TeamName;
     return result;
   }, {});
-
-  const lastPostIndex = currentPage * postsPerPage;
-  const firstPostIndex = lastPostIndex - postsPerPage;
-  const currentPosts = stats.slice(firstPostIndex, lastPostIndex);
 
   const filteredPlayers = players.filter((player) =>
     player.PlayerName.toLowerCase().includes(searchTerm.toLowerCase())
@@ -170,6 +199,12 @@ function Stats() {
     setShowCreate(true);
   };
 
+  const handleEditClick = (stat) => {
+    setSelectedStat(stat);
+    setUpdatedStat(stat);
+    setShowModal(true);
+  };
+
   return (
     <div className="divide-x mt-2 lg:grid grid-cols-4 ">
       <div className="grid grid-cols-3 divide-x col-span-1">
@@ -181,6 +216,15 @@ function Stats() {
             >
               Create Stat
             </button>
+          </div>
+          <div className="ml-2">
+          <input
+            type="text"
+            placeholder="Search by player name"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 md:w-auto md:ml-5"
+          />
           </div>
           {/* <input type="number" placeholder="PlayerId" value={PlayerId} onChange={e => setStat({ ...stat, PlayerId: e.target.value})} /> */}
 
@@ -437,6 +481,7 @@ function Stats() {
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400 sticky top-0 z-10">
               <tr>
+              
                 <th scope="col" className="py-3 px-1 sticky left-0 bg-gray-200">
                   Player
                 </th>
@@ -491,7 +536,11 @@ function Stats() {
               </tr>
             </thead>
             <tbody>
-              {currentPosts.map((stat) => (
+              {stats
+  .filter((stat) =>
+    PlayersName[stat.PlayerId].toLowerCase().includes(searchQuery.toLowerCase())
+  )
+  .map((stat) => (
                 <tr
                   key={stat.id}
                   className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 text-xs"
@@ -531,6 +580,12 @@ function Stats() {
                   </td>
                   <td className="py-1 px-1 text-center">{stat.Season}</td>
                   <td className="py-1 px-1 text-center">
+                  <button
+                      className="lg:block font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                      onClick={() => handleEditClick(stat)}
+                    >
+                      Edit
+                    </button>
                     <button
                       className="md:block font-medium text-blue-600 dark:text-blue-500 hover:underline "
                       onClick={() => deleteStat(stat.id)}
@@ -541,19 +596,258 @@ function Stats() {
                 </tr>
               ))}
             </tbody>
-            <tfoot className="bg-gray-100 border border-gray-300 py-2">
-              <div className="flex items-center justify-center">
-                <Pagination
-                  totalPosts={stats.length}
-                  postsPerPage={postsPerPage}
-                  setCurrentPage={setCurrentPage}
-                  className="flex-shrink-0 mx-auto"
-                />
-              </div>
-            </tfoot>
           </table>
         )}
       </div>
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity opacity-100 z-50">
+          <div className="bg-white rounded-lg p-3 h-5/6 w-auto">
+          <h2 className="text-lg font-medium mb-4">Edit Stat Details</h2>
+            <div className="flex">
+              <label className="flex flex-col">
+                <h3>Name:</h3>
+                <input
+                  type="date"
+                  value={updatedStat.YourDate}
+                  onChange={(e) =>
+                    setUpdatedStat({
+                      ...updatedStat,
+                      YourDate: e.target.value,
+                    })
+                  }
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-1 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </label>
+              <label className="flex flex-col">
+                <h3>Player:</h3>
+                <input
+                  type="text"
+                  value={PlayersName[updatedStat.PlayerId]}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-1 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </label>
+            </div>
+            <div className="flex">
+              <label className="flex flex-col">
+                <h3>Team:</h3>
+                <input
+                  type="text"
+                  value={TeamsName[updatedStat.TeamId]}
+                  onChange={(e) =>
+                    setUpdatedStat({
+                      ...updatedStat,
+                      TeamId: e.target.value,
+                    })
+                  }
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-1 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </label>
+              <label className="flex flex-col">
+                <h3>Points:</h3>
+                <input
+                  type="text"
+                  value={updatedStat.Points}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-1 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  />
+              </label>
+            </div>
+            <div className="flex">
+              <label className="flex flex-col">
+                <h3>Rebounds:</h3>
+                <input
+                  type="text"
+                  value={updatedStat.Rebounds}
+                  onChange={(e) =>
+                    setUpdatedStat({
+                      ...updatedStat,
+                      Rebounds: e.target.value,
+                    })
+                  }
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-1 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </label>
+              <label className="flex flex-col">
+                <h3>Assists:</h3>
+                <input
+                  type="text"
+                  value={updatedStat.Assists}
+                  onChange={(e) =>
+                    setUpdatedStat({
+                      ...updatedStat,
+                      Assists: e.target.value,
+                    })
+                  }
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-1 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  />
+              </label>
+            </div>
+            <div className="flex">
+              <label className="flex flex-col">
+                <h3>Steals:</h3>
+                <input
+                  type="text"
+                  value={updatedStat.Steals}
+                  onChange={(e) =>
+                    setUpdatedStat({
+                      ...updatedStat,
+                      Steals: e.target.value,
+                    })
+                  }
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-1 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </label>
+              <label className="flex flex-col">
+                <h3>Blocks:</h3>
+                <input
+                  type="text"
+                  value={updatedStat.Blocks}
+                  onChange={(e) =>
+                    setUpdatedStat({
+                      ...updatedStat,
+                      Blocks: e.target.value,
+                    })
+                  }
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-1 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  />
+              </label>
+            </div>
+            <div className="flex">
+              <label className="flex flex-col">
+                <h3>FeildGoalsAttempted:</h3>
+                <input
+                  type="text"
+                  value={updatedStat.FeildGoalsAttempted}
+                  onChange={(e) =>
+                    setUpdatedStat({
+                      ...updatedStat,
+                      FeildGoalsAttempted: e.target.value,
+                    })
+                  }
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-1 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </label>
+              <label className="flex flex-col">
+                <h3>FeildGoalsMade:</h3>
+                <input
+                  type="text"
+                  value={updatedStat.FeildGoalsMade}
+                  onChange={(e) =>
+                    setUpdatedStat({
+                      ...updatedStat,
+                      FeildGoalsMade: e.target.value,
+                    })
+                  }
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-1 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  />
+              </label>
+            </div>
+            <div className="flex">
+              <label className="flex flex-col">
+                <h3>ThreePointersAttempted:</h3>
+                <input
+                  type="text"
+                  value={updatedStat.ThreePointersAttempted}
+                  onChange={(e) =>
+                    setUpdatedStat({
+                      ...updatedStat,
+                      ThreePointersAttempted: e.target.value,
+                    })
+                  }
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-1 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </label>
+              <label className="flex flex-col">
+                <h3>ThreePointersMade:</h3>
+                <input
+                  type="text"
+                  value={updatedStat.ThreePointersMade}
+                  onChange={(e) =>
+                    setUpdatedStat({
+                      ...updatedStat,
+                      ThreePointersMade: e.target.value,
+                    })
+                  }
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-1 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  />
+              </label>
+            </div>
+            <div className="flex">
+              <label className="flex flex-col">
+                <h3>FreeThrowsAttempted:</h3>
+                <input
+                  type="text"
+                  value={updatedStat.FreeThrowsAttempted}
+                  onChange={(e) =>
+                    setUpdatedStat({
+                      ...updatedStat,
+                      FreeThrowsAttempted: e.target.value,
+                    })
+                  }
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-1 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </label>
+              <label className="flex flex-col">
+                <h3>FreeThrowsMade:</h3>
+                <input
+                  type="text"
+                  value={updatedStat.FreeThrowsMade}
+                  onChange={(e) =>
+                    setUpdatedStat({
+                      ...updatedStat,
+                      FreeThrowsMade: e.target.value,
+                    })
+                  }
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-1 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  />
+              </label>
+            </div>
+            <div className="flex">
+              <label className="flex flex-col">
+                <h3>Season:</h3>
+                <input
+                  type="text"
+                  value={updatedStat.Season}
+                  onChange={(e) =>
+                    setUpdatedStat({
+                      ...updatedStat,
+                      Season: e.target.value,
+                    })
+                  }
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-1 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </label>
+              <label className="flex flex-col">
+                <h3>sex_id:</h3>
+                <input
+                  type="text"
+                  value={updatedStat.sex_id}
+                  onChange={(e) =>
+                    setUpdatedStat({
+                      ...updatedStat,
+                      sex_id: e.target.value,
+                    })
+                  }
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  />
+              </label>
+            </div>
+            <div className="flex justify-center">
+              <button
+                className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 mb-5 mx-5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                onClick={() => setShowModal(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 mb-5 mx-5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                onClick={handleUpdate}
+              >
+                Save
+              </button>
+            </div>
+          </div>
+          </div>
+      )}
     </div>
   );
 }
