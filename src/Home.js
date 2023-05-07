@@ -81,7 +81,7 @@ const Home = () => {
         </div>
       </div>
       
-  <div className="container mx-auto my-8 z-20 relative bg-white" key={article.id}>
+  <div className="flex flex-col container mx-auto my-8 z-20 relative w-full bg-white" key={article.id}>
     <h2 className="text-2xl font-bold mb-4 text-center">Recent Articles</h2>
     {latestArticles.map((article) => (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
