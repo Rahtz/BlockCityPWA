@@ -66,12 +66,14 @@ function Records() {
     const top5ReboundsM = getTop5PlayersByStat(stats, "Rebounds", 1);
     const top5StealsM = getTop5PlayersByStat(stats, "Steals", 1);
     const top5BlocksM = getTop5PlayersByStat(stats, "Blocks", 1);
+    const top5MvpPointsM = getTop5PlayersByStat(stats, "MvpPoints", 1);
 
     const top5PointsW = getTop5PlayersByStat(stats, "Points", 2);
     const top5AssistsW = getTop5PlayersByStat(stats, "Assists", 2);
     const top5ReboundsW = getTop5PlayersByStat(stats, "Rebounds", 2);
     const top5StealsW = getTop5PlayersByStat(stats, "Steals", 2);
-    const top5BlocksW = getTop5PlayersByStat(stats, "Blocks", 2);
+    const top5BlocksW = getTop5PlayersByStat(stats, "Blocks", 2);    
+    const top5MvpPointsW = getTop5PlayersByStat(stats, "MvpPoints", 1);
 
 
     const handleMenClick = () => {
@@ -89,6 +91,7 @@ function Records() {
             assists: top5AssistsM,
             steals: top5StealsM,
             blocks: top5BlocksM,
+            mvppoints: top5MvpPointsM,
           }
         : {
             points: top5PointsW,
@@ -96,6 +99,7 @@ function Records() {
             assists: top5AssistsW,
             steals: top5StealsW,
             blocks: top5BlocksW,
+            mvppoints: top5MvpPointsW,
           };
  
   return (
@@ -240,6 +244,23 @@ function Records() {
                             </Link>
                         </div>
                         <p className={`text-sm pr-10 ${index === 0 ? 'font-bold' : ''}`}>{(item.Blocks)}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div className="bg-white">
+                <p className="text-blue-600 font-display pl-8 py-2">MVP POINTS</p>
+                <hr/>
+                <div className="flex flex-col -space-y-[12px]">
+                    {statsToDisplay.mvppoints.map((item, index) => (
+                        <div key={index} className="flex items-center justify-between py-2">
+                        <div className="flex items-center">
+                            <p className={`text-sm pl-10 ${index === 0 ? 'font-bold' : ''}`}>{index + 1}.</p>
+                            <Link to={`/stats/${item.playerId}`}>
+                            <p className={`text-sm pl-2 ${index === 0 ? 'font-bold' : ''}`}>{PlayersName[item.playerId]}</p>
+                            </Link>
+                        </div>
+                        <p className={`text-sm pr-10 ${index === 0 ? 'font-bold' : ''}`}>{(item.MvpPoints)}</p>
                         </div>
                     ))}
                 </div>

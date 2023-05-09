@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "./client";
+import WeeklyMvp from "./WeeklyMvp";
 import myImage from "./images/myImage.jpg";
 import CometsLastGame from "./images/CometsLastGame.jpg";
 import HighFlyersLastGame from "./images/HighFlyersLastGame.jpg";
@@ -62,8 +63,8 @@ const Home = () => {
 
   return (
     <div>
-      <div className="relative h-[500px] overflow-hidden">
-        <div className="absolute inset-0">
+      <div className="relative h-[600px] overflow-hidden">
+        <div className="absolute inset-0 -mt-2">
           <img
             src={myImage}
             alt="My Image"
@@ -80,8 +81,11 @@ const Home = () => {
           </button>
         </div>
       </div>
+      <div className="bg-white relative z-10">
+        <WeeklyMvp />
+      </div>
       
-  <div className="flex flex-col container mx-auto my-8 z-20 relative w-full bg-white" key={article.id}>
+  <div className="flex flex-col container mx-auto z-20 relative w-full bg-white" key={article.id}>
     <h2 className="text-2xl font-bold mb-4 text-center">Recent Articles</h2>
     {latestArticles.map((article) => (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">

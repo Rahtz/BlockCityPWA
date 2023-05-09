@@ -51,7 +51,7 @@ const Navbar = ({ session, handleSessionChange }) => {
           navbar ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex flex-col items-start mt-[65px] w-[150px] h-full border-onyx border-x-[1px] bg-black">
+        <div className="flex flex-col items-start mt-[70px] w-[150px] h-full border-onyx border-x-[1px] bg-black">
           <p
             className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx ${
               location.pathname === "/home" ? "text-white" : ""
@@ -116,7 +116,7 @@ const Navbar = ({ session, handleSessionChange }) => {
           )}
         </div>
       </nav>
-      <nav className="sticky top-0 w-full border-b-[1px] border-onyx bg-black shadow z-50">
+      <nav className="fixed top-0 w-full border-b-[1px] border-onyx bg-black shadow z-50">
         <div className="flex justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
           <div>
             <div className="flex items-center py-3 md:py-5 md:block">

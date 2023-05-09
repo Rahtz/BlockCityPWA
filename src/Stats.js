@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "./client";
 import { Link } from "react-router-dom";
-import Pagination from "./Pagination";
 import ClipLoader from "react-spinners/ClipLoader";
 
 function Stats() {
@@ -11,8 +10,7 @@ function Stats() {
   const [stats, setStats] = useState([]);
   const [sexs, setSexs] = useState([]);
   const [showCreate, setShowCreate] = useState(false);
-  const [showModal, setShowModal] = useState(false); 
-  const [searchText, setSearchText] = useState("");
+  const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStat, setSelectedStat] = useState(null);
@@ -33,6 +31,7 @@ function Stats() {
     FreeThrowsMade: "",
     Season: "",
     sex_id: "",
+    MvpPoints: "",
   });
 
   const [stat, setStat] = useState({
@@ -52,6 +51,7 @@ function Stats() {
     FreeThrowsMade: "",
     Season: "",
     sex_id: "",
+    MvpPoints: "",
   });
   const {
     YourDate,
@@ -70,7 +70,14 @@ function Stats() {
     FreeThrowsMade,
     Season,
     sex_id,
+    MvpPoints,
   } = stat;
+
+  const [inputValues, setInputValues] = useState({
+    num1: 0,
+    num2: 0,
+    sum: 0,
+  });
 
   useEffect(() => {
     fetchStats();
@@ -124,6 +131,7 @@ function Stats() {
           FreeThrowsMade,
           Season,
           sex_id,
+          MvpPoints,
         },
       ])
       .single();
@@ -143,9 +151,10 @@ function Stats() {
       FreeThrowsAttempted: "",
       FreeThrowsMade: "",
       sex_id: "",
+      MvpPoints: "",
     });
     fetchStats();
-    setShowCreate(false)
+    setShowCreate(false);
   }
 
   async function deleteStat(id) {
@@ -205,8 +214,28 @@ function Stats() {
     setShowModal(true);
   };
 
+  const handleInputChange1 = (event) => {
+    const { name, value } = event.target;
+
+    setInputValues((prevValues) => {
+      const newValues = { ...prevValues, [name]: Number(value) };
+      newValues.sum = newValues.num1 + newValues.num2;
+      return newValues;
+    });
+  };
+
+  const handlepointsclick = (e) => {
+    setStat({ ...stat, Points: e.target.value });
+    handleInputChange1(e);
+  };
+
+  const handlereboundsclick = (e) => {
+    setStat({ ...stat, Rebounds: e.target.value });
+    handleInputChange1(e);
+  };
+
   return (
-    <div className="divide-x mt-2 lg:grid grid-cols-4 ">
+    <div className="divide-x mt-2 lg:grid grid-cols-4">
       <div className="grid grid-cols-3 divide-x col-span-1">
         <div className="col-span-3">
           <div className="grid grid-cols-2 mt-2">
@@ -218,13 +247,13 @@ function Stats() {
             </button>
           </div>
           <div className="ml-2">
-          <input
-            type="text"
-            placeholder="Search by player name"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 md:w-auto md:ml-5"
-          />
+            <input
+              type="text"
+              placeholder="Search by player name"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 md:w-auto md:ml-5"
+            />
           </div>
           {/* <input type="number" placeholder="PlayerId" value={PlayerId} onChange={e => setStat({ ...stat, PlayerId: e.target.value})} /> */}
 
@@ -234,7 +263,7 @@ function Stats() {
       {showCreate && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity opacity-100 z-50">
           <div className="bg-white rounded-lg p-3 h-auto w-auto">
-            <div className="flex">
+            <div className="flex -mb-4">
               <label className="flex flex-col">
                 <h3>Date</h3>
                 <input
@@ -274,7 +303,7 @@ function Stats() {
                 </select>
               </label>
             </div>
-            <div className="flex">
+            <div className="flex -mb-4">
               <label className="flex flex-col">
                 <h3>Team</h3>
                 <select
@@ -302,15 +331,18 @@ function Stats() {
                 </select>
               </label>
             </div>
-            <div className="flex">
+            <div className="flex -mb-4">
               <label className="flex flex-col">
                 <h3>Points</h3>
                 <input
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   type="number"
                   placeholder="Points"
-                  value={Points}
-                  onChange={(e) => setStat({ ...stat, Points: e.target.value })}
+                  name="num1"
+                  value={inputValues.num1}
+                  onChange={handlereboundsclick}
+                  // value={Points}
+                  // onChange={(e) => setStat({ ...stat, Points: e.target.value })}
                 />
               </label>
               <label className="flex flex-col">
@@ -319,14 +351,17 @@ function Stats() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   type="number"
                   placeholder="Rebounds"
-                  value={Rebounds}
-                  onChange={(e) =>
-                    setStat({ ...stat, Rebounds: e.target.value })
-                  }
+                  name="num2"
+                  value={inputValues.num2}
+                  onChange={handleInputChange1}
+                  // value={Rebounds}
+                  // onChange={(e) =>
+                  //   setStat({ ...stat, Rebounds: e.target.value })
+                  // }
                 />
               </label>
             </div>
-            <div className="flex">
+            <div className="flex -mb-4">
               <label className="flex flex-col">
                 <h3>Assists</h3>
                 <input
@@ -350,7 +385,7 @@ function Stats() {
                 />
               </label>
             </div>
-            <div className="flex">
+            <div className="flex -mb-4">
               <label className="flex flex-col">
                 <h3>Blocks</h3>
                 <input
@@ -374,7 +409,7 @@ function Stats() {
                 />
               </label>
             </div>
-            <div className="flex">
+            <div className="flex -mb-4">
               <label className="flex flex-col">
                 <h3>FGM</h3>
                 <input
@@ -400,7 +435,7 @@ function Stats() {
                 />
               </label>
             </div>
-            <div className="flex">
+            <div className="flex -mb-4">
               <label className="flex flex-col">
                 <h3>3PM</h3>
                 <input
@@ -426,7 +461,7 @@ function Stats() {
                 />
               </label>
             </div>
-            <div className="flex">
+            <div className="flex -mb-4">
               <label className="flex flex-col">
                 <h3>FTM</h3>
                 <input
@@ -447,6 +482,20 @@ function Stats() {
                   placeholder="Season"
                   value={Season}
                   onChange={(e) => setStat({ ...stat, Season: e.target.value })}
+                />
+              </label>
+            </div>
+            <div className="flex -mb-4">
+              <label className="flex flex-col">
+                <h3>Mvp Points</h3>
+                <input
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  type="number"
+                  placeholder="MVP Points"
+                  value={inputValues.sum}
+                  onChange={(e) =>
+                    setStat({ ...stat, MvpPoints: e.target.value })
+                  }
                 />
               </label>
             </div>
@@ -481,7 +530,6 @@ function Stats() {
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400 sticky top-0 z-10">
               <tr>
-              
                 <th scope="col" className="py-3 px-1 sticky left-0 bg-gray-200">
                   Player
                 </th>
@@ -527,74 +575,73 @@ function Stats() {
                 <th scope="col" className="py-3 px-1 text-center">
                   Season
                 </th>
-                <th
-                  scope="col"
-                  className="md:block py-3 px-1 text-center"
-                >
+                <th scope="col" className="md:block py-3 px-1 text-center">
                   Options
                 </th>
               </tr>
             </thead>
             <tbody>
               {stats
-  .filter((stat) =>
-    PlayersName[stat.PlayerId].toLowerCase().includes(searchQuery.toLowerCase())
-  )
-  .map((stat) => (
-                <tr
-                  key={stat.id}
-                  className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 text-xs"
-                >
-                  <th
-                    scope="row"
-                    className="sticky left-0 bg-white py-4 pl-5 font-medium text-gray-900 whitespace-nowrap dark:text-white "
+                .filter((stat) =>
+                  PlayersName[stat.PlayerId]
+                    .toLowerCase()
+                    .includes(searchQuery.toLowerCase())
+                )
+                .map((stat) => (
+                  <tr
+                    key={stat.id}
+                    className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 text-xs"
                   >
-                    <Link to={`/stats/${stat.PlayerId}`}>
-                      {PlayersName[stat.PlayerId]}
-                    </Link>
-                  </th>
-                  <td>{TeamsName[stat.TeamId]}</td>
-                  <td className="py-1 px-1">{stat.YourDate}</td>
-                  <td className="py-1 px-1 text-center">{stat.Points}</td>
-                  <td className="py-1 px-1 text-center">{stat.Rebounds}</td>
-                  <td className="py-1 px-1 text-center">{stat.Assists}</td>
-                  <td className="py-1 px-1 text-center">{stat.Steals}</td>
-                  <td className="py-1 px-1 text-center">{stat.Blocks}</td>
-                  <td className="py-1 px-1 text-center">
-                    {stat.FeildGoalsAttempted}
-                  </td>
-                  <td className="py-1 px-1 text-center">
-                    {stat.FeildGoalsMade}
-                  </td>
-                  <td className="py-1 px-1 text-center">
-                    {stat.ThreePointersAttempted}
-                  </td>
-                  <td className="py-1 px-1 text-center">
-                    {stat.ThreePointersMade}
-                  </td>
-                  <td className="py-1 px-1 text-center">
-                    {stat.FreeThrowsAttempted}
-                  </td>
-                  <td className="py-1 px-1 text-center">
-                    {stat.FreeThrowsMade}
-                  </td>
-                  <td className="py-1 px-1 text-center">{stat.Season}</td>
-                  <td className="py-1 px-1 text-center">
-                  <button
-                      className="lg:block font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                      onClick={() => handleEditClick(stat)}
+                    <th
+                      scope="row"
+                      className="sticky left-0 bg-white py-4 pl-5 font-medium text-gray-900 whitespace-nowrap dark:text-white "
                     >
-                      Edit
-                    </button>
-                    <button
-                      className="md:block font-medium text-blue-600 dark:text-blue-500 hover:underline "
-                      onClick={() => deleteStat(stat.id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
+                      <Link to={`/stats/${stat.PlayerId}`}>
+                        {PlayersName[stat.PlayerId]}
+                      </Link>
+                    </th>
+                    <td>{TeamsName[stat.TeamId]}</td>
+                    <td className="py-1 px-1">{stat.YourDate}</td>
+                    <td className="py-1 px-1 text-center">{stat.Points}</td>
+                    <td className="py-1 px-1 text-center">{stat.Rebounds}</td>
+                    <td className="py-1 px-1 text-center">{stat.Assists}</td>
+                    <td className="py-1 px-1 text-center">{stat.Steals}</td>
+                    <td className="py-1 px-1 text-center">{stat.Blocks}</td>
+                    <td className="py-1 px-1 text-center">
+                      {stat.FeildGoalsAttempted}
+                    </td>
+                    <td className="py-1 px-1 text-center">
+                      {stat.FeildGoalsMade}
+                    </td>
+                    <td className="py-1 px-1 text-center">
+                      {stat.ThreePointersAttempted}
+                    </td>
+                    <td className="py-1 px-1 text-center">
+                      {stat.ThreePointersMade}
+                    </td>
+                    <td className="py-1 px-1 text-center">
+                      {stat.FreeThrowsAttempted}
+                    </td>
+                    <td className="py-1 px-1 text-center">
+                      {stat.FreeThrowsMade}
+                    </td>
+                    <td className="py-1 px-1 text-center">{stat.Season}</td>
+                    <td className="py-1 px-1 text-center">
+                      <button
+                        className="lg:block font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                        onClick={() => handleEditClick(stat)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="md:block font-medium text-blue-600 dark:text-blue-500 hover:underline "
+                        onClick={() => deleteStat(stat.id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         )}
@@ -602,7 +649,7 @@ function Stats() {
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity opacity-100 z-50">
           <div className="bg-white rounded-lg p-3 h-5/6 w-auto">
-          <h2 className="text-lg font-medium mb-4">Edit Stat Details</h2>
+            <h2 className="text-lg font-medium mb-4">Edit Stat Details</h2>
             <div className="flex">
               <label className="flex flex-col">
                 <h3>Name:</h3>
@@ -648,7 +695,7 @@ function Stats() {
                   type="text"
                   value={updatedStat.Points}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-1 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
+                />
               </label>
             </div>
             <div className="flex">
@@ -678,7 +725,7 @@ function Stats() {
                     })
                   }
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-1 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
+                />
               </label>
             </div>
             <div className="flex">
@@ -708,7 +755,7 @@ function Stats() {
                     })
                   }
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-1 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
+                />
               </label>
             </div>
             <div className="flex">
@@ -738,7 +785,7 @@ function Stats() {
                     })
                   }
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-1 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
+                />
               </label>
             </div>
             <div className="flex">
@@ -768,7 +815,7 @@ function Stats() {
                     })
                   }
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-1 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
+                />
               </label>
             </div>
             <div className="flex">
@@ -798,7 +845,7 @@ function Stats() {
                     })
                   }
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-1 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
+                />
               </label>
             </div>
             <div className="flex">
@@ -828,7 +875,7 @@ function Stats() {
                     })
                   }
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
+                />
               </label>
             </div>
             <div className="flex justify-center">
@@ -846,7 +893,7 @@ function Stats() {
               </button>
             </div>
           </div>
-          </div>
+        </div>
       )}
     </div>
   );
