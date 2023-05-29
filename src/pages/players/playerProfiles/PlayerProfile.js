@@ -427,7 +427,7 @@ function Stats() {
   // console.log(totalPoints);
 
   return (
-    <div className='overscroll-none'>
+    <div>
       <div className="w-full bg-gray-800 -mt-2">
         <div className="flex w-full h-auto border">
           <div className="block w-3/6">
