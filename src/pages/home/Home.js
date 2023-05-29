@@ -58,7 +58,7 @@ const Home = () => {
             style={{ maxHeight: "calc(100% - 40px)" }}
           >
             <img
-              src={`https://kztusjtvdmyslpoycgad.supabase.co/storage/v1/object/public/images/public/${article.imageName}`}
+              src={`https://kztusjtvdmyslpoycgad.supabase.co/storage/v1/object/public/images/public/${article.picture_url}`}
               alt="Article Image"
             />
             <h2 className="text-lg font-bold mb-2">{article.heading}</h2>

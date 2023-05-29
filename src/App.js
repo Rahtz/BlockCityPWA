@@ -14,6 +14,7 @@ import Articles from "../src/pages/addArticles/Articles";
 import TeamProfile from "./pages/teams/teamProfiles/TeamProfile";
 import TopWeeklyMvpPoints from "./pages/mvp/TopWeeklyMvpPoints";
 import Pictures from "./pages/Pictures";
+import ComparePlayers from "./pages/ComparePlayers";
 import NotFound from "./NotFound";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState } from "react";
@@ -51,6 +52,7 @@ function App() {
             <Route path="/records" element={<Records />} />
             <Route path="/stat" element={<Stat />} />
             <Route path="/pictures" element={<Pictures />} />
+            <Route path="/compare" element={<ComparePlayers />} />
             <Route path="/mvp" element={<TopWeeklyMvpPoints />} />
             <Route path="/articles" element={<Articles />} />
             <Route path="/login" element={<Login />} />
