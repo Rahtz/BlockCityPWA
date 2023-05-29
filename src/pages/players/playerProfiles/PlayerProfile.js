@@ -394,6 +394,38 @@ function Stats() {
 
   const totals = calculateTotals();
 
+  let totalAssists = 0;
+  let totalBlocks = -0;
+  let totalFGAttempted = -0;
+  let totalFGMade = -0;
+  let totalFTAttempted = -0;
+  let totalFTMade = -0;
+  let totalPoints = -0;
+  let totalRebounds = -0;
+  let totalSteals = -0;
+  let totalThreeAttempted = -0;
+  let totalThreeMade = -0;  
+  let totalturnovers = -0;
+  let totalmvpPoints = -0;
+
+  stats.forEach((stat) => {
+      totalAssists += stat.Assists;
+      totalBlocks += stat.Blocks;
+      totalFGAttempted += stat.FeildGoalsAttempted;
+      totalFGMade += stat.FeildGoalsMade;
+      totalFTAttempted += stat.FreeThrowsAttempted;
+      totalFTMade += stat.FreeThrowsMade;
+      totalPoints += stat.Points;
+      totalRebounds += stat.Rebounds;
+      totalSteals += stat.Steals;
+      totalThreeAttempted += stat.ThreePointersAttempted;
+      totalThreeMade += stat.ThreePointersMade;      
+      totalturnovers += stat.Turnovers;
+      totalmvpPoints += stat.MvpPoints;
+  });
+  // console.log(stats);
+  // console.log(totalPoints);
+
   return (
     <div>
       <div className="w-full bg-gray-800 -mt-2">
@@ -1137,8 +1169,52 @@ function Stats() {
                         <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                           {total.mvpPoints}
                         </td>
-                      </tr>
+                      </tr>                      
                     ))}
+                    <tr className="bg-white border-b">
+                        <td className="px-6 py-2 whitespace-nowrap text-xs font-medium text-gray-900 border-r">
+                        Total
+                        </td>
+                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {totalPoints}
+                        </td>
+                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {totalRebounds}
+                        </td>
+                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {totalAssists}
+                        </td>
+                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {totalSteals}
+                        </td>
+                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {totalBlocks}
+                        </td>
+                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {totalFGAttempted}
+                        </td>
+                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {totalFGMade}
+                        </td>
+                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {totalThreeAttempted}
+                        </td>
+                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {totalThreeMade}
+                        </td>
+                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {totalFTAttempted}
+                        </td>
+                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {totalFTMade}
+                        </td>
+                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {totalturnovers}
+                        </td>
+                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {totalmvpPoints}
+                        </td>
+                      </tr>
                   </tbody>
                 </table>
               </div>
