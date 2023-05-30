@@ -149,7 +149,7 @@ const Home = () => {
             ))}
           </div>
         </div>
-        <div className="mt-4">
+        <div>
         <Sponsors />
         </div>
       </div>
