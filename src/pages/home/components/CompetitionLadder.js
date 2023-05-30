@@ -3,7 +3,9 @@ import React from 'react'
 const CompetitionLadder = () => {
   return (
     <div>
-        <h1 className="text-4xl py-5 font-bold text-center">Competition Ladder</h1>
+    <h1 className="text-4xl py-5 font-bold text-center">Competition Ladder</h1>
+    <div className="lg:flex lg:justify-center">
+        <div>
         <h2 className="text-bold text-center py-4 text-xl text-black">Mens</h2>
           <div class="overflow-x-auto">
             <div class="flex justify-center">
@@ -182,6 +184,9 @@ const CompetitionLadder = () => {
               </table>
             </div>
           </div>
+          </div>
+
+          <div>
 
           <h2 className="text-bold text-center py-4 text-xl text-black">Womens</h2>
 
@@ -286,6 +291,8 @@ const CompetitionLadder = () => {
                 </tbody>
               </table>
             </div>
+            </div>
+          </div>
           </div>
     </div>
   )

@@ -109,11 +109,14 @@ const Home = () => {
         </div>
       </div>
       <div className="bg-white relative z-20 -mt-[110px] lg:mt-[300px]">
-      <div className="lg:flex">
+      <div>
+          <WeeklyMvp />
+        </div>
+      <div>
         <div>
           <CompetitionLadder />
         </div>
-        <div>
+        <div className="lg:hidden">
           <WeeklyMvp />
         </div>
         </div>
