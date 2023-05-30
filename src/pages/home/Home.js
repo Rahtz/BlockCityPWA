@@ -3,6 +3,7 @@ import { supabase } from "../../services/client";
 import WeeklyMvp from "./components/WeeklyMvp";
 import myImage from "../../assets/images/myImage.jpg";
 import CompetitionLadder from "./components/CompetitionLadder";
+import Sponsors from "./components/Sponsors";
 
 const Home = () => {
   const [showModal, setShowModal] = useState(false);
@@ -116,21 +117,21 @@ const Home = () => {
           <WeeklyMvp />
         </div>
         </div>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 z-20 relative bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 z-20 relative bg-white w-[300px] lg:w-full">
           <h1 className="text-2xl font-bold mb-4 text-center">
-            Recent Articles
+            Our Latest Articles
           </h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {latestArticles.map((article) => (
               <div
-                className="bg-white rounded-lg shadow-lg hover:shadow-xl overflow-hidden"
+                className="bg-white shadow-lg hover:shadow-xl overflow-hidden rounded-lg"
                 key={article.id}
               >
                 <a className="block" onClick={handleLinkClick}>
                   <img
                     src={`https://kztusjtvdmyslpoycgad.supabase.co/storage/v1/object/public/images/public/${article.picture_url}`}
                     alt="Article Image"
-                    className="w-full lg:h-[400px]"
+                    className="w-full h-[250px] lg:h-[400px]"
                   />
                   <div className="p-4">
                     <h3 className="text-xl font-bold mb-2">
@@ -147,6 +148,9 @@ const Home = () => {
               </div>
             ))}
           </div>
+        </div>
+        <div className="mt-4">
+        <Sponsors />
         </div>
       </div>
       {selectedArticle && (

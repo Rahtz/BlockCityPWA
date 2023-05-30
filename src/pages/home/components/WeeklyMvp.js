@@ -72,34 +72,34 @@ const WeeklyMvp = () => {
           }) => (
             <div
               key={TeamId}
-              className="flex flex-col items-center bg-white rounded-lg shadow-lg px-6 py-4 my-4 w-full max-w-2xl border border-gray-200"
+              className="flex flex-col items-center bg-white rounded-lg shadow-lg px-6 py-1 my-4 w-full h-[150px] max-w-2xl border border-gray-200"
             >
-              <p className="text-xl font-semibold mb-2">{TeamsName[TeamId]}</p>
-              <p className="text-lg font-medium mb-2">
+              <p className="text-lg font-semibold mb-1">{TeamsName[TeamId]}</p>
+              <p className="text-md font-medium mb-1">
                 {PlayersName[PlayerId]}
               </p>
-              <p className="text-lg font-medium mb-2">
+              <p className="text-md font-medium mb-1">
                 MVP Points: {MvpPoints}
               </p>
               <div className="grid grid-cols-5 gap-2">
-                <div className="bg-gray-200 rounded-lg px-4 py-2 text-center">
-                  <p className="text-sm font-bold">PTS</p>
+                <div className="bg-gray-200 rounded-lg px-4 py-1 text-center">
+                  <p className="text-xs font-bold">PTS</p>
                   <p>{Points}</p>
                 </div>
-                <div className="bg-gray-200 rounded-lg px-4 py-2 text-center">
-                  <p className="text-sm font-bold">AST</p>
+                <div className="bg-gray-200 rounded-lg px-4 py-1 text-center">
+                  <p className="text-xs font-bold">AST</p>
                   <p>{Assists}</p>
                 </div>
-                <div className="bg-gray-200 rounded-lg px-4 py-2 text-center">
-                  <p className="text-sm font-bold">REB</p>
+                <div className="bg-gray-200 rounded-lg px-4 py-1 text-center">
+                  <p className="text-xs font-bold">REB</p>
                   <p>{Rebounds}</p>
                 </div>
-                <div className="bg-gray-200 rounded-lg px-4 py-2 text-center">
-                  <p className="text-sm font-bold">STL</p>
+                <div className="bg-gray-200 rounded-lg px-4 py-1 text-center">
+                  <p className="text-xs font-bold">STL</p>
                   <p>{Steals}</p>
                 </div>
-                <div className="bg-gray-200 rounded-lg px-4 py-2 text-center">
-                  <p className="text-sm font-bold">BLK</p>
+                <div className="bg-gray-200 rounded-lg px-4 py-1 text-center">
+                  <p className="text-xs font-bold">BLK</p>
                   <p>{Blocks}</p>
                 </div>
               </div>

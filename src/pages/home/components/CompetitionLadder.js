@@ -7,7 +7,7 @@ const CompetitionLadder = () => {
         <h2 className="text-bold text-center py-4 text-xl text-black">Mens</h2>
           <div class="overflow-x-auto">
             <div class="flex justify-center">
-              <table class="min-w-full divide-y divide-gray-200">
+              <table class="min-w-full divide-y divide-gray-200 ">
                 <thead class="bg-gray-50">
                   <tr>
                     <th
