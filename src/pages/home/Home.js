@@ -109,7 +109,7 @@ const Home = () => {
         </div>
       </div>
       <div className="bg-white relative z-20 -mt-[110px] lg:mt-[300px]">
-      <div>
+      <div className="hidden lg:block">
           <WeeklyMvp />
         </div>
       <div>
