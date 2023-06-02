@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../services/client";
+import AdminNav from "../layout/AdminNav";
 
 
 const Pictures = () => {
@@ -109,7 +110,9 @@ const Pictures = () => {
   
 
   return (
-    <div className="p-4">
+    <div>
+    <AdminNav/>
+    <div className="px-8">
   <form onSubmit={handleSubmit} className="mb-4">
     <label className="block mb-2">
       Image Name:
@@ -162,6 +165,7 @@ const Pictures = () => {
       ))}
     </tbody>
   </table>
+  </div>
 </div>
   );
 };

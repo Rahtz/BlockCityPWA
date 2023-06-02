@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../../services/client";
 import { Link } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
+import AdminNav from "../../layout/AdminNav";
 
 function Stats() {
   const [loading, setLoading] = useState(false);
@@ -217,6 +218,7 @@ function Stats() {
 
   return (
     <div className="divide-x mt-2 lg:grid grid-cols-4">
+    <AdminNav/>
       <div className="grid grid-cols-3 divide-x col-span-1">
         <div className="col-span-3">
           <div className="grid grid-cols-2 mt-2">

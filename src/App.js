@@ -15,6 +15,7 @@ import TeamProfile from "./pages/teams/teamProfiles/TeamProfile";
 import TopWeeklyMvpPoints from "./pages/mvp/TopWeeklyMvpPoints";
 import Pictures from "./pages/Pictures";
 import ComparePlayers from "./pages/ComparePlayers";
+import Admin from "./pages/administration/Admin";
 import NotFound from "./NotFound";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState } from "react";
@@ -29,7 +30,10 @@ function App() {
   };
 
   return (
-    <Router>
+    
+    <div className="flex flex-col min-h-screen">
+  <div className="flex-grow">
+  <Router>
       <div className="App">
         <Helmet>
           <meta
@@ -56,13 +60,23 @@ function App() {
             <Route path="/mvp" element={<TopWeeklyMvpPoints />} />
             <Route path="/articles" element={<Articles />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/admin" element={<Admin />} />
             <Route path="/team/:id" element={<TeamProfile />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </Router>
+  </div>
+  <footer className="bg-black py-4 mt-2">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <p className="text-white text-center">
+        &copy; {new Date().getFullYear()} Jacob Ratima. All rights reserved.
+      </p>
+    </div>
+  </footer>
+</div>
   );
 }
 

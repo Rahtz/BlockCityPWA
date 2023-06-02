@@ -53,7 +53,7 @@ const Navbar = ({ session, handleSessionChange }) => {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 w-full z-50 bg-black text-white ">
+      <nav className="fixed top-0 left-0 w-full z-50 bg-black text-white lg:h-[80px] lg:pb-1">
         <div className="md:flex md:items-center md:justify-between md:py-4 md:px-6">
           <div className="flex">
             <div className="flex items-center justify-between py-4 px-6 lg:py-1">
@@ -125,7 +125,7 @@ const Navbar = ({ session, handleSessionChange }) => {
                   MVP
                 </Link>
               </p>
-              {session ? (
+              {/* {session ? (
                 <p
                   className={`text-sm font-bold py-3 pl-2 w-full font-sans border-onyx ${
                     location.pathname === "/stats" ? "text-white" : ""
@@ -159,6 +159,19 @@ const Navbar = ({ session, handleSessionChange }) => {
                 >
                   <Link to="/pictures">
                     Images
+                  </Link>
+                </p>
+              ) : (
+                <></>
+              )} */}
+              {session ? (
+                <p
+                  className={`text-sm font-bold py-3 pl-2 w-full font-sans border-onyx ${
+                    location.pathname === "/admin" ? "text-white" : ""
+                  }`}
+                >
+                  <Link to="/admin">
+                    Admin
                   </Link>
                 </p>
               ) : (
@@ -233,7 +246,7 @@ const Navbar = ({ session, handleSessionChange }) => {
                 MVP
             </p>
               </Link>
-            {session ? (
+            {/* {session ? (
                 <Link to="/stats" onClick={() => setIsOpen(false)}>
               <p
                 className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx text-center ${
@@ -267,6 +280,19 @@ const Navbar = ({ session, handleSessionChange }) => {
                 }`}
               >
                   Images
+              </p>
+                </Link>
+            ) : (
+              <></>
+            )} */}
+            {session ? (
+                <Link to="/admin" onClick={() => setIsOpen(false)}>
+              <p
+                className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx text-center ${
+                  location.pathname === "/admin" ? "text-white" : ""
+                }`}
+              >
+                  Admin
               </p>
                 </Link>
             ) : (
