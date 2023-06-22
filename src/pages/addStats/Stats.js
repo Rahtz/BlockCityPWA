@@ -87,8 +87,28 @@ function Stats() {
   }, []);
 
   async function fetchStats() {
-    const { data } = await supabase.from("stats").select();
-    setStats(data);
+    let allData = [];
+    let lastItem = null;
+  
+    do {
+      const { data, error } = await supabase
+        .from("stats")
+        .select()
+        .limit(1000)
+        .gt("id", lastItem?.id || 0)
+        .order("id");
+  
+      if (error) {
+        console.error(error);
+        break;
+      }
+  
+      allData.push(...data);
+      lastItem = data[data.length - 1];
+    } while (lastItem);
+  
+    setStats(allData);
+    console.log(allData);
   }
 
   async function fetchPlayers() {

@@ -125,6 +125,15 @@ const Navbar = ({ session, handleSessionChange }) => {
                   MVP
                 </Link>
               </p>
+              <p
+                className={`text-sm font-bold py-3 pl-2 w-full font-sans border-onyx ${
+                  location.pathname === "/milestones" ? "text-white" : ""
+                }`}
+              >
+                <Link to="/milestones" >
+                  Milestones
+                </Link>
+              </p>
               {/* {session ? (
                 <p
                   className={`text-sm font-bold py-3 pl-2 w-full font-sans border-onyx ${
@@ -244,6 +253,15 @@ const Navbar = ({ session, handleSessionChange }) => {
               }`}
             >
                 MVP
+            </p>
+              </Link>
+              <Link to="/milestones" onClick={() => setIsOpen(false)}>
+            <p
+              className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx text-center ${
+                location.pathname === "/milestones" ? "text-white" : ""
+              }`}
+            >
+                Milestones
             </p>
               </Link>
             {/* {session ? (

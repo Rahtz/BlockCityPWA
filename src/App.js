@@ -7,6 +7,7 @@ import AverageStats from "./pages/stats/AverageStats";
 import PlayerProfile from "./pages/players/playerProfiles/PlayerProfile";
 import Records from "./pages/stats/Records";
 import Home from "../src/pages/home/Home";
+import Milestones from "../src/pages/home/components/Milestones";
 import Stat from "./pages/stats/Stat";
 import Login from "./pages/login/Login";
 import Footer from "./layout/Footer";
@@ -59,6 +60,7 @@ function App() {
             <Route path="/compare" element={<ComparePlayers />} />
             <Route path="/mvp" element={<TopWeeklyMvpPoints />} />
             <Route path="/articles" element={<Articles />} />
+            <Route path="/milestones" element={<Milestones />} />
             <Route path="/login" element={<Login />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/team/:id" element={<TeamProfile />} />

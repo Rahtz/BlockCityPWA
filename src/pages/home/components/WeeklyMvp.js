@@ -57,8 +57,8 @@ const WeeklyMvp = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <h1 className="text-4xl mt-10 font-bold">Weekly MVPs</h1>
-      <div className="lg:flex lg:flex-row lg:space-x-2">
+      <h1 className="text-4xl mt-10 font-bold lg:text-white">Weekly MVPs</h1>
+      <div className="lg:flex lg:flex-row lg:space-x-4">
         {stats.map(
           ({
             TeamId,
@@ -72,34 +72,34 @@ const WeeklyMvp = () => {
           }) => (
             <div
               key={TeamId}
-              className="flex flex-col items-center bg-white rounded-lg shadow-lg px-6 py-1 my-4 w-full h-[150px] max-w-2xl border border-gray-200"
+              className="flex flex-col items-center bg-white rounded-lg shadow-lg px-6 py-1 my-4 lg:h-[200px] lg:w-[400px] w-full h-[150px] max-w-2xl border border-gray-200"
             >
               <p className="text-lg font-semibold mb-1">{TeamsName[TeamId]}</p>
               <p className="text-md font-medium mb-1">
                 {PlayersName[PlayerId]}
               </p>
-              <p className="text-md font-medium mb-1">
+              <p className="text-md font-medium lg:mb-7 mb-1">
                 MVP Points: {MvpPoints}
               </p>
               <div className="grid grid-cols-5 gap-2">
-                <div className="bg-gray-200 rounded-lg px-4 py-1 text-center">
-                  <p className="text-xs font-bold">PTS</p>
+                <div className="bg-gray-200 rounded-lg lg:px-6 lg:py-2 px-4 py-1 text-center">
+                  <p className="lg:text-sm text-xs font-bold">PTS</p>
                   <p>{Points}</p>
                 </div>
-                <div className="bg-gray-200 rounded-lg px-4 py-1 text-center">
-                  <p className="text-xs font-bold">AST</p>
-                  <p>{Assists}</p>
-                </div>
-                <div className="bg-gray-200 rounded-lg px-4 py-1 text-center">
-                  <p className="text-xs font-bold">REB</p>
+                <div className="bg-gray-200 rounded-lg lg:px-6 lg:py-2 px-4 py-1 text-center">
+                  <p className="lg:text-sm text-xs font-bold">REB</p>
                   <p>{Rebounds}</p>
                 </div>
-                <div className="bg-gray-200 rounded-lg px-4 py-1 text-center">
-                  <p className="text-xs font-bold">STL</p>
+                <div className="bg-gray-200 rounded-lg lg:px-6 lg:py-2 px-4 py-1 text-center">
+                  <p className="lg:text-sm text-xs font-bold">AST</p>
+                  <p>{Assists}</p>
+                </div>
+                <div className="bg-gray-200 rounded-lg lg:px-6 lg:py-2 px-4 py-1 text-center">
+                  <p className="lg:text-sm text-xs font-bold">STL</p>
                   <p>{Steals}</p>
                 </div>
-                <div className="bg-gray-200 rounded-lg px-4 py-1 text-center">
-                  <p className="text-xs font-bold">BLK</p>
+                <div className="bg-gray-200 rounded-lg lg:px-6 lg:py-2 px-4 py-1 text-center">
+                  <p className="lg:text-sm text-xs font-bold">BLK</p>
                   <p>{Blocks}</p>
                 </div>
               </div>

@@ -351,7 +351,6 @@ const Stat = () => {
       })
       ;
 
-    console.log(statsToDisplay.tpm);
 
   return (
     <div className="h-auto bg-gray-200">

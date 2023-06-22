@@ -257,18 +257,36 @@ const TeamProfile = () => {
                       <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {stat.FeildGoalsMade}
                       </td>
+                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                            {(
+                              (stat.FeildGoalsMade / stat.FeildGoalsAttempted) *
+                              100
+                            ).toFixed(1) + "%"}
+                          </td>
                       <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {stat.ThreePointersAttempted}
                       </td>
                       <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {stat.ThreePointersMade}
                       </td>
+                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                            {(
+                              (stat.ThreePointersMade / stat.ThreePointersAttempted) *
+                              100
+                            ).toFixed(1) + "%"}
+                          </td>
                       <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {stat.FreeThrowsAttempted}
                       </td>
                       <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {stat.FreeThrowsMade}
                       </td>
+                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                            {(
+                              (stat.FreeThrowsMade / stat.FreeThrowsAttempted) *
+                              100
+                            ).toFixed(1) + "%"}
+                          </td>
                       <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {stat.Turnovers}
                       </td>

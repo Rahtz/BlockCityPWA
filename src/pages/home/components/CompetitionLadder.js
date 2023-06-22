@@ -238,10 +238,10 @@ const CompetitionLadder = () => {
                         </div>
                       </div>
                     </td>
-                    <td class="px-6 whitespace-nowrap">3</td>
+                    <td class="px-6 whitespace-nowrap">4</td>
                     <td class="px-6 whitespace-nowrap">3</td>
                     <td class="px-6 whitespace-nowrap">0</td>
-                    <td class="px-6 whitespace-nowrap">+119</td>
+                    <td class="px-6 whitespace-nowrap">+115</td>
                   </tr>
                   <tr className="bg-yellow-200">
                     <td class="px-6 py-2 whitespace-nowrap">
@@ -253,10 +253,10 @@ const CompetitionLadder = () => {
                         </div>
                       </div>
                     </td>
-                    <td class="px-6 whitespace-nowrap">3</td>
-                    <td class="px-6 whitespace-nowrap">2</td>
+                    <td class="px-6 whitespace-nowrap">5</td>
+                    <td class="px-6 whitespace-nowrap">4</td>
                     <td class="px-6 whitespace-nowrap">1</td>
-                    <td class="px-6 whitespace-nowrap">+46</td>
+                    <td class="px-6 whitespace-nowrap">+85</td>
                   </tr>
                   <tr>
                     <td class="px-6 py-2 whitespace-nowrap">
@@ -268,10 +268,10 @@ const CompetitionLadder = () => {
                         </div>
                       </div>
                     </td>
-                    <td class="px-6 whitespace-nowrap">3</td>
-                    <td class="px-6 whitespace-nowrap">1</td>
+                    <td class="px-6 whitespace-nowrap">5</td>
                     <td class="px-6 whitespace-nowrap">2</td>
-                    <td class="px-6 whitespace-nowrap">-13</td>
+                    <td class="px-6 whitespace-nowrap">3</td>
+                    <td class="px-6 whitespace-nowrap">-21</td>
                   </tr>
                   <tr>
                     <td class="px-6 py-2 whitespace-nowrap">
@@ -283,10 +283,10 @@ const CompetitionLadder = () => {
                         </div>
                       </div>
                     </td>
-                    <td class="px-6 whitespace-nowrap">3</td>
-                    <td class="px-6 whitespace-nowrap">1</td>
-                    <td class="px-6 whitespace-nowrap">2</td>
-                    <td class="px-6 whitespace-nowrap">-152</td>
+                    <td class="px-6 whitespace-nowrap">4</td>
+                    <td class="px-6 whitespace-nowrap">0</td>
+                    <td class="px-6 whitespace-nowrap">4</td>
+                    <td class="px-6 whitespace-nowrap">-179</td>
                   </tr>                
                 </tbody>
               </table>

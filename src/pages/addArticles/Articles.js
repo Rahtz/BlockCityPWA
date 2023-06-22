@@ -30,16 +30,19 @@ const Articles = () => {
     fetchPictures();
   }, []);
 
+  //Function to get articles from the database and save them to articles const 
   async function fetchArticles() {
     const { data } = await supabase.from("articles").select();
     setArticles(data);
   }
 
+  //Function to get pictures from the database and save them to pictures const 
   async function fetchPictures() {
     const { data } = await supabase.from("pictures").select();
     setPictures(data);
   }
 
+  //supabase function that is called to create an article in the articles database table
   async function createArticle() {
     await supabase
       .from("articles")
@@ -60,6 +63,7 @@ const Articles = () => {
     setShowCreate(false);
   }
 
+  //supabase function that is called to delete an article from the articles table with the id that is passed
   async function deleteArticle(id) {
     const confirmed = window.confirm(
       "Are you sure you want to delete this article?"

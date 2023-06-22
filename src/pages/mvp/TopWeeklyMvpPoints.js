@@ -4,7 +4,8 @@ import { supabase } from "../../services/client";
 const TopWeeklyMvpPoints = () => {
   const [stats, setStats] = useState([]);
   const [players, setPlayers] = useState([]);
-  const [year, setYear] = useState(""); // set initial value to an empty string
+  const [category, setCategory] = useState(""); // category state
+  const [year, setYear] = useState(""); // year state
   const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
@@ -13,11 +14,10 @@ const TopWeeklyMvpPoints = () => {
   }, []);
 
   useEffect(() => {
-    // get the latest year from the stats data
     const latestYear = Math.max(
       ...stats.map((d) => parseInt(d.YourDate.substring(0, 4)))
     );
-    setYear(latestYear.toString()); // convert to a string and set as the default value
+    setYear(latestYear.toString());
   }, [stats]);
 
   async function getStats() {
@@ -42,28 +42,55 @@ const TopWeeklyMvpPoints = () => {
     } while (lastItem);
   
     setStats(allData);
+    console.log(allData);
   }
 
-  async function fetchPlayers() {
-    const { data } = await supabase.from("players").select();
+  async function fetchPlayers(category) {
+    let request = supabase.from("players").select();
+  
+    if (category !== "" && !isNaN(category)) {
+      request = request.eq("sex_id", parseInt(category));
+    }
+  
+    const { data, error } = await request;
+  
+    if (error) {
+      console.error(error);
+      // Handle the error as needed
+      return;
+    }
+  
     setPlayers(data);
   }
 
-  var PlayersName = players.reduce(function (result, currentObject) {
-    result[currentObject.id] = currentObject.PlayerName;
-    return result;
-  }, {});
+  var PlayersName = players
+  ? players.reduce(function (result, currentObject) {
+      result[currentObject.id] = currentObject.PlayerName;
+      return result;
+    }, {})
+  : {};
 
   const years = Array.from(
     new Set(stats.map((d) => d.YourDate.substring(0, 4)))
   ).sort((a, b) => b - a);
 
+  const handleCategoryChange = (event) => {
+    const selectedCategory = event.target.value;
+    setCategory(selectedCategory);
+  };
+  
   const handleYearChange = (event) => {
-    setYear(event.target.value);
+    const selectedYear = event.target.value;
+    setYear(selectedYear);
   };
 
   const filteredData =
-    year === "" ? stats : stats.filter((d) => d.YourDate.startsWith(year));
+  year === "" && category === ""
+    ? stats
+    : stats.filter((d) =>
+        (year === "" || d.YourDate.startsWith(year)) &&
+        (category === "" || d.sex_id === parseInt(category))
+      );
 
   const playerPoints = filteredData.reduce((points, d) => {
     const playerId = d.PlayerId;
@@ -117,12 +144,25 @@ const TopWeeklyMvpPoints = () => {
         </select>
         <span className="text-gray-500">Filter by year</span>
       </div>
+      <div className="mb-4">
+  <select
+    className="border border-gray-400 rounded px-4 py-2 mr-2"
+    value={category}
+    onChange={handleCategoryChange}
+  >
+    <option value="">All Categories</option>
+    <option value="1">Men</option>
+    <option value="2">Women</option>
+    <option value="3">Social</option>
+  </select>
+  <span className="text-gray-500">Filter by category</span>
+</div>
       <ol>
         {!showMore &&
           sortedPlayerPoints.map(({ rank, playerId, points }) => (
             <li key={playerId} className="mb-2">
               <span className="font-bold">{rank}</span> -{" "}
-              <span className="text-blue-500">{PlayersName[playerId]}</span>:{" "}
+              <span className="text-blue-500">{PlayersName[playerId] || ''}</span>:{" "}
               {points} MVP Points
             </li>
           ))}
