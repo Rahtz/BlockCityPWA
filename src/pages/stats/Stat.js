@@ -24,7 +24,7 @@ const Stat = () => {
   async function getStats() {
     let allData = [];
     let lastItem = null;
-  
+
     do {
       const { data, error } = await supabase
         .from("stats")
@@ -32,16 +32,16 @@ const Stat = () => {
         .limit(1000)
         .gt("id", lastItem?.id || 0)
         .order("id");
-  
+
       if (error) {
         console.error(error);
         break;
       }
-  
+
       allData.push(...data);
       lastItem = data[data.length - 1];
     } while (lastItem);
-  
+
     setStats(allData);
     console.log(allData);
   }
@@ -94,6 +94,7 @@ const Stat = () => {
     });
 
     const averageStatsByPlayerId = {};
+
     let numPlayersWithThreeOrMoreOccurrences = 0;
     for (const playerId in totalStatsByPlayerId) {
       const totalStats = totalStatsByPlayerId[playerId];
@@ -314,9 +315,10 @@ const Stat = () => {
         turnovers: top5TurnoversAveragesM,
         tpm: top53PMAveragesM,
         ftm: top5FTMAveragesM,
-        mvp: top5MVPAveragesM
+        mvp: top5MVPAveragesM,
       }
-    : (showWomen ? {
+    : showWomen
+    ? {
         points: top5PointsAveragesW,
         rebounds: top5ReboundsAveragesW,
         assists: top5AssistsAveragesW,
@@ -325,9 +327,10 @@ const Stat = () => {
         turnovers: top5TurnoversAveragesW,
         tpm: top53PMAveragesW,
         ftm: top5FTMAveragesW,
-        mvp: top5MVPAveragesW
+        mvp: top5MVPAveragesW,
       }
-      : showSocial ? {
+    : showSocial
+    ? {
         points: top5PointsAveragesS,
         rebounds: top5ReboundsAveragesS,
         assists: top5AssistsAveragesS,
@@ -336,9 +339,9 @@ const Stat = () => {
         turnovers: top5TurnoversAveragesS,
         tpm: top53PMAveragesS,
         ftm: top5FTMAveragesS,
-        mvp: top5MVPAveragesS
+        mvp: top5MVPAveragesS,
       }
-      : {
+    : {
         points: 0,
         rebounds: 0,
         assists: 0,
@@ -347,11 +350,8 @@ const Stat = () => {
         turnovers: 0,
         tpm: 0,
         ftm: 0,
-        mvp: 0
-      })
-      ;
-
-
+        mvp: 0,
+      };
   return (
     <div className="h-auto bg-gray-200">
       <div className="flex items-center justify-center space-x-[20px] bg-white h-[40px]">
@@ -394,405 +394,407 @@ const Stat = () => {
             </div>
           ) : (
             <div>
-            <div className="lg:flex items-center flex-col">
-              <div className="flex my-4">
-                <button
-                  className={`${
-                    showMen ? "bg-gray-900 text-white" : "bg-gray-200"
-                  } py-2 px-4 font-semibold rounded-l-lg`}
-                  onClick={handleMenClick}
-                >
-                  Men's Stats
-                </button>
-                <button
-                  className={`${
-                    showWomen ? "bg-gray-900 text-white" : "bg-gray-200"
-                  } py-2 px-4 font-semibold`}
-                  onClick={handleWomenClick}
-                >
-                  Women's Stats
-                </button>
-                <button
-                  className={`${
-                    showSocial ? "bg-gray-900 text-white" : "bg-gray-200"
-                  } py-2 px-4 font-semibold rounded-r-lg`}
-                  onClick={handleSocialClick}
-                >
-                  Social Stats
-                </button>
-              </div>
-              
-              <div className="mt-6 bg-white lg:w-[900px]">
-                <h1 className="pl-6 font-display text-xl lg:text-center">{latestYear} Season Averages</h1>
-                <hr />
-              </div>
-              
-              <div className="lg:flex">
-              <div className="bg-white lg:w-[300px]">
-                <p className="text-blue-600 font-display pl-8 py-2">
-                  POINTS
-                </p>
-                <hr />
-                <div className="flex flex-col -space-y-[12px]">
-                  {statsToDisplay.points.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between py-2"
-                    >
-                      <div className="flex items-center">
-                        <p
-                          className={`text-sm pl-10 ${
-                            index === 0 ? "font-bold" : ""
-                          }`}
+              <div className="lg:flex items-center flex-col">
+                <div className="flex my-4">
+                  <button
+                    className={`${
+                      showMen ? "bg-gray-900 text-white" : "bg-gray-200"
+                    } py-2 px-4 font-semibold rounded-l-lg`}
+                    onClick={handleMenClick}
+                  >
+                    Men's Stats
+                  </button>
+                  <button
+                    className={`${
+                      showWomen ? "bg-gray-900 text-white" : "bg-gray-200"
+                    } py-2 px-4 font-semibold`}
+                    onClick={handleWomenClick}
+                  >
+                    Women's Stats
+                  </button>
+                  <button
+                    className={`${
+                      showSocial ? "bg-gray-900 text-white" : "bg-gray-200"
+                    } py-2 px-4 font-semibold rounded-r-lg`}
+                    onClick={handleSocialClick}
+                  >
+                    Social Stats
+                  </button>
+                </div>
+
+                <div className="mt-6 bg-white lg:w-[900px]">
+                  <h1 className="pl-6 font-display text-xl lg:text-center">
+                    {latestYear} Season Averages
+                  </h1>
+                  <hr />
+                </div>
+
+                <div className="lg:flex">
+                  <div className="bg-white lg:w-[300px]">
+                    <p className="text-blue-600 font-display pl-8 py-2">
+                      POINTS
+                    </p>
+                    <hr />
+                    <div className="flex flex-col -space-y-[12px]">
+                      {statsToDisplay.points.map((item, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-between py-2"
                         >
-                          {index + 1}.
-                        </p>
-                        <Link to={`/stats/${item.playerId}`}>
+                          <div className="flex items-center">
+                            <p
+                              className={`text-sm pl-10 ${
+                                index === 0 ? "font-bold" : ""
+                              }`}
+                            >
+                              {index + 1}.
+                            </p>
+                            <Link to={`/stats/${item.playerId}`}>
+                              <p
+                                className={`text-sm pl-2 ${
+                                  index === 0 ? "font-bold" : ""
+                                }`}
+                              >
+                                {PlayersName[item.playerId]}
+                              </p>
+                            </Link>
+                          </div>
                           <p
-                            className={`text-sm pl-2 ${
+                            className={`text-sm pr-10 ${
                               index === 0 ? "font-bold" : ""
                             }`}
                           >
-                            {PlayersName[item.playerId]}
+                            {item.Points.toFixed(1)}
                           </p>
-                        </Link>
-                      </div>
-                      <p
-                        className={`text-sm pr-10 ${
-                          index === 0 ? "font-bold" : ""
-                        }`}
-                      >
-                        {item.Points.toFixed(1)}
-                      </p>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </div>
-              <div className="bg-white lg:w-[300px]">
-                <p className="text-blue-600 font-display pl-8 py-2">
-                  REBOUNDS
-                </p>
-                <hr />
-                <div className="flex flex-col -space-y-[12px]">
-                  {statsToDisplay.rebounds.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between py-2"
-                    >
-                      <div className="flex items-center">
-                        <p
-                          className={`text-sm pl-10 ${
-                            index === 0 ? "font-bold" : ""
-                          }`}
+                  </div>
+                  <div className="bg-white lg:w-[300px]">
+                    <p className="text-blue-600 font-display pl-8 py-2">
+                      REBOUNDS
+                    </p>
+                    <hr />
+                    <div className="flex flex-col -space-y-[12px]">
+                      {statsToDisplay.rebounds.map((item, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-between py-2"
                         >
-                          {index + 1}.
-                        </p>
-                        <Link to={`/stats/${item.playerId}`}>
+                          <div className="flex items-center">
+                            <p
+                              className={`text-sm pl-10 ${
+                                index === 0 ? "font-bold" : ""
+                              }`}
+                            >
+                              {index + 1}.
+                            </p>
+                            <Link to={`/stats/${item.playerId}`}>
+                              <p
+                                className={`text-sm pl-2 ${
+                                  index === 0 ? "font-bold" : ""
+                                }`}
+                              >
+                                {PlayersName[item.playerId]}
+                              </p>
+                            </Link>
+                          </div>
                           <p
-                            className={`text-sm pl-2 ${
+                            className={`text-sm pr-10 ${
                               index === 0 ? "font-bold" : ""
                             }`}
                           >
-                            {PlayersName[item.playerId]}
+                            {item.Rebounds.toFixed(1)}
                           </p>
-                        </Link>
-                      </div>
-                      <p
-                        className={`text-sm pr-10 ${
-                          index === 0 ? "font-bold" : ""
-                        }`}
-                      >
-                        {item.Rebounds.toFixed(1)}
-                      </p>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </div>
-              <div className="bg-white lg:w-[300px]">
-                <p className="text-blue-600 font-display pl-8 py-2">
-                  ASSISTS
-                </p>
-                <hr />
-                <div className="flex flex-col -space-y-[12px]">
-                  {statsToDisplay.assists.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between py-2"
-                    >
-                      <div className="flex items-center">
-                        <p
-                          className={`text-sm pl-10 ${
-                            index === 0 ? "font-bold" : ""
-                          }`}
+                  </div>
+                  <div className="bg-white lg:w-[300px]">
+                    <p className="text-blue-600 font-display pl-8 py-2">
+                      ASSISTS
+                    </p>
+                    <hr />
+                    <div className="flex flex-col -space-y-[12px]">
+                      {statsToDisplay.assists.map((item, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-between py-2"
                         >
-                          {index + 1}.
-                        </p>
-                        <Link to={`/stats/${item.playerId}`}>
+                          <div className="flex items-center">
+                            <p
+                              className={`text-sm pl-10 ${
+                                index === 0 ? "font-bold" : ""
+                              }`}
+                            >
+                              {index + 1}.
+                            </p>
+                            <Link to={`/stats/${item.playerId}`}>
+                              <p
+                                className={`text-sm pl-2 ${
+                                  index === 0 ? "font-bold" : ""
+                                }`}
+                              >
+                                {PlayersName[item.playerId]}
+                              </p>
+                            </Link>
+                          </div>
                           <p
-                            className={`text-sm pl-2 ${
+                            className={`text-sm pr-10 ${
                               index === 0 ? "font-bold" : ""
                             }`}
                           >
-                            {PlayersName[item.playerId]}
+                            {item.Assists.toFixed(1)}
                           </p>
-                        </Link>
-                      </div>
-                      <p
-                        className={`text-sm pr-10 ${
-                          index === 0 ? "font-bold" : ""
-                        }`}
-                      >
-                        {item.Assists.toFixed(1)}
-                      </p>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  </div>
                 </div>
-              </div>
-              </div>
-              <div className="lg:flex">
-              <div className="bg-white lg:w-[300px]">
-                <p className="text-blue-600 font-display pl-8 py-2">
-                  STEALS
-                </p>
-                <hr />
-                <div className="flex flex-col -space-y-[12px]">
-                  {statsToDisplay.steals.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between py-2"
-                    >
-                      <div className="flex items-center">
-                        <p
-                          className={`text-sm pl-10 ${
-                            index === 0 ? "font-bold" : ""
-                          }`}
+                <div className="lg:flex">
+                  <div className="bg-white lg:w-[300px]">
+                    <p className="text-blue-600 font-display pl-8 py-2">
+                      STEALS
+                    </p>
+                    <hr />
+                    <div className="flex flex-col -space-y-[12px]">
+                      {statsToDisplay.steals.map((item, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-between py-2"
                         >
-                          {index + 1}.
-                        </p>
-                        <Link to={`/stats/${item.playerId}`}>
+                          <div className="flex items-center">
+                            <p
+                              className={`text-sm pl-10 ${
+                                index === 0 ? "font-bold" : ""
+                              }`}
+                            >
+                              {index + 1}.
+                            </p>
+                            <Link to={`/stats/${item.playerId}`}>
+                              <p
+                                className={`text-sm pl-2 ${
+                                  index === 0 ? "font-bold" : ""
+                                }`}
+                              >
+                                {PlayersName[item.playerId]}
+                              </p>
+                            </Link>
+                          </div>
                           <p
-                            className={`text-sm pl-2 ${
+                            className={`text-sm pr-10 ${
                               index === 0 ? "font-bold" : ""
                             }`}
                           >
-                            {PlayersName[item.playerId]}
+                            {item.Steals.toFixed(1)}
                           </p>
-                        </Link>
-                      </div>
-                      <p
-                        className={`text-sm pr-10 ${
-                          index === 0 ? "font-bold" : ""
-                        }`}
-                      >
-                        {item.Steals.toFixed(1)}
-                      </p>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </div>
-              <div className="bg-white lg:w-[300px]">
-                <p className="text-blue-600 font-display pl-8 py-2">
-                  BLOCKS
-                </p>
-                <hr />
-                <div className="flex flex-col -space-y-[12px]">
-                  {statsToDisplay.blocks.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between py-2"
-                    >
-                      <div className="flex items-center">
-                        <p
-                          className={`text-sm pl-10 ${
-                            index === 0 ? "font-bold" : ""
-                          }`}
+                  </div>
+                  <div className="bg-white lg:w-[300px]">
+                    <p className="text-blue-600 font-display pl-8 py-2">
+                      BLOCKS
+                    </p>
+                    <hr />
+                    <div className="flex flex-col -space-y-[12px]">
+                      {statsToDisplay.blocks.map((item, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-between py-2"
                         >
-                          {index + 1}.
-                        </p>
-                        <Link to={`/stats/${item.playerId}`}>
+                          <div className="flex items-center">
+                            <p
+                              className={`text-sm pl-10 ${
+                                index === 0 ? "font-bold" : ""
+                              }`}
+                            >
+                              {index + 1}.
+                            </p>
+                            <Link to={`/stats/${item.playerId}`}>
+                              <p
+                                className={`text-sm pl-2 ${
+                                  index === 0 ? "font-bold" : ""
+                                }`}
+                              >
+                                {PlayersName[item.playerId]}
+                              </p>
+                            </Link>
+                          </div>
                           <p
-                            className={`text-sm pl-2 ${
+                            className={`text-sm pr-10 ${
                               index === 0 ? "font-bold" : ""
                             }`}
                           >
-                            {PlayersName[item.playerId]}
+                            {item.Blocks.toFixed(1)}
                           </p>
-                        </Link>
-                      </div>
-                      <p
-                        className={`text-sm pr-10 ${
-                          index === 0 ? "font-bold" : ""
-                        }`}
-                      >
-                        {item.Blocks.toFixed(1)}
-                      </p>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </div>
-              <div className="bg-white lg:w-[300px]">
-                <p className="text-blue-600 font-display pl-8 py-2">
-                  TURNOVERS
-                </p>
-                <hr />
-                <div className="flex flex-col -space-y-[12px]">
-                  {statsToDisplay.turnovers.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between py-2"
-                    >
-                      <div className="flex items-center">
-                        <p
-                          className={`text-sm pl-10 ${
-                            index === 0 ? "font-bold" : ""
-                          }`}
+                  </div>
+                  <div className="bg-white lg:w-[300px]">
+                    <p className="text-blue-600 font-display pl-8 py-2">
+                      TURNOVERS
+                    </p>
+                    <hr />
+                    <div className="flex flex-col -space-y-[12px]">
+                      {statsToDisplay.turnovers.map((item, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-between py-2"
                         >
-                          {index + 1}.
-                        </p>
-                        <Link to={`/stats/${item.playerId}`}>
+                          <div className="flex items-center">
+                            <p
+                              className={`text-sm pl-10 ${
+                                index === 0 ? "font-bold" : ""
+                              }`}
+                            >
+                              {index + 1}.
+                            </p>
+                            <Link to={`/stats/${item.playerId}`}>
+                              <p
+                                className={`text-sm pl-2 ${
+                                  index === 0 ? "font-bold" : ""
+                                }`}
+                              >
+                                {PlayersName[item.playerId]}
+                              </p>
+                            </Link>
+                          </div>
                           <p
-                            className={`text-sm pl-2 ${
+                            className={`text-sm pr-10 ${
                               index === 0 ? "font-bold" : ""
                             }`}
                           >
-                            {PlayersName[item.playerId]}
+                            {item.Turnovers.toFixed(1)}
                           </p>
-                        </Link>
-                      </div>
-                      <p
-                        className={`text-sm pr-10 ${
-                          index === 0 ? "font-bold" : ""
-                        }`}
-                      >
-                        {item.Turnovers.toFixed(1)}
-                      </p>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  </div>
                 </div>
-              </div>
-              </div>
-              <div className="lg:flex">
-              <div className="bg-white lg:w-[300px]">
-                <p className="text-blue-600 font-display pl-8 py-2">
-                  THREE POINTERS MADE
-                </p>
-                <hr />
-                <div className="flex flex-col -space-y-[12px]">
-                  {statsToDisplay.tpm.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between py-2"
-                    >
-                      <div className="flex items-center">
-                        <p
-                          className={`text-sm pl-10 ${
-                            index === 0 ? "font-bold" : ""
-                          }`}
+                <div className="lg:flex">
+                  <div className="bg-white lg:w-[300px]">
+                    <p className="text-blue-600 font-display pl-8 py-2">
+                      THREE POINTERS MADE
+                    </p>
+                    <hr />
+                    <div className="flex flex-col -space-y-[12px]">
+                      {statsToDisplay.tpm.map((item, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-between py-2"
                         >
-                          {index + 1}.
-                        </p>
-                        <Link to={`/stats/${item.playerId}`}>
+                          <div className="flex items-center">
+                            <p
+                              className={`text-sm pl-10 ${
+                                index === 0 ? "font-bold" : ""
+                              }`}
+                            >
+                              {index + 1}.
+                            </p>
+                            <Link to={`/stats/${item.playerId}`}>
+                              <p
+                                className={`text-sm pl-2 ${
+                                  index === 0 ? "font-bold" : ""
+                                }`}
+                              >
+                                {PlayersName[item.playerId]}
+                              </p>
+                            </Link>
+                          </div>
                           <p
-                            className={`text-sm pl-2 ${
+                            className={`text-sm pr-10 ${
                               index === 0 ? "font-bold" : ""
                             }`}
                           >
-                            {PlayersName[item.playerId]}
+                            {item.ThreePointersMade.toFixed(1)}
                           </p>
-                        </Link>
-                      </div>
-                      <p
-                        className={`text-sm pr-10 ${
-                          index === 0 ? "font-bold" : ""
-                        }`}
-                      >
-                        {item.ThreePointersMade.toFixed(1)}
-                      </p>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </div>
-              <div className="bg-white lg:w-[300px]">
-                <p className="text-blue-600 font-display pl-8 py-2">
-                  FREE THROWS MADE
-                </p>
-                <hr />
-                <div className="flex flex-col -space-y-[12px]">
-                  {statsToDisplay.ftm.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between py-2"
-                    >
-                      <div className="flex items-center">
-                        <p
-                          className={`text-sm pl-10 ${
-                            index === 0 ? "font-bold" : ""
-                          }`}
+                  </div>
+                  <div className="bg-white lg:w-[300px]">
+                    <p className="text-blue-600 font-display pl-8 py-2">
+                      FREE THROWS MADE
+                    </p>
+                    <hr />
+                    <div className="flex flex-col -space-y-[12px]">
+                      {statsToDisplay.ftm.map((item, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-between py-2"
                         >
-                          {index + 1}.
-                        </p>
-                        <Link to={`/stats/${item.playerId}`}>
+                          <div className="flex items-center">
+                            <p
+                              className={`text-sm pl-10 ${
+                                index === 0 ? "font-bold" : ""
+                              }`}
+                            >
+                              {index + 1}.
+                            </p>
+                            <Link to={`/stats/${item.playerId}`}>
+                              <p
+                                className={`text-sm pl-2 ${
+                                  index === 0 ? "font-bold" : ""
+                                }`}
+                              >
+                                {PlayersName[item.playerId]}
+                              </p>
+                            </Link>
+                          </div>
                           <p
-                            className={`text-sm pl-2 ${
+                            className={`text-sm pr-10 ${
                               index === 0 ? "font-bold" : ""
                             }`}
                           >
-                            {PlayersName[item.playerId]}
+                            {item.FreeThrowsMade.toFixed(1)}
                           </p>
-                        </Link>
-                      </div>
-                      <p
-                        className={`text-sm pr-10 ${
-                          index === 0 ? "font-bold" : ""
-                        }`}
-                      >
-                        {item.FreeThrowsMade.toFixed(1)}
-                      </p>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </div>
-              <div className="bg-white lg:w-[300px]">
-                <p className="text-blue-600 font-display pl-8 py-2">
-                  MVP POINTS
-                </p>
-                <hr />
-                <div className="flex flex-col -space-y-[12px]">
-                  {statsToDisplay.mvp.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between py-2"
-                    >
-                      <div className="flex items-center">
-                        <p
-                          className={`text-sm pl-10 ${
-                            index === 0 ? "font-bold" : ""
-                          }`}
+                  </div>
+                  <div className="bg-white lg:w-[300px]">
+                    <p className="text-blue-600 font-display pl-8 py-2">
+                      MVP POINTS
+                    </p>
+                    <hr />
+                    <div className="flex flex-col -space-y-[12px]">
+                      {statsToDisplay.mvp.map((item, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center justify-between py-2"
                         >
-                          {index + 1}.
-                        </p>
-                        <Link to={`/stats/${item.playerId}`}>
+                          <div className="flex items-center">
+                            <p
+                              className={`text-sm pl-10 ${
+                                index === 0 ? "font-bold" : ""
+                              }`}
+                            >
+                              {index + 1}.
+                            </p>
+                            <Link to={`/stats/${item.playerId}`}>
+                              <p
+                                className={`text-sm pl-2 ${
+                                  index === 0 ? "font-bold" : ""
+                                }`}
+                              >
+                                {PlayersName[item.playerId]}
+                              </p>
+                            </Link>
+                          </div>
                           <p
-                            className={`text-sm pl-2 ${
+                            className={`text-sm pr-10 ${
                               index === 0 ? "font-bold" : ""
                             }`}
                           >
-                            {PlayersName[item.playerId]}
+                            {item.MvpPoints.toFixed(1)}
                           </p>
-                        </Link>
-                      </div>
-                      <p
-                        className={`text-sm pr-10 ${
-                          index === 0 ? "font-bold" : ""
-                        }`}
-                      >
-                        {item.MvpPoints.toFixed(1)}
-                      </p>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  </div>
                 </div>
-              </div>
-              </div>
               </div>
             </div>
           )}
