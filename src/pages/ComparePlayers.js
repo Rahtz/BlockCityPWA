@@ -122,9 +122,9 @@ const ComparePlayers = () => {
 
   return (
     <div className="container mx-auto py-8">
-    <div className='border h-[150px]'>
+    {/* <div className='border h-[150px]'>
       <div className='border border-red-500 h-[70px]'></div>
-    </div>
+    </div> */}
       <div className="flex flex-col items-center">
         <label className="mb-4">
           Player 1:
