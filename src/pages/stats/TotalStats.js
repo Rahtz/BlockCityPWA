@@ -6,12 +6,12 @@ import ClipLoader from "react-spinners/ClipLoader";
 function Stats() {
   const [loading, setLoading] = useState(false);
   const [players, setPlayers] = useState([]);
-  // const [teams, setTeams] = useState([]);
   const [totalstats, setTotalStats] = useState([]);
+  const [sortColumn, setSortColumn] = useState(null);
+  const [sortOrder, setSortOrder] = useState("asc");
 
   useEffect(() => {
     fetchPlayers();
-    // fetchTeams();
     fetchTotalStats();
     setLoading(true);
     setTimeout(() => {
@@ -29,20 +29,35 @@ function Stats() {
     setPlayers(data);
   }
 
-  // async function fetchTeams() {
-  //   const { data } = await supabase.from("teams").select();
-  //   setTeams(data);
-  // }
-
   var PlayersName = players.reduce(function (result, currentObject) {
     result[currentObject.id] = currentObject.PlayerName;
     return result;
   }, {});
 
-  // var TeamsName = teams.reduce(function (result, currentObject) {
-  //   result[currentObject.id] = currentObject.TeamName;
-  //   return result;
-  // }, {});
+  function handleSort(column) {
+    if (sortColumn === column) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortColumn(column);
+      setSortOrder("asc");
+    }
+  }
+
+  function sortData(data, column, order) {
+    const sortedData = [...data];
+    sortedData.sort((a, b) => {
+      const valA = a[column];
+      const valB = b[column];
+      if (valA < valB) return order === "asc" ? -1 : 1;
+      if (valA > valB) return order === "asc" ? 1 : -1;
+      return 0;
+    });
+    return sortedData;
+  }
+
+  const sortedStats = sortColumn
+    ? sortData(totalstats, sortColumn, sortOrder)
+    : totalstats;
 
   return (
     <div className="lg:grid grid-cols-4 divide-x">
@@ -93,43 +108,87 @@ function Stats() {
                 <th scope="col" className="py-2 px-2 sticky left-0 bg-gray-50">
                   Player
                 </th>
-                <th scope="col" className="py-2 px-2 text-center">
+                <th
+                  scope="col"
+                  className="py-2 px-2 text-center cursor-pointer"
+                  onClick={() => handleSort("Points")}
+                >
                   Points
                 </th>
-                <th scope="col" className="py-2 px-2 text-center">
+                <th
+                  scope="col"
+                  className="py-2 px-2 text-center cursor-pointer"
+                  onClick={() => handleSort("Rebounds")}
+                >
                   Rebounds
                 </th>
-                <th scope="col" className="py-2 px-2 text-center">
+                <th
+                  scope="col"
+                  className="py-2 px-2 text-center cursor-pointer"
+                  onClick={() => handleSort("Assists")}
+                >
                   Assists
                 </th>
-                <th scope="col" className="py-2 px-2 text-center">
+                <th
+                  scope="col"
+                  className="py-2 px-2 text-center cursor-pointer"
+                  onClick={() => handleSort("Steals")}
+                >
                   Steals
                 </th>
-                <th scope="col" className="py-2 px-2 text-center">
+                <th
+                  scope="col"
+                  className="py-2 px-2 text-center cursor-pointer"
+                  onClick={() => handleSort("Blocks")}
+                >
                   Blocks
                 </th>
-                <th scope="col" className="py-2 px-2 text-center">
+                <th
+                  scope="col"
+                  className="py-2 px-2 text-center cursor-pointer"
+                  onClick={() => handleSort("FeildGoalsAttempted")}
+                >
                   FGA
                 </th>
-                <th scope="col" className="py-2 px-2 text-center">
+                <th
+                  scope="col"
+                  className="py-2 px-2 text-center cursor-pointer"
+                  onClick={() => handleSort("FeildGoalsMade")}
+                >
                   FGM
                 </th>
-                <th scope="col" className="py-2 px-2 text-center">
+                <th
+                  scope="col"
+                  className="py-2 px-2 text-center cursor-pointer"
+                  onClick={() => handleSort("ThreePointersAttempted")}
+                >
                   3PA
                 </th>
-                <th scope="col" className="py-2 px-2 text-center">
+                <th
+                  scope="col"
+                  className="py-2 px-2 text-center cursor-pointer"
+                  onClick={() => handleSort("ThreePointersMade")}
+                >
                   3PM
                 </th>
-                <th scope="col" className="py-2 px-2 text-center">
+                <th
+                  scope="col"
+                  className="py-2 px-2 text-center cursor-pointer"
+                  onClick={() => handleSort("FreeThrowsAttempted")}
+                >
                   FTA
                 </th>
-                <th scope="col" className="py-2 px-2 text-center">
+                <th
+                  scope="col"
+                  className="py-2 px-2 text-center cursor-pointer"
+                  onClick={() => handleSort("FreeThrowsMade")}
+                >
                   FTM
                 </th>
               </tr>
             </thead>
             <tbody>
-              {totalstats.map((stat) => (
+              {sortedStats.map((stat) => (
                 <tr
                   key={stat.id}
                   className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 text-xs"

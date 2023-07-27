@@ -430,14 +430,15 @@ function Stats() {
     <div>
       <div className="w-full bg-gray-800 -mt-2">
         <div className="flex w-full h-auto border">
-          <div className="block w-3/6">
-            <div className="flex items-end w-[150px] h-40 ml-10">
-              {" "}
-              <img className="object-bottom" 
-              src={`https://kztusjtvdmyslpoycgad.supabase.co/storage/v1/object/public/images/public/${getPlayerPicture(parseInt(params.id))}`} 
-              alt="pi" />
-            </div>
-          </div>
+        <div className="block w-3/6">
+  <div className="flex items-end w-[150px] h-40 ml-10">
+    <img
+      className="object-bottom object-contain w-full h-full" // Use object-contain to scale down the image without squashing
+      src={`https://kztusjtvdmyslpoycgad.supabase.co/storage/v1/object/public/images/public/${getPlayerPicture(parseInt(params.id))}`}
+      alt="pi"
+    />
+  </div>
+</div>
           <div className="w-3/6 flex flex-col justify-center items-start">
             <div className="flex flex-col text-white">
               <p className="font-sans font-normal text-xs">

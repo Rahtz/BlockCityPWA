@@ -16,8 +16,8 @@ function Players({ session }) {
   const [showGamesModal, setShowGamesModal] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [activeTab, setActiveTab] = useState("all");
-  const [sortColumn, setSortColumn] = useState('GamesPlayed');
-  const [sortOrder, setSortOrder] = useState('dsc');
+  const [sortColumn, setSortColumn] = useState("GamesPlayed");
+  const [sortOrder, setSortOrder] = useState("dsc");
   const [updatedPlayer, setUpdatedPlayer] = useState({
     PlayerName: "",
     team_id: "",
@@ -63,7 +63,7 @@ function Players({ session }) {
     sex_id,
     clubNumber,
     GamesPlayed,
-    picture_id
+    picture_id,
   } = player;
 
   useEffect(() => {
@@ -117,7 +117,7 @@ function Players({ session }) {
           sex_id,
           clubNumber,
           GamesPlayed,
-          picture_id
+          picture_id,
         },
       ])
       .single();
@@ -161,15 +161,6 @@ function Players({ session }) {
       fetchPlayers();
     }
   }
-
-  // function getTeamName(playerId) {
-  //   const player = players.find((player) => player.id === playerId);
-  //   if (!player) {
-  //     return "Unknown Player";
-  //   }
-  //   const team = teams.find((team) => team.id === player.team_id);
-  //   return team ? team.TeamName : "Unknown Team";
-  // }
 
   const handleUpdate = async () => {
     const { error } = await supabase
@@ -237,7 +228,6 @@ function Players({ session }) {
   };
 
   const handleSubmit = async () => {
-
     if (!selectedFile) {
       alert("Please select a file to upload");
       return;
@@ -256,24 +246,25 @@ function Players({ session }) {
       console.log("Image uploaded successfully:", imageData.Key);
 
       const { data: playerData, error: playerError } = await supabase
-      .from("players")
-      .insert([
-        {
-          PlayerName,
-          birthdate,
-          position,
-          number,
-          highSchool,
-          weight,
-          heightFeet,
-          heightInches,
-          team_id,
-          sex_id,
-          clubNumber,
-          GamesPlayed,
-          avatar_url: imageData.path
-        },
-      ]).single();
+        .from("players")
+        .insert([
+          {
+            PlayerName,
+            birthdate,
+            position,
+            number,
+            highSchool,
+            weight,
+            heightFeet,
+            heightInches,
+            team_id,
+            sex_id,
+            clubNumber,
+            GamesPlayed,
+            avatar_url: imageData.path,
+          },
+        ])
+        .single();
       setPlayer({
         PlayerName: "",
         birthdate: "",
@@ -306,24 +297,24 @@ function Players({ session }) {
       alert("Please select a file to upload");
       return;
     }
-  
+
     const timestamp = new Date().getTime();
     const filename = `${timestamp}-${selectedFile.name}`;
-  
+
     const { data: imageData, error: imageError } = await supabase.storage
       .from("images/public")
       .upload(filename, selectedFile);
-  
+
     if (imageError) {
       console.log("Error uploading image:", imageError.message);
     } else {
       console.log("Image uploaded successfully:", imageData.Key);
-  
+
       const { data: playerData, error: playerError } = await supabase
-      .from("players")
-      .update({avatar_url: imageData.path})
-      .match({ id: selectedPlayer.id }); 
-  
+        .from("players")
+        .update({ avatar_url: imageData.path })
+        .match({ id: selectedPlayer.id });
+
       if (playerError) {
         console.log("Error updating player:", playerError.message);
       } else {
@@ -342,11 +333,11 @@ function Players({ session }) {
   const handleSort = (column) => {
     if (sortColumn === column) {
       // If the current column is already sorted, toggle the sort order
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     } else {
       // If a new column is clicked, set the new column and set the default sort order to 'asc'
       setSortColumn(column);
-      setSortOrder('asc');
+      setSortOrder("asc");
     }
   };
 
@@ -414,12 +405,16 @@ function Players({ session }) {
               <th scope="col" className="py-3 px-2">
                 Player Name
               </th>
-              <th scope="col" className="py-3 px-2" onClick={() => handleSort('GamesPlayed')}>
-  Games Played
-  {sortColumn === 'GamesPlayed' && (
-    <span>{sortOrder === 'asc' ? ' ▲' : ' ▼'}</span>
-  )}
-</th>
+              <th
+                scope="col"
+                className="py-3 px-2"
+                onClick={() => handleSort("GamesPlayed")}
+              >
+                Games Played
+                {sortColumn === "GamesPlayed" && (
+                  <span>{sortOrder === "asc" ? " ▲" : " ▼"}</span>
+                )}
+              </th>
               {session ? (
                 <th scope="col" className="py-3 px-2">
                   Options
@@ -431,19 +426,21 @@ function Players({ session }) {
           </thead>
           <tbody>
             {filteredPlayers
-  .sort((a, b) => {
-    if (sortColumn === 'GamesPlayed') {
-      // If sorting by GamesPlayed, compare the sum of GamesPlayed and ExtraGames
-      const aValue = a.GamesPlayed + a.ExtraGames;
-      const bValue = b.GamesPlayed + b.ExtraGames;
-      return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
-    } else {
-      // If sorting by other columns (e.g., ClubNumber or PlayerName), compare them directly
-      return sortOrder === 'asc'
-        ? a[sortColumn].localeCompare(b[sortColumn])
-        : b[sortColumn].localeCompare(a[sortColumn]);
-    }
-  })
+              .sort((a, b) => {
+                if (sortColumn === "GamesPlayed") {
+                  // If sorting by GamesPlayed, compare the sum of GamesPlayed and ExtraGames
+                  const aValue = a.GamesPlayed + a.ExtraGames;
+                  const bValue = b.GamesPlayed + b.ExtraGames;
+                  return sortOrder === "asc"
+                    ? aValue - bValue
+                    : bValue - aValue;
+                } else {
+                  // If sorting by other columns (e.g., ClubNumber or PlayerName), compare them directly
+                  return sortOrder === "asc"
+                    ? a[sortColumn].localeCompare(b[sortColumn])
+                    : b[sortColumn].localeCompare(a[sortColumn]);
+                }
+              })
               .map((player) => (
                 <tr
                   key={player.id}
@@ -675,24 +672,24 @@ function Players({ session }) {
               </div>
             </div>
             <div className="flex flex-col">
-                <h3>Image:</h3>
-                <form
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5  w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  onChange={(e) =>
-                    setPlayer({ ...player, picture_id: e.target.value })
-                  }
-                >
-                  <select name="picture_id">
-                    <option value="">--Select a picture--</option>
-                    {pictures.map((picture) => (
-                      <option key={picture.id} value={picture.id}>
-                        {picture.picture_url}
-                      </option>
-                    ))}
-                  </select>
-                </form>
-              </div>
-              {/* <div className="mb-4">
+              <h3>Image:</h3>
+              <form
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5  w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onChange={(e) =>
+                  setPlayer({ ...player, picture_id: e.target.value })
+                }
+              >
+                <select name="picture_id">
+                  <option value="">--Select a picture--</option>
+                  {pictures.map((picture) => (
+                    <option key={picture.id} value={picture.id}>
+                      {picture.picture_url}
+                    </option>
+                  ))}
+                </select>
+              </form>
+            </div>
+            {/* <div className="mb-4">
                 <label
                   htmlFor="file-input"
                   className="block text-gray-700 font-bold mb-2"
@@ -921,25 +918,25 @@ function Players({ session }) {
               </div>
             </div>
             <div className="flex flex-col">
-                <h3>Image:</h3>
-                <select
-                  value={updatedPlayer.picture_id}
-                  onChange={(e) =>
-                    setUpdatedPlayer({
-                      ...updatedPlayer,
-                      picture_id: e.target.value,
-                    })
-                  }
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                >
-                  <option value="">--Select an Image--</option>
-                  {pictures.map((picture) => (
-                    <option key={picture.id} value={picture.id}>
-                      {picture.picture_url}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <h3>Image:</h3>
+              <select
+                value={updatedPlayer.picture_id}
+                onChange={(e) =>
+                  setUpdatedPlayer({
+                    ...updatedPlayer,
+                    picture_id: e.target.value,
+                  })
+                }
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              >
+                <option value="">--Select an Image--</option>
+                {pictures.map((picture) => (
+                  <option key={picture.id} value={picture.id}>
+                    {picture.picture_url}
+                  </option>
+                ))}
+              </select>
+            </div>
             <div className="flex justify-center">
               <button
                 className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 mb-5 mx-5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
