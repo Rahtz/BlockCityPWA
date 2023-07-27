@@ -134,6 +134,15 @@ const Navbar = ({ session, handleSessionChange }) => {
                   Milestones
                 </Link>
               </p>
+              <p
+                className={`text-sm font-bold py-3 pl-2 w-full font-sans border-onyx ${
+                  location.pathname === "/compare" ? "text-white" : ""
+                }`}
+              >
+                <Link to="/compare" >
+                  Compare
+                </Link>
+              </p>
               {/* {session ? (
                 <p
                   className={`text-sm font-bold py-3 pl-2 w-full font-sans border-onyx ${
@@ -262,6 +271,15 @@ const Navbar = ({ session, handleSessionChange }) => {
               }`}
             >
                 Milestones
+            </p>
+              </Link>
+              <Link to="/compare" onClick={() => setIsOpen(false)}>
+            <p
+              className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx text-center ${
+                location.pathname === "/compare" ? "text-white" : ""
+              }`}
+            >
+                Compare
             </p>
               </Link>
             {/* {session ? (

@@ -50,15 +50,30 @@ const CompetitionLadder = () => {
                       <div class="flex items-center">
                         <div class="ml-4">
                           <div class="text-sm font-medium text-gray-900">
+                            The Jokers
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 whitespace-nowrap">7</td>
+                    <td class="px-6 whitespace-nowrap">7</td>
+                    <td class="px-6 whitespace-nowrap">0</td>
+                    <td class="px-6 whitespace-nowrap">+181</td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-2 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900">
                             PNBHS
                           </div>
                         </div>
                       </div>
                     </td>
-                    <td class="px-6 whitespace-nowrap">3</td>
-                    <td class="px-6 whitespace-nowrap">3</td>
-                    <td class="px-6 whitespace-nowrap">0</td>
-                    <td class="px-6 whitespace-nowrap">+83</td>
+                    <td class="px-6 whitespace-nowrap">6</td>
+                    <td class="px-6 whitespace-nowrap">5</td>
+                    <td class="px-6 whitespace-nowrap">1</td>
+                    <td class="px-6 whitespace-nowrap">+70</td>
                   </tr>
                   <tr>
                     <td class="px-6 py-2 whitespace-nowrap">
@@ -70,55 +85,10 @@ const CompetitionLadder = () => {
                         </div>
                       </div>
                     </td>
-                    <td class="px-6 whitespace-nowrap">3</td>
-                    <td class="px-6 whitespace-nowrap">3</td>
-                    <td class="px-6 whitespace-nowrap">0</td>
+                    <td class="px-6 whitespace-nowrap">6</td>
+                    <td class="px-6 whitespace-nowrap">5</td>
+                    <td class="px-6 whitespace-nowrap">1</td>
                     <td class="px-6 whitespace-nowrap">+66</td>
-                  </tr>
-                  <tr>
-                    <td class="px-6 py-2 whitespace-nowrap">
-                      <div class="flex items-center">
-                        <div class="ml-4">
-                          <div class="text-sm font-medium text-gray-900">
-                            The Jokers
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="px-6 whitespace-nowrap">3</td>
-                    <td class="px-6 whitespace-nowrap">3</td>
-                    <td class="px-6 whitespace-nowrap">0</td>
-                    <td class="px-6 whitespace-nowrap">+57</td>
-                  </tr>
-                  <tr>
-                    <td class="px-6 py-2 whitespace-nowrap">
-                      <div class="flex items-center">
-                        <div class="ml-4">
-                          <div class="text-sm font-medium text-gray-900">
-                            It's Up
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="px-6 whitespace-nowrap">2</td>
-                    <td class="px-6 whitespace-nowrap">1</td>
-                    <td class="px-6 whitespace-nowrap">1</td>
-                    <td class="px-6 whitespace-nowrap">+15</td>
-                  </tr>
-                  <tr>
-                    <td class="px-6 py-2 whitespace-nowrap">
-                      <div class="flex items-center">
-                        <div class="ml-4">
-                          <div class="text-sm font-medium text-gray-900">
-                            Manukura
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="px-6 whitespace-nowrap">2</td>
-                    <td class="px-6 whitespace-nowrap">1</td>
-                    <td class="px-6 whitespace-nowrap">1</td>
-                    <td class="px-6 whitespace-nowrap">-16</td>
                   </tr>
                   <tr>
                     <td class="px-6 py-2 whitespace-nowrap">
@@ -130,10 +100,10 @@ const CompetitionLadder = () => {
                         </div>
                       </div>
                     </td>
-                    <td class="px-6 whitespace-nowrap">2</td>
-                    <td class="px-6 whitespace-nowrap">1</td>
-                    <td class="px-6 whitespace-nowrap">1</td>
-                    <td class="px-6 whitespace-nowrap">-23</td>
+                    <td class="px-6 whitespace-nowrap">6</td>
+                    <td class="px-6 whitespace-nowrap">3</td>
+                    <td class="px-6 whitespace-nowrap">3</td>
+                    <td class="px-6 whitespace-nowrap">+4</td>
                   </tr> 
                   <tr>
                     <td class="px-6 py-2 whitespace-nowrap">
@@ -145,10 +115,40 @@ const CompetitionLadder = () => {
                         </div>
                       </div>
                     </td>
+                    <td class="px-6 whitespace-nowrap">6</td>
+                    <td class="px-6 whitespace-nowrap">2</td>
+                    <td class="px-6 whitespace-nowrap">4</td>
+                    <td class="px-6 whitespace-nowrap">-24</td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-2 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900">
+                            Manukura
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 whitespace-nowrap">6</td>
                     <td class="px-6 whitespace-nowrap">3</td>
-                    <td class="px-6 whitespace-nowrap">0</td>
                     <td class="px-6 whitespace-nowrap">3</td>
-                    <td class="px-6 whitespace-nowrap">-35</td>
+                    <td class="px-6 whitespace-nowrap">-34</td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-2 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900">
+                            It's Up
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 whitespace-nowrap">6</td>
+                    <td class="px-6 whitespace-nowrap">1</td>
+                    <td class="px-6 whitespace-nowrap">5</td>
+                    <td class="px-6 whitespace-nowrap">-51</td>
                   </tr>
                   <tr className="bg-yellow-200">
                     <td class="px-6 py-2 whitespace-nowrap">
@@ -160,10 +160,10 @@ const CompetitionLadder = () => {
                         </div>
                       </div>
                     </td>
-                    <td class="px-6 whitespace-nowrap">2</td>
-                    <td class="px-6 whitespace-nowrap">0</td>
-                    <td class="px-6 whitespace-nowrap">2</td>
-                    <td class="px-6 whitespace-nowrap">-23</td>
+                    <td class="px-6 whitespace-nowrap">6</td>
+                    <td class="px-6 whitespace-nowrap">1</td>
+                    <td class="px-6 whitespace-nowrap">5</td>
+                    <td class="px-6 whitespace-nowrap">-56</td>
                   </tr>
                   <tr className="bg-yellow-200">
                     <td class="px-6 py-2 whitespace-nowrap">
@@ -175,10 +175,10 @@ const CompetitionLadder = () => {
                         </div>
                       </div>
                     </td>
-                    <td class="px-6 whitespace-nowrap">2</td>
-                    <td class="px-6 whitespace-nowrap">0</td>
-                    <td class="px-6 whitespace-nowrap">2</td>
-                    <td class="px-6 whitespace-nowrap">-47</td>
+                    <td class="px-6 whitespace-nowrap">7</td>
+                    <td class="px-6 whitespace-nowrap">1</td>
+                    <td class="px-6 whitespace-nowrap">6</td>
+                    <td class="px-6 whitespace-nowrap">-156</td>
                   </tr>                 
                 </tbody>
               </table>

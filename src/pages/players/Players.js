@@ -16,6 +16,8 @@ function Players({ session }) {
   const [showGamesModal, setShowGamesModal] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [activeTab, setActiveTab] = useState("all");
+  const [sortColumn, setSortColumn] = useState('GamesPlayed');
+  const [sortOrder, setSortOrder] = useState('dsc');
   const [updatedPlayer, setUpdatedPlayer] = useState({
     PlayerName: "",
     team_id: "",
@@ -337,6 +339,17 @@ function Players({ session }) {
     handleSubmit();
   };
 
+  const handleSort = (column) => {
+    if (sortColumn === column) {
+      // If the current column is already sorted, toggle the sort order
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      // If a new column is clicked, set the new column and set the default sort order to 'asc'
+      setSortColumn(column);
+      setSortOrder('asc');
+    }
+  };
+
   return (
     <div className="lg:grid divide-x mt-1">
       <div className="flex flex-col items-center justify-center w-full my-2 md:flex-row md:items-center md:justify-between">
@@ -401,9 +414,12 @@ function Players({ session }) {
               <th scope="col" className="py-3 px-2">
                 Player Name
               </th>
-              <th scope="col" className="py-3 px-2">
-                Games Played
-              </th>
+              <th scope="col" className="py-3 px-2" onClick={() => handleSort('GamesPlayed')}>
+  Games Played
+  {sortColumn === 'GamesPlayed' && (
+    <span>{sortOrder === 'asc' ? ' ▲' : ' ▼'}</span>
+  )}
+</th>
               {session ? (
                 <th scope="col" className="py-3 px-2">
                   Options
@@ -415,7 +431,19 @@ function Players({ session }) {
           </thead>
           <tbody>
             {filteredPlayers
-              .sort((a, b) => a.clubNumber - b.clubNumber)
+  .sort((a, b) => {
+    if (sortColumn === 'GamesPlayed') {
+      // If sorting by GamesPlayed, compare the sum of GamesPlayed and ExtraGames
+      const aValue = a.GamesPlayed + a.ExtraGames;
+      const bValue = b.GamesPlayed + b.ExtraGames;
+      return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
+    } else {
+      // If sorting by other columns (e.g., ClubNumber or PlayerName), compare them directly
+      return sortOrder === 'asc'
+        ? a[sortColumn].localeCompare(b[sortColumn])
+        : b[sortColumn].localeCompare(a[sortColumn]);
+    }
+  })
               .map((player) => (
                 <tr
                   key={player.id}
