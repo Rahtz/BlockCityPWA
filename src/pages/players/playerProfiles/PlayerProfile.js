@@ -3,10 +3,6 @@ import { useState, useEffect } from "react";
 import { differenceInYears } from "date-fns";
 import { supabase } from "../../../services/client";
 import { useParams } from "react-router-dom";
-// import Blockcity from "./images/Blockcity.png";
-import sengun from "../../../assets/images/sengun.png";
-// import jacob from "./images/jacob.png";
-// import jacob1 from "./images/jacob1.png";
 
 function Stats() {
   const [openTab, setOpenTab] = useState(1);
@@ -71,10 +67,11 @@ function Stats() {
     if (!player) {
       return "Unknown Player";
     }
-    const picture = pictures.find((picture) => picture.id === player.picture_id);
+    const picture = pictures.find(
+      (picture) => picture.id === player.picture_id
+    );
     return picture ? picture.picture_url : "Unknown Picture";
   }
-
 
   var PlayersName = players.reduce(function (result, currentObject) {
     result[currentObject.id] = currentObject.PlayerName;
@@ -130,7 +127,6 @@ function Stats() {
     result[currentObject.id] = currentObject.picture_url;
     return result;
   }, {});
-
 
   let points = 0;
   let rebounds = 0;
@@ -226,8 +222,10 @@ function Stats() {
       seasonaverageCareerGames += 1;
     }
     averageCareerPoints = seasonaverageCareerPoints / seasonaverageCareerGames;
-    averageCareerRebounds = seasonaverageCareerRebounds / seasonaverageCareerGames;
-    averageCareerAssists = seasonaverageCareerAssists / seasonaverageCareerGames;
+    averageCareerRebounds =
+      seasonaverageCareerRebounds / seasonaverageCareerGames;
+    averageCareerAssists =
+      seasonaverageCareerAssists / seasonaverageCareerGames;
     averageCareerSteals = seasonaverageCareerSteals / seasonaverageCareerGames;
     averageCareerBlocks = seasonaverageCareerBlocks / seasonaverageCareerGames;
     averageCareerFGA = seasonaverageCareerFGA / seasonaverageCareerGames;
@@ -236,7 +234,8 @@ function Stats() {
     averageCareer3PM = seasonaverageCareer3PM / seasonaverageCareerGames;
     averageCareerFTA = seasonaverageCareerFTA / seasonaverageCareerGames;
     averageCareerFTM = seasonaverageCareerFTM / seasonaverageCareerGames;
-    averageCareerTurnovers = seasonaverageCareerTurnovers / seasonaverageCareerGames;
+    averageCareerTurnovers =
+      seasonaverageCareerTurnovers / seasonaverageCareerGames;
     averageCareerMvp = seasonaverageCareerMVP / seasonaverageCareerGames;
   });
 
@@ -404,24 +403,24 @@ function Stats() {
   let totalRebounds = -0;
   let totalSteals = -0;
   let totalThreeAttempted = -0;
-  let totalThreeMade = -0;  
+  let totalThreeMade = -0;
   let totalturnovers = -0;
   let totalmvpPoints = -0;
 
   stats.forEach((stat) => {
-      totalAssists += stat.Assists;
-      totalBlocks += stat.Blocks;
-      totalFGAttempted += stat.FeildGoalsAttempted;
-      totalFGMade += stat.FeildGoalsMade;
-      totalFTAttempted += stat.FreeThrowsAttempted;
-      totalFTMade += stat.FreeThrowsMade;
-      totalPoints += stat.Points;
-      totalRebounds += stat.Rebounds;
-      totalSteals += stat.Steals;
-      totalThreeAttempted += stat.ThreePointersAttempted;
-      totalThreeMade += stat.ThreePointersMade;      
-      totalturnovers += stat.Turnovers;
-      totalmvpPoints += stat.MvpPoints;
+    totalAssists += stat.Assists;
+    totalBlocks += stat.Blocks;
+    totalFGAttempted += stat.FeildGoalsAttempted;
+    totalFGMade += stat.FeildGoalsMade;
+    totalFTAttempted += stat.FreeThrowsAttempted;
+    totalFTMade += stat.FreeThrowsMade;
+    totalPoints += stat.Points;
+    totalRebounds += stat.Rebounds;
+    totalSteals += stat.Steals;
+    totalThreeAttempted += stat.ThreePointersAttempted;
+    totalThreeMade += stat.ThreePointersMade;
+    totalturnovers += stat.Turnovers;
+    totalmvpPoints += stat.MvpPoints;
   });
   // console.log(stats);
   // console.log(totalPoints);
@@ -430,15 +429,17 @@ function Stats() {
     <div>
       <div className="w-full bg-gray-800 -mt-2">
         <div className="flex w-full h-auto border">
-        <div className="block w-3/6">
-  <div className="flex items-end w-[150px] h-40 ml-10">
-    <img
-      className="object-bottom object-contain w-full h-full" // Use object-contain to scale down the image without squashing
-      src={`https://kztusjtvdmyslpoycgad.supabase.co/storage/v1/object/public/images/public/${getPlayerPicture(parseInt(params.id))}`}
-      alt="pi"
-    />
-  </div>
-</div>
+          <div className="block w-3/6">
+            <div className="flex items-end w-[150px] h-40 ml-10">
+              <img
+                className="object-bottom object-contain w-full h-full" // Use object-contain to scale down the image without squashing
+                src={`https://kztusjtvdmyslpoycgad.supabase.co/storage/v1/object/public/images/public/${getPlayerPicture(
+                  parseInt(params.id)
+                )}`}
+                alt="pi"
+              />
+            </div>
+          </div>
           <div className="w-3/6 flex flex-col justify-center items-start">
             <div className="flex flex-col text-white">
               <p className="font-sans font-normal text-xs">
@@ -989,48 +990,48 @@ function Stats() {
                       </tr>
                     ))}
                     <tr>
-                    <td className="px-6 py-2 whitespace-nowrap text-xs font-medium text-gray-900 border-r">
-                          Total
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {averageCareerPoints.toFixed(1)}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {averageCareerRebounds.toFixed(1)}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {averageCareerAssists.toFixed(1)}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {averageCareerSteals.toFixed(1)}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {averageCareerBlocks.toFixed(1)}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {averageCareerFGA.toFixed(1)}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {averageCareerFGM.toFixed(1)}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {averageCareer3PA.toFixed(1)}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {averageCareer3PM.toFixed(1)}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {averageCareerFTA.toFixed(1)}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {averageCareerFTM.toFixed(1)}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {averageCareerTurnovers.toFixed(1)}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                          {averageCareerMvp.toFixed(1)}
-                        </td>
+                      <td className="px-6 py-2 whitespace-nowrap text-xs font-medium text-gray-900 border-r">
+                        Total
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {averageCareerPoints.toFixed(1)}
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {averageCareerRebounds.toFixed(1)}
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {averageCareerAssists.toFixed(1)}
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {averageCareerSteals.toFixed(1)}
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {averageCareerBlocks.toFixed(1)}
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {averageCareerFGA.toFixed(1)}
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {averageCareerFGM.toFixed(1)}
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {averageCareer3PA.toFixed(1)}
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {averageCareer3PM.toFixed(1)}
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {averageCareerFTA.toFixed(1)}
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {averageCareerFTM.toFixed(1)}
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {averageCareerTurnovers.toFixed(1)}
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {averageCareerMvp.toFixed(1)}
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -1170,52 +1171,52 @@ function Stats() {
                         <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                           {total.mvpPoints}
                         </td>
-                      </tr>                      
+                      </tr>
                     ))}
                     <tr className="bg-white border-b">
-                        <td className="px-6 py-2 whitespace-nowrap text-xs font-medium text-gray-900 border-r">
+                      <td className="px-6 py-2 whitespace-nowrap text-xs font-medium text-gray-900 border-r">
                         Total
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {totalPoints}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {totalRebounds}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {totalAssists}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {totalSteals}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {totalBlocks}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {totalFGAttempted}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {totalFGMade}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {totalThreeAttempted}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {totalThreeMade}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {totalFTAttempted}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {totalFTMade}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {totalturnovers}
-                        </td>
-                        <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {totalmvpPoints}
-                        </td>
-                      </tr>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

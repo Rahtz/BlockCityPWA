@@ -49,6 +49,7 @@ const Stat = () => {
   async function fetchPlayers() {
     const { data } = await supabase.from("players").select();
     setPlayers(data);
+    console.log(data);
   }
 
   var PlayersName = players.reduce(function (result, currentObject) {

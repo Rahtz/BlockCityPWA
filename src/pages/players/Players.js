@@ -395,9 +395,10 @@ function Players({ session }) {
           </div>
         </div>
       </div>
-      <div className="overflow-x-auto relative shadow-md sm:rounded-lg w-full col-span-7">
+      <div className='flex items-center justify-center'>
+      <div className="overflow-x-auto relative shadow-md w-full lg:w-10/12 col-span-7">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="py-3 px-2">
                 Club Number
@@ -498,6 +499,7 @@ function Players({ session }) {
               ))}
           </tbody>
         </table>
+      </div>
       </div>
       {showCreate && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity opacity-100 z-50">

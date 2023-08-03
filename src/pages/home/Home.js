@@ -96,13 +96,13 @@ const Home = () => {
             <img
               src={myImage}
               alt="My Image"
-              className="lg:w-9/12 h-[500px] lg:h-[500px] object-cover lg:object-fill"
+              className="lg:w-full h-[500px] lg:h-screen object-cover lg:object-fill"
               style={{ position: "fixed" }}
             />
           </div>
         </div>
-        <div className="absolute inset-0 flex flex-col justify-start items-start z-10 mt-[250px] ml-[20px] lg:ml-[300px]">
-          <h1 className="text-white text-4xl lg:text-5xl text-left mb-8">
+        <div className="absolute inset-0 flex flex-col justify-start items-start z-10 mt-[250px] lg:mt-[130px] ml-[20px] lg:ml-[300px]">
+          <h1 className="text-white text-4xl lg:text-6xl text-left mb-8">
             Block City Basketball Club
           </h1>
           <button className="px-8 py-3 bg-yellow-500 text-black rounded-xl hover:bg-blue-600 border-2 border-black">
@@ -110,7 +110,7 @@ const Home = () => {
           </button>
         </div>
       </div>
-      <div className="hidden lg:block relative lg:-mt-[250px] z-20">
+      <div className="hidden lg:block relative lg:-mt-[50px] z-20">
           <WeeklyMvp />
         </div>
       <div className="relative z-20 bg-white -mt-[110px] lg:mt-[300px]">

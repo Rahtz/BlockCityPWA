@@ -37,7 +37,9 @@ totalstats
     { statName: "Rebounds", startMilestone: 0, endMilestone: 10000, incrementValue: 500 },
     { statName: "Assists", startMilestone: 0, endMilestone: 10000, incrementValue: 100 },
     { statName: "Steals", startMilestone: 0, endMilestone: 10000, incrementValue: 50 },
-    { statName: "Blocks", startMilestone: 0, endMilestone: 10000, incrementValue: 50 },    
+    { statName: "Blocks", startMilestone: 0, endMilestone: 10000, incrementValue: 50 },  
+    { statName: "Double Doubles", startMilestone: 0, endMilestone: 10000, incrementValue: 100 },  
+    { statName: "Triple Doubles", startMilestone: 0, endMilestone: 10000, incrementValue: 100 },    
   ];
   
   const generateMilestoneTables = (config) => {
