@@ -13,7 +13,7 @@ const LatestNews = () => {
       .from("articles")
       .select("heading, body, picture_id")
       .order("created_at", { ascending: false })
-      .limit(10);
+      .limit(5);
 
     if (error) {
       console.error("Error fetching articles:", error);
