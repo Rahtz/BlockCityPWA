@@ -91,15 +91,6 @@ const Navbar = ({ session, handleSessionChange }) => {
               </p>
               <p
                 className={`text-sm font-bold py-3 pl-2 w-full font-sans border-onyx ${
-                  location.pathname === "/home2" ? "text-white" : ""
-                }`}
-              >
-                <Link to="/home2" >
-                  Home2
-                </Link>
-              </p>
-              <p
-                className={`text-sm font-bold py-3 pl-2 w-full font-sans border-onyx ${
                   location.pathname === "/stat" ? "text-white" : ""
                 }`}
               >
