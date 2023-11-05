@@ -95,53 +95,65 @@ const RecentGames = () => {
     }, {});
 
   return (
-    <div className="overflow-x-auto">
-          <div className="flex space-x-2 py-3">
-            {games && Array.isArray(games) ? (
-              games.map((game, index) => (
-                <div
-                  key={index}
-                  className="h-[125px] w-[200px] lg:p-2 pl-[10px] pr-[10px] rounded-xl border bg-white text-sm flex flex-col justify-start"
-                >
-                  <div>
-                    <p>{game.GameDate}</p>
-                  </div>
-                  <div className="flex justify-between pt-2 space-x-[10px] lg:space-x-0">
-                    <div>
-                      <div className="flex lg:space-x-3 space-x-[10px] w-[120px]">
-                        <img
-                          className="w-[30px] h-[30px]"
-                          src={`https://kztusjtvdmyslpoycgad.supabase.co/storage/v1/object/public/images/public/${
-                            picture_url[GameTeam[game.TeamId]]
-                          }`}
-                          alt="AI"
-                        />
-                        <p>{TeamsName[game.TeamId]}</p>
-                      </div>
-                      <div className="flex lg:space-x-3 space-x-[10px]">
-                        <img
-                          className="w-[30px] h-[30px] mt-2"
-                          src={`https://kztusjtvdmyslpoycgad.supabase.co/storage/v1/object/public/images/public/${
-                            picture_url[GameTeam1[game.OppTeamId]]
-                          }`}
-                          alt="AI"
-                        />
-                        <p className="pt-3">{OppTeamsName[game.OppTeamId]}</p>
-                      </div>
-                    </div>
+    <div className="overflow-x-auto pl-[1%]">
+  <div className="flex space-x-2 py-3">
+    {games && Array.isArray(games) ? (
+      games.map((game, index) => {
+        // Parse the game date to a Date object
+        const gameDate = new Date(game.GameDate);
+        // Format the date to "dd MMM yyyy" format
+        const formattedDate = gameDate.toLocaleString('en-GB', {
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric',
+        });
 
-                    <div>
-                      <p>{game.TeamScore}</p>
-                      <p className="pt-4">{game.OppTeamScore}</p>
-                    </div>
-                  </div>
+        return (
+          <div
+            key={index}
+            className="h-[125px] w-[200px] lg:p-2 pl-[10px] pr-[10px] rounded-xl border bg-white text-sm flex flex-col justify-start"
+          >
+            <div>
+              <p>{formattedDate}</p>
+            </div>
+            <div className="flex justify-between pt-2 space-x-[10px] lg:space-x-0">
+              <div>
+                <div className="flex lg:space-x-3 space-x-[10px] w-[140px]">
+                  <img
+                    className="w-[30px] h-[30px]"
+                    src={`https://kztusjtvdmyslpoycgad.supabase.co/storage/v1/object/public/images/public/${
+                      picture_url[GameTeam[game.TeamId]]
+                    }`}
+                    alt="AI"
+                  />
+                  <p>{TeamsName[game.TeamId]}</p>
                 </div>
-              ))
-            ) : (
-              <p>No games available in the last 3 weeks.</p>
-            )}
+                <div className="flex lg:space-x-3 space-x-[10px]">
+                  <img
+                    className="w-[30px] h-[30px] mt-2"
+                    src={`https://kztusjtvdmyslpoycgad.supabase.co/storage/v1/object/public/images/public/${
+                      picture_url[GameTeam1[game.OppTeamId]]
+                    }`}
+                    alt="AI"
+                  />
+                  <p className="pt-3">{OppTeamsName[game.OppTeamId]}</p>
+                </div>
+              </div>
+
+              <div>
+                <p>{game.TeamScore}</p>
+                <p className="pt-4">{game.OppTeamScore}</p>
+              </div>
+            </div>
           </div>
-        </div>
+        );
+      })
+    ) : (
+      <p>No games available in the last 3 weeks.</p>
+    )}
+  </div>
+</div>
+
   )
 }
 

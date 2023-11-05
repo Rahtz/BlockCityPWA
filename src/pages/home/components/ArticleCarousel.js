@@ -42,7 +42,7 @@ const ArticleCarousel = () => {
     const interval = setInterval(() => {
       // Increment the current slide index to switch to the next item
       setCurrentSlide((prevSlide) => (prevSlide + 1) % articles.length);
-    }, 10000); // Change the interval duration as needed (in milliseconds)
+    }, 5000); // Change the interval duration as needed (in milliseconds)
 
     return () => {
       clearInterval(interval); // Clear the interval to stop the automatic switching when the component unmounts
