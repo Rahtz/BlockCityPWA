@@ -5,26 +5,26 @@ import HighFlyers from "../../../assets/images/Highflyers.png";
 
 const TeamProfile = () => {
   const params = useParams();
-  const [teams, setTeams] = useState([]);
+  const [oppTeams, setOppTeams] = useState([]);
   const [stats, setStats] = useState([]);
   const [players, setPlayers] = useState([]);
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
 
   useEffect(() => {
-    fetchTeams();
     fetchStats();
     fetchPlayers();
+    fetchOppTeams();
   }, []);
-
-  async function fetchTeams() {
-    const { data } = await supabase.from("teams").select();
-    setTeams(data);
-  }
 
   async function fetchPlayers() {
     const { data } = await supabase.from("players").select();
     setPlayers(data);
+  }
+
+  async function fetchOppTeams() {
+    const { data } = await supabase.from("oppTeam").select();
+    setOppTeams(data);
   }
 
   async function fetchStats() {
@@ -37,6 +37,11 @@ const TeamProfile = () => {
 
   var PlayersName = players.reduce(function (result, currentObject) {
     result[currentObject.id] = currentObject.PlayerName;
+    return result;
+  }, {});
+
+  var OppTeamName = oppTeams.reduce(function (result, currentObject) {
+    result[currentObject.id] = currentObject.Name;
     return result;
   }, {});
 
@@ -73,9 +78,6 @@ const TeamProfile = () => {
     return true;
   });
 
-  const years = Object.keys(groupedStats).map((date) =>
-    new Date(date).getFullYear()
-  );
   const uniqueYears = Array.from(
     new Set(stats.map((stat) => new Date(stat.YourDate).getFullYear()))
   ).sort((a, b) => a - b);
@@ -152,6 +154,12 @@ const TeamProfile = () => {
                     </th>
                     <th
                       scope="col"
+                      className="text-xs font-bold text-gray-900 px-1 py-2 border-r"
+                    >
+                      Opponent
+                    </th>
+                    <th
+                      scope="col"
                       className="text-xs font-bold text-gray-900 px-1 py-2"
                     >
                       PTS
@@ -196,6 +204,12 @@ const TeamProfile = () => {
                       scope="col"
                       className="text-xs font-bold text-gray-900 px-1 py-2"
                     >
+                      FG%
+                    </th>
+                    <th
+                      scope="col"
+                      className="text-xs font-bold text-gray-900 px-1 py-2"
+                    >
                       3PA
                     </th>
                     <th
@@ -208,6 +222,12 @@ const TeamProfile = () => {
                       scope="col"
                       className="text-xs font-bold text-gray-900 px-1 py-2"
                     >
+                      3P%
+                    </th>
+                    <th
+                      scope="col"
+                      className="text-xs font-bold text-gray-900 px-1 py-2"
+                    >
                       FTA
                     </th>
                     <th
@@ -215,6 +235,12 @@ const TeamProfile = () => {
                       className="text-xs font-bold text-gray-900 px-1 py-2"
                     >
                       FTM
+                    </th>
+                    <th
+                      scope="col"
+                      className="text-xs font-bold text-gray-900 px-1 py-2"
+                    >
+                      FT%
                     </th>
                     <th
                       scope="col"
@@ -237,6 +263,9 @@ const TeamProfile = () => {
                         {PlayersName[stat.PlayerId]}
                       </td>
                       <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {OppTeamName[stat.OppTeamId]}
+                      </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {stat.Points}
                       </td>
                       <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
@@ -257,36 +286,37 @@ const TeamProfile = () => {
                       <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {stat.FeildGoalsMade}
                       </td>
-                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                            {(
-                              (stat.FeildGoalsMade / stat.FeildGoalsAttempted) *
-                              100
-                            ).toFixed(1) + "%"}
-                          </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {(
+                          (stat.FeildGoalsMade / stat.FeildGoalsAttempted) *
+                          100
+                        ).toFixed(1) + "%"}
+                      </td>
                       <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {stat.ThreePointersAttempted}
                       </td>
                       <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {stat.ThreePointersMade}
                       </td>
-                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                            {(
-                              (stat.ThreePointersMade / stat.ThreePointersAttempted) *
-                              100
-                            ).toFixed(1) + "%"}
-                          </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {(
+                          (stat.ThreePointersMade /
+                            stat.ThreePointersAttempted) *
+                          100
+                        ).toFixed(1) + "%"}
+                      </td>
                       <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {stat.FreeThrowsAttempted}
                       </td>
                       <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {stat.FreeThrowsMade}
                       </td>
-                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
-                            {(
-                              (stat.FreeThrowsMade / stat.FreeThrowsAttempted) *
-                              100
-                            ).toFixed(1) + "%"}
-                          </td>
+                      <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                        {(
+                          (stat.FreeThrowsMade / stat.FreeThrowsAttempted) *
+                          100
+                        ).toFixed(1) + "%"}
+                      </td>
                       <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                         {stat.Turnovers}
                       </td>

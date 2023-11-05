@@ -10,7 +10,7 @@ import Home from "../src/pages/home/Home";
 import Milestones from "../src/pages/home/components/Milestones";
 import Stat from "./pages/stats/Stat";
 import Login from "./pages/login/Login";
-import Footer from "./layout/Footer";
+// import Footer from "./layout/Footer";
 import Articles from "../src/pages/addArticles/Articles";
 import TeamProfile from "./pages/teams/teamProfiles/TeamProfile";
 import TopWeeklyMvpPoints from "./pages/mvp/TopWeeklyMvpPoints";
@@ -21,6 +21,10 @@ import NotFound from "./NotFound";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState } from "react";
 import { Helmet } from "react-helmet";
+import OppTeams from './pages/administration/OppTeams';
+import Games from './pages/administration/Games';
+import CreateGames from './pages/administration/CreateGames';
+
 
 function App() {
   const [session, setSession] = useState(localStorage.getItem("session") || ""); // session object after registration / login
@@ -61,6 +65,9 @@ function App() {
             <Route path="/mvp" element={<TopWeeklyMvpPoints />} />
             <Route path="/articles" element={<Articles />} />
             <Route path="/milestones" element={<Milestones />} />
+            <Route path="/oppteams" element={<OppTeams />} />
+            <Route path="/games" element={<Games />} />
+            <Route path="/creategames" element={<CreateGames />} />
             <Route path="/login" element={<Login />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/team/:id" element={<TeamProfile />} />
@@ -71,13 +78,13 @@ function App() {
       </div>
     </Router>
   </div>
-  <footer className="bg-black py-4 mt-2">
+  {/* <footer className="bg-black py-4 mt-2">
     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
       <p className="text-white text-center">
         &copy; {new Date().getFullYear()} Jacob Ratima. All rights reserved.
       </p>
     </div>
-  </footer>
+  </footer> */}
 </div>
   );
 }

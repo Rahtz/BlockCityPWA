@@ -112,7 +112,7 @@ const Pictures = () => {
   return (
     <div>
     <AdminNav/>
-    <div className="px-8">
+    <div className="ml-[200px] px-8">
   <form onSubmit={handleSubmit} className="mb-4">
     <label className="block mb-2">
       Image Name:

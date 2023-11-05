@@ -1,4 +1,4 @@
-import React from "react";
+ import React from "react";
 import { useState, useEffect } from "react";
 import { differenceInYears } from "date-fns";
 import { supabase } from "../../../services/client";
@@ -8,6 +8,7 @@ function Stats() {
   const [openTab, setOpenTab] = useState(1);
   const [players, setPlayers] = useState([]);
   const [teams, setTeams] = useState([]);
+  const [oppTeams, setOppTeams] = useState([]);
   const [pictures, setPictures] = useState([]);
   const [stats, setStats] = useState([]);
   const [selectedYear, setSelectedYear] = useState(null);
@@ -17,6 +18,7 @@ function Stats() {
   useEffect(() => {
     fetchPlayers();
     fetchTeams();
+    fetchOppTeams();
     fetchPictures();
     //eslint-disable-next-line
     fetchStatsById();
@@ -52,6 +54,11 @@ function Stats() {
     const { data } = await supabase.from("pictures").select();
     setPictures(data);
   }
+  
+  async function fetchOppTeams() {
+    const { data } = await supabase.from("oppTeam").select();
+    setOppTeams(data);
+  }
 
   function getTeamName(playerId) {
     const player = players.find((player) => player.id === playerId);
@@ -75,6 +82,11 @@ function Stats() {
 
   var PlayersName = players.reduce(function (result, currentObject) {
     result[currentObject.id] = currentObject.PlayerName;
+    return result;
+  }, {});
+
+  var OppTeamsName = oppTeams.reduce(function (result, currentObject) {
+    result[currentObject.id] = currentObject.Name;
     return result;
   }, {});
 
@@ -649,6 +661,12 @@ function Stats() {
                         scope="col"
                         className="text-xs font-bold text-gray-900 px-1 py-2"
                       >
+                        Opposition
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-xs font-bold text-gray-900 px-1 py-2"
+                      >
                         Date
                       </th>
                       <th
@@ -785,6 +803,9 @@ function Stats() {
                           <td className="px-6 py-2 whitespace-nowrap text-xs font-medium text-gray-900 border-r">
                             <span>{TeamsName[stat.TeamId]}</span>
                             {/* <img className="w-3" src = {Blockcity} alt="BC" /> */}
+                          </td>
+                          <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
+                            {OppTeamsName[stat.OppTeamId]}
                           </td>
                           <td className="text-xs text-gray-900 font-light px-1 py-2 whitespace-nowrap">
                             {stat.YourDate}

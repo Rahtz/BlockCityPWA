@@ -1,54 +1,57 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from "react-router-dom";
 
 const AdminNav = () => {
-    const [isCollapsed, setIsCollapsed] = useState(true);
-  
-    const handleToggleCollapse = () => {
-      setIsCollapsed(!isCollapsed);
-    };
+  const [currentPage, setCurrentPage] = useState('');
+
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+
+    if (currentPath === '/games') {
+      setCurrentPage('games');
+    } else if (currentPath === '/stats') {
+      setCurrentPage('stats');
+    } else if (currentPath === '/articles') {
+      setCurrentPage('articles');
+    } else if (currentPath === '/pictures') {
+      setCurrentPage('pictures');
+    }
+    // Add conditions for other pages
+  }, []);
 
   return (
-    <div className="relative z-40">
-      {/* Button */}
-      <button
-        onClick={handleToggleCollapse}
-        className={`absolute -top-2 ${isCollapsed ? 'left-0' : 'left-[150px]'} p-2 rounded-md bg-gray-800 text-white`}
-      >
-        {isCollapsed ? '>' : '<'}
-      </button>
+    <div className="z-10">
       {/* Navigation content */}
       <div
-        className={`fixed left-0 top-0 h-screen w-[150px] bg-black transition-transform duration-300 transform ${
-          isCollapsed ? '-translate-x-full' : 'translate-x-0'
-        }`}
+        className={
+          "fixed left-0 top-0 h-screen w-[200px] transition-transform duration-300 transform translate-x-0 border-r "
+        }
       >
         <ul className="mt-20">
           <li>
-            <a href="#" className="block py-2 px-4 text-white hover:bg-gray-700">
-            <Link to="/stats">
-                    Add Stats
-                  </Link>
+            <a href="#" className={currentPage === 'games' ? "block py-2 px-4 bg-gray-100" : "block py-2 px-4"}>
+              <Link to="/games">Games</Link>
             </a>
           </li>
           <li>
-            <a href="#" className="block py-2 px-4 text-white hover:bg-gray-700">
-            <Link to="/articles" >
-                    Articles
-                  </Link>
+            <a href="#" className={currentPage === 'stats' ? "block py-2 px-4 bg-gray-100" : "block py-2 px-4"}>
+              <Link to="/stats">Add Stats</Link>
             </a>
           </li>
           <li>
-            <a href="#" className="block py-2 px-4 text-white hover:bg-gray-700">
-            <Link to="/pictures">
-                    Images
-                  </Link>
+            <a href="#" className={currentPage === 'articles' ? "block py-2 px-4 bg-gray-100" : "block py-2 px-4"}>
+              <Link to="/articles">Articles</Link>
+            </a>
+          </li>
+          <li>
+            <a href="#" className={currentPage === 'pictures' ? "block py-2 px-4 bg-gray-100" : "block py-2 px-4"}>
+              <Link to="/pictures">Images</Link>
             </a>
           </li>
         </ul>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AdminNav
+export default AdminNav;

@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../services/client";
 import { Link } from "react-router-dom";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { BiBasketball } from "react-icons/bi";
 
 function Players({ session }) {
   const [teams, setTeams] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [players, setPlayers] = useState([]);
   const [pictures, setPictures] = useState([]);
+  const [allPlayers, setAllPlayers] = useState([]);
   const [sexs, setSexs] = useState([]);
   const [num, setNum] = useState("");
   const [selectedPlayer, setSelectedPlayer] = useState(null);
@@ -18,6 +21,9 @@ function Players({ session }) {
   const [activeTab, setActiveTab] = useState("all");
   const [sortColumn, setSortColumn] = useState("GamesPlayed");
   const [sortOrder, setSortOrder] = useState("dsc");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(25);
+  const itemsPerPageOptions = [10, 25, 50, 100];
   const [updatedPlayer, setUpdatedPlayer] = useState({
     PlayerName: "",
     team_id: "",
@@ -72,11 +78,18 @@ function Players({ session }) {
     fetchSexs();
     getMaxNumber();
     fetchPictures();
-  }, []);
+    fetchAllPlayers();
+  }, [currentPage, itemsPerPage]);
 
   async function fetchTeams() {
     const { data } = await supabase.from("teams").select("*");
     setTeams(data);
+  }
+
+  async function fetchAllPlayers() {
+    const { data } = await supabase.from("players").select();
+    const dl = data.length;
+    setAllPlayers(dl);
   }
 
   async function fetchPictures() {
@@ -85,9 +98,14 @@ function Players({ session }) {
   }
 
   async function fetchPlayers() {
-    const { data } = await supabase.from("players").select();
+    const { data } = await supabase
+        .from("players")
+        .select()
+        .order('GamesPlayed', { ascending: false })  // Order by games_played in descending order
+        .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
+
     setPlayers(data);
-  }
+}
 
   async function getMaxNumber() {
     const { data } = await supabase.rpc("getmaxnumber");
@@ -342,30 +360,22 @@ function Players({ session }) {
   };
 
   return (
-    <div className="lg:grid divide-x mt-1">
-      <div className="flex flex-col items-center justify-center w-full my-2 md:flex-row md:items-center md:justify-between">
-        {session ? (
-          <button
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-[370px] sm:w-auto px-5 py-2.5 mb-5 mx-5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 md:mb-0"
-            onClick={handleCreateClick}
-          >
-            Create Player
-          </button>
-        ) : (
-          <></>
-        )}
-
-        <div className="flex">
-          <div className="ml-2">
+    <div className="flex flex-col h-screen">
+      <div className="w-full bg-white">
+        <div className="lg:sticky top-[100px] z-10 bg-white">
+          <div className="mt-5 -mb-14 ml-5">
+            <p className="text-2xl text-black">Players</p>
+          </div>
+          <div className="ml-32 mt-5 z-12">
             <input
               type="text"
               placeholder="Search players"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 md:w-auto md:ml-5"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5"
             />
           </div>
-          <div className="flex mx-2">
+          <div className="hidden lg:block text-right bg-white -mt-14">
             <button
               className={`${
                 activeTab === "all" ? "bg-gray-900 text-white" : "bg-gray-200"
@@ -392,114 +402,192 @@ function Players({ session }) {
             >
               Womens
             </button>
-          </div>
-        </div>
-      </div>
-      <div className='flex items-center justify-center'>
-      <div className="overflow-x-auto relative shadow-md w-full lg:w-10/12 col-span-7">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="py-3 px-2">
-                Club Number
-              </th>
-              <th scope="col" className="py-3 px-2">
-                Player Name
-              </th>
-              <th
-                scope="col"
-                className="py-3 px-2"
-                onClick={() => handleSort("GamesPlayed")}
+            {session ? (
+              <button
+                className="hover:bg-gray-50 focus:bg-gray-300 border font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center mt-4 mr-10 ml-10"
+                onClick={handleCreateClick}
               >
-                Games Played
-                {sortColumn === "GamesPlayed" && (
-                  <span>{sortOrder === "asc" ? " ▲" : " ▼"}</span>
-                )}
-              </th>
-              {session ? (
-                <th scope="col" className="py-3 px-2">
-                  Options
-                </th>
-              ) : (
-                <></>
-              )}
-            </tr>
-          </thead>
-          <tbody>
-            {filteredPlayers
-              .sort((a, b) => {
-                if (sortColumn === "GamesPlayed") {
-                  // If sorting by GamesPlayed, compare the sum of GamesPlayed and ExtraGames
-                  const aValue = a.GamesPlayed + a.ExtraGames;
-                  const bValue = b.GamesPlayed + b.ExtraGames;
-                  return sortOrder === "asc"
-                    ? aValue - bValue
-                    : bValue - aValue;
-                } else {
-                  // If sorting by other columns (e.g., ClubNumber or PlayerName), compare them directly
-                  return sortOrder === "asc"
-                    ? a[sortColumn].localeCompare(b[sortColumn])
-                    : b[sortColumn].localeCompare(a[sortColumn]);
-                }
-              })
-              .map((player) => (
-                <tr
-                  key={player.id}
-                  className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 text-xs"
-                >
+                Create Player
+              </button>
+            ) : (
+              <></>
+            )}
+          </div>
+
+          <div className="bg-white border-b">
+            <table className="w-full">
+              <thead className="text-xs text-gray-500 border-b">
+                <tr>
                   <th
-                    scope="row"
-                    className="py-4 px-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    scope="col"
+                    className="py-3 px-6 text-left"
+                    style={{ width: "25%" }} // 1/6th width for each column
                   >
-                    {player.clubNumber}
+                    Club Number
                   </th>
                   <th
-                    scope="row"
-                    className="py-4 px-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    scope="col"
+                    className="py-3 px-6 text-left"
+                    style={{ width: "25%" }} // 1/6th width for each column
                   >
-                    <Link to={`/stats/${player.id}`}>{player.PlayerName}</Link>
+                    Player Name
                   </th>
-                  {/* <th
-                    scope="row"
-                    className="py-4 px-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    {getTeamName(player.id)}
-                  </th> */}
                   <th
-                    scope="row"
-                    className="py-4 px-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    scope="col"
+                    className="py-3 px-6 text-left"
+                    style={{ width: "25%" }}
+                    onClick={() => handleSort("GamesPlayed")}
                   >
-                    {player.GamesPlayed + player.ExtraGames}
+                    Games Played
+                    {sortColumn === "GamesPlayed" && (
+                      <span>{sortOrder === "asc" ? " ▲" : " ▼"}</span>
+                    )}
                   </th>
                   {session ? (
-                    <td className="flex flex-col py-4 px-6">
-                      <button
-                        className="lg:block font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                        onClick={() => showGamesModal1(player)}
-                      >
-                        Games
-                      </button>
-                      <button
-                        className="lg:block font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                        onClick={() => handleEditClick(player)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="lg:block font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                        onClick={() => deletePlayer(player.id)}
-                      >
-                        Delete
-                      </button>
-                    </td>
+                    <th
+                      scope="col"
+                      className="py-3 px-6 text-left"
+                      style={{ width: "25%" }} // 1/6th width for each column
+                    >
+                      
+                    </th>
                   ) : (
                     <></>
                   )}
                 </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
+              </thead>
+            </table>
+          </div>
+        </div>
+
+        <div className="overflow-x-auto relative">
+          <div className="overflow-y-auto w-full z-1">
+            <table className="w-full text-sm text-left">
+              <tbody>
+                {filteredPlayers
+                  .sort((a, b) => {
+                    if (sortColumn === "GamesPlayed") {
+                      // If sorting by GamesPlayed, compare the sum of GamesPlayed and ExtraGames
+                      const aValue = a.GamesPlayed + a.ExtraGames;
+                      const bValue = b.GamesPlayed + b.ExtraGames;
+                      return sortOrder === "asc"
+                        ? aValue - bValue
+                        : bValue - aValue;
+                    } else {
+                      // If sorting by other columns (e.g., ClubNumber or PlayerName), compare them directly
+                      return sortOrder === "asc"
+                        ? a[sortColumn].localeCompare(b[sortColumn])
+                        : b[sortColumn].localeCompare(a[sortColumn]);
+                    }
+                  })
+                  .map((player) => (
+                    <tr
+                      key={player.id}
+                      className="bg-white border-b dark:bg-gray-900 dark:border-gray-300 text-xs group relative hover:bg-gray-100"
+                    >
+                      <td
+                        scope="row"
+                        className="py-2 px-6 text-left font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        style={{ width: "25%" }} // 1/6th width for each column
+                      >
+                        {player.clubNumber}
+                      </td>
+                      <td
+                        scope="row"
+                        className="py-2 px-6 text-left font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        style={{ width: "25%" }} // 1/6th width for each column
+                      >
+                        <Link to={`/stats/${player.id}`}>
+                          {player.PlayerName}
+                        </Link>
+                      </td>
+                      <td
+                        scope="row"
+                        className="py-2 px-6 text-left font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        style={{ width: "25%" }} // 1/6th width for each column
+                      >
+                        {player.GamesPlayed + player.ExtraGames}
+                      </td>
+                      {session ? (
+                        <td
+                          scope="row"
+                          className="py-2 px-6 text-left font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          style={{ width: "25%" }} // 1/6th width for each column
+                        >
+                          <div className="flex">
+                            <button
+                              className="mt-1 delete-icon invisible group-hover:visible"
+                              onClick={() => handleEditClick(player)}
+                            >
+                              <AiFillEdit />
+                            </button>
+                            <button
+                              className="mt-1 mx-2 delete-icon invisible group-hover:visible"
+                              onClick={() => showGamesModal1(player)}
+                            >
+                              <BiBasketball />
+                            </button>
+                            <button
+                              className="mt-1 mr-4 delete-icon invisible group-hover:visible"
+                              onClick={() => deletePlayer(player.id)}
+                            >
+                              <AiFillDelete />
+                            </button>
+                          </div>
+                        </td>
+                      ) : (
+                        <></>
+                      )}
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="fixed bottom-0 left-0 w-full h-[60px] bg-white shadow-md p-4">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center"></div>
+              <div className="flex items-center">
+                <div className="ml-4 pr-6">
+                  {/* Items per page dropdown */}
+                  <label htmlFor="itemsPerPage" className="mr-2">
+                    Items per page:
+                  </label>
+                  <select
+                    id="itemsPerPage"
+                    className="border rounded px-2 py-1 focus:outline-none"
+                    value={itemsPerPage}
+                    onChange={(e) => setItemsPerPage(Number(e.target.value))}
+                  >
+                    {itemsPerPageOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <p className="mr-2 pr-6">
+                  {(currentPage - 1) * itemsPerPage + 1} -{" "}
+                  {Math.min(currentPage * itemsPerPage, allPlayers)} of{" "}
+                  {allPlayers}
+                </p>
+                <button
+                  className="px-3 py-1 mr-1 border rounded focus:outline-none"
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  Previous
+                </button>
+                <button
+                  className="px-3 py-1 ml-1 border rounded focus:outline-none"
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  disabled={players.length < itemsPerPage}
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       {showCreate && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity opacity-100 z-50">
