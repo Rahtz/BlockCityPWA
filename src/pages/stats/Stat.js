@@ -12,15 +12,6 @@ const Stat = () => {
   const [showWomen, setShowWomen] = useState(false);
   const [showSocial, setShowSocial] = useState(false);
 
-  useEffect(() => {
-    fetchPlayers();
-    getStats();
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
-
   async function getStats() {
     let allData = [];
     let lastItem = null;

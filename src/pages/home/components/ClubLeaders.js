@@ -142,7 +142,7 @@ const ClubLeaders = ({ statisticType }) => {
   const top5Players = playerAverages.slice(0, 5);
 
   return (
-    <div className="lg:w-1/5 w-auto h-[500px] rounded-xl bg-white">
+    <div className="lg:w-[300px] w-auto h-[500px] rounded-xl bg-white">
       <div className="flex h-[220px] w-[300px]">
         {top5Players.length > 0 && (
           <div className="w-1/2 h-full bg-gray-500 rounded-tl-xl pl-5 pt-5">
@@ -199,7 +199,7 @@ const ClubLeaders = ({ statisticType }) => {
                 {top5Players[1].averageStat.toFixed(1)}
               </h1>
             </div>
-            <div className="flex justify-between border-b border-gray-300 ">
+            <div className="flex justify-between border-b border-gray-300">
               <div className="flex items-center space-x-3">
                 <img
                   className="w-[25px] h-[25px]"

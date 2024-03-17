@@ -50,7 +50,7 @@ const ArticleCarousel = () => {
   }, [articles.length]);
 
   return (
-    <div className="lg:h-[550px] lg:9/12 w-11/12 h-auto">
+    <div className="lg:h-[600px] lg:w-9/12 w-11/12 h-auto">
       <Carousel
         showThumbs={false}
         dynamicHeight={true}
@@ -84,7 +84,7 @@ const ArticleCarousel = () => {
 
             <div
               key={index}
-              className="hidden lg:flex flex-row pl-10 bg-white rounded-xl -mt-20"
+              className="hidden lg:flex flex-row pl-10 bg-white rounded-xl -mt-20lg:-mt-0"
             >
               <div className="w-full lg:w-7/12 py-20 flex lg:flex-col lg:order-1 lg:px-5">
                 <h2 className="font-bold lg:text-5xl text-2xl lg:pb-5 -mb-[60px] lg:mb-0">

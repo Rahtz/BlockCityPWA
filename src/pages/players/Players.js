@@ -546,15 +546,15 @@ function Players({ session }) {
           <div className="fixed bottom-0 left-0 w-full h-[60px] bg-white shadow-md p-4">
             <div className="flex justify-between items-center">
               <div className="flex items-center"></div>
-              <div className="flex items-center">
+              <div className="flex items-center -mt-[20px] lg:mt-0">
                 <div className="ml-4 pr-6">
                   {/* Items per page dropdown */}
-                  <label htmlFor="itemsPerPage" className="mr-2">
+                  <label htmlFor="itemsPerPage" className="mr-2 text-xs lg:text-lg">
                     Items per page:
                   </label>
                   <select
                     id="itemsPerPage"
-                    className="border rounded px-2 py-1 focus:outline-none"
+                    className="border rounded px-2 py-1 focus:outline-none text-xs lg:text-lg"
                     value={itemsPerPage}
                     onChange={(e) => setItemsPerPage(Number(e.target.value))}
                   >
@@ -565,20 +565,20 @@ function Players({ session }) {
                     ))}
                   </select>
                 </div>
-                <p className="mr-2 pr-6">
+                <p className="mr-2 pr-6 text-xs lg:text-lg">
                   {(currentPage - 1) * itemsPerPage + 1} -{" "}
                   {Math.min(currentPage * itemsPerPage, allPlayers)} of{" "}
                   {allPlayers}
                 </p>
                 <button
-                  className="px-3 py-1 mr-1 border rounded focus:outline-none"
+                  className="px-3 py-1 mr-1 border rounded focus:outline-none text-xs lg:text-lg"
                   onClick={() => setCurrentPage(currentPage - 1)}
                   disabled={currentPage === 1}
                 >
                   Previous
                 </button>
                 <button
-                  className="px-3 py-1 ml-1 border rounded focus:outline-none"
+                  className="px-3 py-1 ml-1 border rounded focus:outline-none text-xs lg:text-lg"
                   onClick={() => setCurrentPage(currentPage + 1)}
                   disabled={players.length < itemsPerPage}
                 >
