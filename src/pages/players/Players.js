@@ -10,6 +10,7 @@ function Players({ session }) {
   const [players, setPlayers] = useState([]);
   const [pictures, setPictures] = useState([]);
   const [allPlayers, setAllPlayers] = useState([]);
+  const [everyPlayer, setEveryPlayer] = useState([]);
   const [sexs, setSexs] = useState([]);
   const [num, setNum] = useState("");
   const [selectedPlayer, setSelectedPlayer] = useState(null);
@@ -79,7 +80,8 @@ function Players({ session }) {
     getMaxNumber();
     fetchPictures();
     fetchAllPlayers();
-  }, [currentPage, itemsPerPage]);
+    fetchEveryPlayer();
+  }, []);
 
   async function fetchTeams() {
     const { data } = await supabase.from("teams").select("*");
@@ -92,6 +94,11 @@ function Players({ session }) {
     setAllPlayers(dl);
   }
 
+  async function fetchEveryPlayer() {
+    const { data } = await supabase.from("players").select();
+    setEveryPlayer(data);
+  }
+
   async function fetchPictures() {
     const { data } = await supabase.from("pictures").select("*");
     setPictures(data);
@@ -99,13 +106,13 @@ function Players({ session }) {
 
   async function fetchPlayers() {
     const { data } = await supabase
-        .from("players")
-        .select()
-        .order('GamesPlayed', { ascending: false })  // Order by games_played in descending order
-        .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
+      .from("players")
+      .select()
+      .order("GamesPlayed", { ascending: false }) // Order by games_played in descending order
+      .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
 
     setPlayers(data);
-}
+  }
 
   async function getMaxNumber() {
     const { data } = await supabase.rpc("getmaxnumber");
@@ -214,7 +221,7 @@ function Players({ session }) {
     setShowImageModal(true);
   };
 
-  const filteredPlayers = players.filter((player) => {
+  const filteredPlayers = everyPlayer.filter((player) => {
     const isNameMatched = player.PlayerName.toLowerCase().includes(
       searchText.toLowerCase()
     );
@@ -420,22 +427,19 @@ function Players({ session }) {
                 <tr>
                   <th
                     scope="col"
-                    className="py-3 px-6 text-left"
-                    style={{ width: "25%" }} // 1/6th width for each column
+                    className="py-3 px-6 text-left w-2/12"
                   >
                     Club Number
                   </th>
                   <th
                     scope="col"
-                    className="py-3 px-6 text-left"
-                    style={{ width: "25%" }} // 1/6th width for each column
+                    className="py-3 px-6 text-left w-4/12"
                   >
                     Player Name
                   </th>
                   <th
                     scope="col"
-                    className="py-3 px-6 text-left"
-                    style={{ width: "25%" }}
+                    className="py-3 px-6 text-left w-2/12"
                     onClick={() => handleSort("GamesPlayed")}
                   >
                     Games Played
@@ -446,11 +450,19 @@ function Players({ session }) {
                   {session ? (
                     <th
                       scope="col"
-                      className="py-3 px-6 text-left"
-                      style={{ width: "25%" }} // 1/6th width for each column
+                      className="py-3 px-6 text-left w-2/12"
                     >
-                      
+                      Active
                     </th>
+                  ) : (
+                    <></>
+                  )}
+                  {session ? (
+                    <th
+                      scope="col"
+                      className="py-3 px-6 text-left w-2/12"
+                      style={{ width: "20%" }} // 1/6th width for each column
+                    ></th>
                   ) : (
                     <></>
                   )}
@@ -487,15 +499,13 @@ function Players({ session }) {
                     >
                       <td
                         scope="row"
-                        className="py-2 px-6 text-left font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                        style={{ width: "25%" }} // 1/6th width for each column
+                        className="py-2 px-6 text-left font-medium text-gray-900 whitespace-nowrap dark:text-white w-2/12"
                       >
                         {player.clubNumber}
                       </td>
                       <td
                         scope="row"
-                        className="py-2 px-6 text-left font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                        style={{ width: "25%" }} // 1/6th width for each column
+                        className="py-2 text-left font-medium text-gray-900 whitespace-nowrap dark:text-white w-4/12"
                       >
                         <Link to={`/stats/${player.id}`}>
                           {player.PlayerName}
@@ -503,16 +513,24 @@ function Players({ session }) {
                       </td>
                       <td
                         scope="row"
-                        className="py-2 px-6 text-left font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                        style={{ width: "25%" }} // 1/6th width for each column
+                        className="py-2 px-6 text-left font-medium text-gray-900 whitespace-nowrap dark:text-white w-2/12"
                       >
                         {player.GamesPlayed + player.ExtraGames}
                       </td>
                       {session ? (
                         <td
                           scope="row"
-                          className="py-2 px-6 text-left font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                          style={{ width: "25%" }} // 1/6th width for each column
+                          className="py-2 px-6 text-left font-medium text-gray-900 whitespace-nowrap dark:text-white w-2/12"
+                        >
+                          {player.isActive ? "Yes" : "No"}
+                        </td>
+                      ) : (
+                        <></>
+                      )}
+                      {session ? (
+                        <td
+                          scope="row"
+                          className="py-2 text-left font-medium text-gray-900 whitespace-nowrap dark:text-white w-2/12"
                         >
                           <div className="flex">
                             <button
@@ -543,12 +561,11 @@ function Players({ session }) {
               </tbody>
             </table>
           </div>
-          <div className="fixed bottom-0 left-0 w-full h-[60px] bg-white shadow-md p-4">
+          {/* <div className="fixed bottom-0 left-0 w-full h-[60px] bg-white shadow-md p-4">
             <div className="flex justify-between items-center">
               <div className="flex items-center"></div>
               <div className="flex items-center -mt-[20px] lg:mt-0">
                 <div className="ml-4 pr-6">
-                  {/* Items per page dropdown */}
                   <label htmlFor="itemsPerPage" className="mr-2 text-xs lg:text-lg">
                     Items per page:
                   </label>
@@ -586,7 +603,7 @@ function Players({ session }) {
                 </button>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       {showCreate && (
@@ -814,7 +831,23 @@ function Players({ session }) {
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity opacity-100 z-50">
           <div className="bg-white rounded-lg p-3 h-5/6 w-auto">
-            <h2 className="text-lg font-medium mb-4">Edit Player Details</h2>
+            <div className="flex space-x-5">
+              <h2 className="text-lg font-medium mb-4">Edit Player Details</h2>
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={updatedPlayer.isActive}
+                  onChange={(e) =>
+                    setUpdatedPlayer({
+                      ...updatedPlayer,
+                      isActive: e.target.checked,
+                    })
+                  }
+                  className="form-checkbox h-5 w-5 text-blue-500"
+                />
+                <span className="ml-2 text-gray-700">Active</span>
+              </label>
+            </div>
             <div className="flex">
               <label className="flex flex-col">
                 <h3>Name:</h3>

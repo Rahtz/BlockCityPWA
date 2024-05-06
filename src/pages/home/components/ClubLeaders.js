@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../../services/client";
+import { getStats } from "../../../services/dbFunctions";
 
 const ClubLeaders = ({ statisticType }) => {
   const [pictures, setPictures] = useState([]);
@@ -13,6 +14,19 @@ const ClubLeaders = ({ statisticType }) => {
     getStats();
     fetchTeams();
   }, []);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //         const statData = await getStats();
+  //         setStats(statData);
+
+  //     } catch (error) {
+  //         console.error('Error fetching categories:', error);
+  //     }
+  // };
+  // fetchData();
+  // }, []);
 
   async function getStats() {
     let allData = [];
@@ -126,20 +140,30 @@ const ClubLeaders = ({ statisticType }) => {
     playerData[playerId].occurrences++;
   });
 
-  // Step 3: Calculate average stats and filter players with at least 3 occurrences
+  // Step 3: Calculate average stats and filter players with at least 1 occurrence
+  const hasThreeOrMoreOccurrences = Object.values(playerData).some(
+    (player) => player.occurrences >= 3
+  );
+  
   const playerAverages = Object.keys(playerData)
-    .filter((playerId) => playerData[playerId].occurrences >= 3)
+    .filter((playerId) => {
+      if (hasThreeOrMoreOccurrences) {
+        return playerData[playerId].occurrences >= 3;
+      } else {
+        return playerData[playerId].occurrences > 0;
+      }
+    })
     .map((playerId) => ({
       playerId: parseInt(playerId),
       averageStat:
         playerData[playerId].totalStat / playerData[playerId].occurrences,
     }));
 
-  // Step 4: Sort players by average statistic
-  playerAverages.sort((a, b) => b.averageStat - a.averageStat);
+// Step 4: Sort players by average statistic
+playerAverages.sort((a, b) => b.averageStat - a.averageStat);
 
-  // Step 5: Get the top 5 players with the highest average statistic
-  const top5Players = playerAverages.slice(0, 5);
+// Step 5: Get the top 5 players with the highest average statistic
+const top5Players = playerAverages.slice(0, Math.min(playerAverages.length, 5));
 
   return (
     <div className="lg:w-[300px] w-auto h-[500px] rounded-xl bg-white">

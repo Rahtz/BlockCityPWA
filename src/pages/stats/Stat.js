@@ -12,10 +12,14 @@ const Stat = () => {
   const [showWomen, setShowWomen] = useState(false);
   const [showSocial, setShowSocial] = useState(false);
 
+  useEffect(() => {
+    getStats();
+    fetchPlayers();
+  }, []);
+
   async function getStats() {
     let allData = [];
     let lastItem = null;
-
     do {
       const { data, error } = await supabase
         .from("stats")
@@ -34,7 +38,6 @@ const Stat = () => {
     } while (lastItem);
 
     setStats(allData);
-    console.log(allData);
   }
 
   async function fetchPlayers() {

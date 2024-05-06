@@ -143,45 +143,6 @@ const Navbar = ({ session, handleSessionChange }) => {
                   Compare
                 </Link>
               </p>
-              {/* {session ? (
-                <p
-                  className={`text-sm font-bold py-3 pl-2 w-full font-sans border-onyx ${
-                    location.pathname === "/stats" ? "text-white" : ""
-                  }`}
-                >
-                  <Link to="/stats">
-                    Add Stats
-                  </Link>
-                </p>
-              ) : (
-                <></>
-              )}
-              {session ? (
-                <p
-                  className={`text-sm font-bold py-3 pl-2 w-full font-sans border-onyx ${
-                    location.pathname === "/articles" ? "text-white" : ""
-                  }`}
-                >
-                  <Link to="/articles" >
-                    Articles
-                  </Link>
-                </p>
-              ) : (
-                <></>
-              )}
-              {session ? (
-                <p
-                  className={`text-sm font-bold py-3 pl-2 w-full font-sans border-onyx ${
-                    location.pathname === "/pictures" ? "text-white" : ""
-                  }`}
-                >
-                  <Link to="/pictures">
-                    Images
-                  </Link>
-                </p>
-              ) : (
-                <></>
-              )} */}
               {session ? (
                 <p
                   className={`text-sm font-bold py-3 pl-2 w-full font-sans border-onyx ${
@@ -282,45 +243,6 @@ const Navbar = ({ session, handleSessionChange }) => {
                 Compare
             </p>
               </Link>
-            {/* {session ? (
-                <Link to="/stats" onClick={() => setIsOpen(false)}>
-              <p
-                className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx text-center ${
-                  location.pathname === "/stats" ? "text-white" : ""
-                }`}
-              >
-                  Add Stats
-              </p>
-                </Link>
-            ) : (
-              <></>
-            )}
-            {session ? (
-                <Link to="/articles" onClick={() => setIsOpen(false)}>
-              <p
-                className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx text-center ${
-                  location.pathname === "/articles" ? "text-white" : ""
-                }`}
-              >
-                  Articles
-              </p>
-                </Link>
-            ) : (
-              <></>
-            )}
-            {session ? (
-                <Link to="/pictures" onClick={() => setIsOpen(false)}>
-              <p
-                className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx text-center ${
-                  location.pathname === "/pictures" ? "text-white" : ""
-                }`}
-              >
-                  Images
-              </p>
-                </Link>
-            ) : (
-              <></>
-            )} */}
             {session ? (
                 <Link to="/admin" onClick={() => setIsOpen(false)}>
               <p
