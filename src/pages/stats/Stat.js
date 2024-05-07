@@ -2,6 +2,12 @@ import { useState, useEffect } from "react";
 import { supabase } from "../../services/client";
 import { Link } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
+import {
+  fetchPlayers,
+  getStats,
+  getPlayerNameMap,
+  getLatestYear,
+} from "../../services/dbFunctions";
 
 const Stat = () => {
   const [loading, setLoading] = useState(false);
@@ -11,64 +17,29 @@ const Stat = () => {
   const [showMen, setShowMen] = useState(true);
   const [showWomen, setShowWomen] = useState(false);
   const [showSocial, setShowSocial] = useState(false);
+  const getPlayerName = getPlayerNameMap(players);
 
   useEffect(() => {
-    getStats();
-    fetchPlayers();
+    const fetchData = async () => {
+      try {
+        const statsData = await getStats();
+        setStats(statsData);
+
+        const playersData = await fetchPlayers();
+        setPlayers(playersData);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+    fetchData();
   }, []);
 
-  async function getStats() {
-    let allData = [];
-    let lastItem = null;
-    do {
-      const { data, error } = await supabase
-        .from("stats")
-        .select()
-        .limit(1000)
-        .gt("id", lastItem?.id || 0)
-        .order("id");
-
-      if (error) {
-        console.error(error);
-        break;
-      }
-
-      allData.push(...data);
-      lastItem = data[data.length - 1];
-    } while (lastItem);
-
-    setStats(allData);
-  }
-
-  async function fetchPlayers() {
-    const { data } = await supabase.from("players").select();
-    setPlayers(data);
-    console.log(data);
-  }
-
-  var PlayersName = players.reduce(function (result, currentObject) {
-    result[currentObject.id] = currentObject.PlayerName;
-    return result;
-  }, {});
-
   useEffect(() => {
-    // compute latest year from stats and update state with setLatestYear
     const year = getLatestYear(stats);
     if (year !== null) {
       setLatestYear(year);
     }
   }, [stats]);
-
-  function getLatestYear(data) {
-    let latestYear = null;
-    for (let i = 0; i < data.length; i++) {
-      const year = new Date(data[i].YourDate).getFullYear();
-      if (latestYear === null || year > latestYear) {
-        latestYear = year;
-      }
-    }
-    return latestYear;
-  }
 
   function getTop5AverageStatsByPlayerId(data, year, statType, sexId) {
     const filteredData = data.filter(
@@ -450,7 +421,7 @@ const Stat = () => {
                                   index === 0 ? "font-bold" : ""
                                 }`}
                               >
-                                {PlayersName[item.playerId]}
+                                {getPlayerName(item.playerId)}
                               </p>
                             </Link>
                           </div>
@@ -490,7 +461,7 @@ const Stat = () => {
                                   index === 0 ? "font-bold" : ""
                                 }`}
                               >
-                                {PlayersName[item.playerId]}
+                                {getPlayerName(item.playerId)}
                               </p>
                             </Link>
                           </div>
@@ -530,7 +501,7 @@ const Stat = () => {
                                   index === 0 ? "font-bold" : ""
                                 }`}
                               >
-                                {PlayersName[item.playerId]}
+                                {getPlayerName(item.playerId)}
                               </p>
                             </Link>
                           </div>
@@ -572,7 +543,7 @@ const Stat = () => {
                                   index === 0 ? "font-bold" : ""
                                 }`}
                               >
-                                {PlayersName[item.playerId]}
+                                {getPlayerName(item.playerId)}
                               </p>
                             </Link>
                           </div>
@@ -612,7 +583,7 @@ const Stat = () => {
                                   index === 0 ? "font-bold" : ""
                                 }`}
                               >
-                                {PlayersName[item.playerId]}
+                                {getPlayerName(item.playerId)}
                               </p>
                             </Link>
                           </div>
@@ -652,7 +623,7 @@ const Stat = () => {
                                   index === 0 ? "font-bold" : ""
                                 }`}
                               >
-                                {PlayersName[item.playerId]}
+                                {getPlayerName(item.playerId)}
                               </p>
                             </Link>
                           </div>
@@ -694,7 +665,7 @@ const Stat = () => {
                                   index === 0 ? "font-bold" : ""
                                 }`}
                               >
-                                {PlayersName[item.playerId]}
+                                {getPlayerName(item.playerId)}
                               </p>
                             </Link>
                           </div>
@@ -734,7 +705,7 @@ const Stat = () => {
                                   index === 0 ? "font-bold" : ""
                                 }`}
                               >
-                                {PlayersName[item.playerId]}
+                                {getPlayerName(item.playerId)}
                               </p>
                             </Link>
                           </div>
@@ -774,7 +745,7 @@ const Stat = () => {
                                   index === 0 ? "font-bold" : ""
                                 }`}
                               >
-                                {PlayersName[item.playerId]}
+                                {getPlayerName(item.playerId)}
                               </p>
                             </Link>
                           </div>

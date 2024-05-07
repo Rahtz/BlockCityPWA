@@ -11,7 +11,7 @@ const CreateGames = () => {
   const [stats, setStats] = useState([]);
   const [teamPoints, setTeamPoints] = useState(0);
   const [oppositionPoints, setOppositionPoints] = useState(0);
-  const [gameId, setGameId] = useState(0); // Default value is 1
+  const [gameId, setGameId] = useState(0);
   const [totalTeamPoints, setTotalTeamPoints] = useState(0);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTeam, setSelectedTeam] = useState("");
@@ -135,7 +135,7 @@ const CreateGames = () => {
   }, []);
 
   async function fetchPlayers() {
-    const { data } = await supabase.from("players").select();
+    const { data } = await supabase.from("players").select().eq("isActive", true);
     setPlayers(data);
   }
 

@@ -1,81 +1,98 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "../../../services/client";
 
 const Milestones = () => {
   const [totalstats, setTotalStats] = useState([]);
   const [players, setPlayers] = useState([]);
-  const [selectedTab, setSelectedTab] = useState("Points");
+  const [selectedTab, setSelectedTab] = useState("Active");
+  const [selectedStat, setSelectedStat] = useState("Points");
+
+  console.log("Players:", players);
 
   useEffect(() => {
-    fetchTotalStats();
     fetchPlayers();
-  }, []);
+    fetchTotalStats();
+  }, [selectedTab, selectedStat]);
 
   async function fetchTotalStats() {
-    const { data } = await supabase.rpc("totals");
-    setTotalStats(data);
-    console.log(data);
-  }
-
-  async function fetchPlayers() {
-    const { data, error } = await supabase
-      .from('players')
-      .select('*, team: team_id (*)'); // Include isActive column if it's in the 'team' table
-
+    const { data, error } = await supabase.rpc("totals");
     if (error) {
-      console.error('Error fetching players:', error.message);
+      console.error("Error fetching total stats:", error.message);
       return;
     }
-
-    // Map isActive from the related team if available
-    const playersWithIsActive = data.map(player => ({
-      ...player,
-      isActive: player.team ? player.team.isActive : false, // Assuming isActive is in the 'team' table
-    }));
-
-    setPlayers(playersWithIsActive);
+    setTotalStats(data);
   }
+  
+  async function fetchPlayers() {
+    const { data, error } = await supabase.from("players").select("*");
+  
+    if (error) {
+      console.error("Error fetching players:", error.message);
+      return;
+    }
+  
+    setPlayers(data);
+  }
+  
+  
 
-  var PlayersName = players.reduce(function (result, currentObject) {
-    result[currentObject.id] = currentObject.PlayerName;
-    return result;
-  }, {});
+  // const PlayersName = players.reduce((result, currentObject) => {
+  //   result[currentObject.PlayerId] = currentObject.PlayerName;
+  //   return result;
+  // }, {});
 
-  // Filter and sort the players closest to reaching a milestone
-  const filterPlayersByMilestone = (statName, startMilestone, endMilestone) =>
-    totalstats
-      .filter((player) => player[statName] >= startMilestone && player[statName] < endMilestone)
-      .sort((a, b) => b[statName] - a[statName]);
+  const PlayersName = {};
+players.forEach((player) => {
+  PlayersName[player.id] = player.PlayerName;
+});
 
-      const milestoneConfigs = [
-        { statName: "Points", startMilestone: 0, endMilestone: 10000, incrementValue: 500 },
-        { statName: "Rebounds", startMilestone: 0, endMilestone: 10000, incrementValue: 500 },
-        { statName: "Assists", startMilestone: 0, endMilestone: 10000, incrementValue: 100 },
-        { statName: "Steals", startMilestone: 0, endMilestone: 10000, incrementValue: 50 },
-        { statName: "Blocks", startMilestone: 0, endMilestone: 10000, incrementValue: 50 },
-        { statName: "Double Doubles", startMilestone: 0, endMilestone: 10000, incrementValue: 100 },
-        { statName: "Triple Doubles", startMilestone: 0, endMilestone: 10000, incrementValue: 100 },
-        { statName: "ThreePointersMade", startMilestone: 0, endMilestone: 10000, incrementValue: 50 }, // Added ThreePointersMade
-      ];
+  const milestoneConfigs = [
+    { statName: "Points", startMilestone: 0, endMilestone: 10000, incrementValue: 500 },
+    { statName: "Rebounds", startMilestone: 0, endMilestone: 10000, incrementValue: 500 },
+    { statName: "Assists", startMilestone: 0, endMilestone: 10000, incrementValue: 100 },
+    { statName: "Steals", startMilestone: 0, endMilestone: 10000, incrementValue: 50 },
+    { statName: "Blocks", startMilestone: 0, endMilestone: 10000, incrementValue: 50 },
+    { statName: "Double Doubles", startMilestone: 0, endMilestone: 10000, incrementValue: 100 },
+    { statName: "Triple Doubles", startMilestone: 0, endMilestone: 10000, incrementValue: 100 },
+    { statName: "ThreePointersMade", startMilestone: 0, endMilestone: 10000, incrementValue: 50 },
+  ];
 
-  const generateMilestoneTables = (config) => {
+  const generateMilestoneTable = (config, activeOnly) => {
+    if (!players.length || !totalstats.length) {
+      return null;
+    }
+  
+    // Create a map of active players
+    const activePlayersMap = {};
+    players.forEach((player) => {
+      // If isActive is null, default to true
+      activePlayersMap[player.id] = player.isActive === null ? true : player.isActive;
+    });
+  
     const incrementValue = config.incrementValue;
     const numberOfTables = Math.ceil((config.endMilestone - config.startMilestone) / incrementValue);
-
+  
     return Array.from({ length: numberOfTables }, (_, index) => {
       const startRange = config.startMilestone + index * incrementValue;
       const endRange = startRange + incrementValue;
-
-      const milestonePlayers = totalstats
-        .filter((player) => player[config.statName] >= startRange && player[config.statName] < endRange)
-        .sort((a, b) => b[config.statName] - a[config.statName]); // Sort players in descending order
-
+  
+      let milestonePlayers = totalstats
+        .filter((player) => {
+          const meetsRangeCriteria = player[config.statName] >= startRange && player[config.statName] < endRange;
+          return meetsRangeCriteria;
+        })
+        .sort((a, b) => b[config.statName] - a[config.statName]);
+  
+      if (activeOnly) {
+        milestonePlayers = milestonePlayers.filter((player) => activePlayersMap[player.PlayerId]);
+      }
+  
       if (milestonePlayers.length === 0) {
         return null;
       }
-
+  
       const milestone = `${startRange} - ${endRange} ${config.statName}`;
-
+  
       return (
         <div key={milestone} className="mb-4">
           <h3 className="text-lg font-semibold mb-2">{milestone}</h3>
@@ -101,20 +118,30 @@ const Milestones = () => {
       );
     });
   };
-
-  const handleTabClick = (statName) => {
-    setSelectedTab(statName);
-  };
-
+  
+  
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Milestones</h1>
       <div className="mb-8">
+        <div className="flex mb-4">
+          {["Active", "All"].map((tab) => (
+            <button
+              key={tab}
+              className={`mr-2 py-2 px-4 rounded-md ${
+                selectedTab === tab ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
+              }`}
+              onClick={() => setSelectedTab(tab)}
+            >
+              {tab} Players
+            </button>
+          ))}
+        </div>
         <div className="relative inline-block">
           <select
             className="block appearance-none w-full py-2 px-4 pr-8 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-gray-700"
-            value={selectedTab}
-            onChange={(e) => handleTabClick(e.target.value)}
+            value={selectedStat}
+            onChange={(e) => setSelectedStat(e.target.value)}
           >
             {milestoneConfigs.map((config) => (
               <option key={config.statName} value={config.statName}>
@@ -139,22 +166,19 @@ const Milestones = () => {
         </div>
         <div className="mt-4">
           {milestoneConfigs.map((config) => {
-            if (selectedTab !== config.statName) {
+            if (selectedStat !== config.statName) {
               return null;
             }
-
-            const milestoneTables = generateMilestoneTables(config).reverse();
-
-            if (milestoneTables.every((table) => table === null)) {
+  
+            const milestoneTable = generateMilestoneTable(config, selectedTab === "Active");
+            if (!milestoneTable || milestoneTable.length === 0) {
               return <p key={config.statName}>No players found.</p>;
             }
-
+  
             return (
               <div key={config.statName}>
-                {milestoneTables.map((table, index) => (
-                  <React.Fragment key={`${config.statName}-${index}`}>
-                    {table}
-                  </React.Fragment>
+                {milestoneTable.reverse().map((table, index) => (
+                  <React.Fragment key={`${config.statName}-${index}`}>{table}</React.Fragment>
                 ))}
               </div>
             );
@@ -163,6 +187,7 @@ const Milestones = () => {
       </div>
     </div>
   );
+  
 };
 
 export default Milestones;
