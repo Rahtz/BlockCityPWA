@@ -3,6 +3,7 @@ import { supabase } from "../../services/client";
 import { Link } from "react-router-dom";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BiBasketball } from "react-icons/bi";
+import EditPlayer from "../players/EditPlayer";
 
 function Players({ session }) {
   const [teams, setTeams] = useState([]);
@@ -535,9 +536,9 @@ function Players({ session }) {
                           <div className="flex">
                             <button
                               className="mt-1 delete-icon invisible group-hover:visible"
-                              onClick={() => handleEditClick(player)}
-                            >
+                            ><Link to={`/editplayer/${player.id}`}>
                               <AiFillEdit />
+                              </Link>
                             </button>
                             <button
                               className="mt-1 mx-2 delete-icon invisible group-hover:visible"
@@ -561,49 +562,6 @@ function Players({ session }) {
               </tbody>
             </table>
           </div>
-          {/* <div className="fixed bottom-0 left-0 w-full h-[60px] bg-white shadow-md p-4">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center"></div>
-              <div className="flex items-center -mt-[20px] lg:mt-0">
-                <div className="ml-4 pr-6">
-                  <label htmlFor="itemsPerPage" className="mr-2 text-xs lg:text-lg">
-                    Items per page:
-                  </label>
-                  <select
-                    id="itemsPerPage"
-                    className="border rounded px-2 py-1 focus:outline-none text-xs lg:text-lg"
-                    value={itemsPerPage}
-                    onChange={(e) => setItemsPerPage(Number(e.target.value))}
-                  >
-                    {itemsPerPageOptions.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <p className="mr-2 pr-6 text-xs lg:text-lg">
-                  {(currentPage - 1) * itemsPerPage + 1} -{" "}
-                  {Math.min(currentPage * itemsPerPage, allPlayers)} of{" "}
-                  {allPlayers}
-                </p>
-                <button
-                  className="px-3 py-1 mr-1 border rounded focus:outline-none text-xs lg:text-lg"
-                  onClick={() => setCurrentPage(currentPage - 1)}
-                  disabled={currentPage === 1}
-                >
-                  Previous
-                </button>
-                <button
-                  className="px-3 py-1 ml-1 border rounded focus:outline-none text-xs lg:text-lg"
-                  onClick={() => setCurrentPage(currentPage + 1)}
-                  disabled={players.length < itemsPerPage}
-                >
-                  Next
-                </button>
-              </div>
-            </div>
-          </div> */}
         </div>
       </div>
       {showCreate && (
@@ -796,20 +754,6 @@ function Players({ session }) {
                 </select>
               </form>
             </div>
-            {/* <div className="mb-4">
-                <label
-                  htmlFor="file-input"
-                  className="block text-gray-700 font-bold mb-2"
-                >
-                  Select an image to upload:
-                </label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
-              </div> */}
             <div className="flex justify-center">
               <button
                 className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-[120px] sm:w-auto px-5 py-2.5 mb-1 mx-5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
@@ -829,253 +773,7 @@ function Players({ session }) {
       )}
 
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity opacity-100 z-50">
-          <div className="bg-white rounded-lg p-3 h-5/6 w-auto">
-            <div className="flex space-x-5">
-              <h2 className="text-lg font-medium mb-4">Edit Player Details</h2>
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={updatedPlayer.isActive}
-                  onChange={(e) =>
-                    setUpdatedPlayer({
-                      ...updatedPlayer,
-                      isActive: e.target.checked,
-                    })
-                  }
-                  className="form-checkbox h-5 w-5 text-blue-500"
-                />
-                <span className="ml-2 text-gray-700">Active</span>
-              </label>
-            </div>
-            <div className="flex">
-              <label className="flex flex-col">
-                <h3>Name:</h3>
-                <input
-                  type="text"
-                  value={updatedPlayer.PlayerName}
-                  onChange={(e) =>
-                    setUpdatedPlayer({
-                      ...updatedPlayer,
-                      PlayerName: e.target.value,
-                    })
-                  }
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                />
-              </label>
-              <label className="flex flex-col">
-                <h3>Club Number:</h3>
-                <input
-                  type="text"
-                  value={updatedPlayer.clubNumber}
-                  onChange={(e) =>
-                    setUpdatedPlayer({
-                      ...updatedPlayer,
-                      clubNumber: e.target.value,
-                    })
-                  }
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                />
-              </label>
-            </div>
-            <div className="flex">
-              <div className="flex flex-col">
-                <h3>Team:</h3>
-                <select
-                  value={updatedPlayer.team_id}
-                  onChange={(e) =>
-                    setUpdatedPlayer({
-                      ...updatedPlayer,
-                      team_id: e.target.value,
-                    })
-                  }
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                >
-                  <option value="">--Select a Team--</option>
-                  {teams.map((team) => (
-                    <option key={team.id} value={team.id}>
-                      {team.TeamName}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <label className="flex flex-col">
-                Birthdate:
-                <input
-                  type="date"
-                  value={updatedPlayer.birthdate}
-                  onChange={(e) =>
-                    setUpdatedPlayer({
-                      ...updatedPlayer,
-                      birthdate: e.target.value,
-                    })
-                  }
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                />
-              </label>
-            </div>
-            <div className="flex">
-              <label className="flex flex-col">
-                <h3>Position:</h3>
-                <input
-                  type="text"
-                  value={updatedPlayer.position}
-                  onChange={(e) =>
-                    setUpdatedPlayer({
-                      ...updatedPlayer,
-                      position: e.target.value,
-                    })
-                  }
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                />
-              </label>
-              <label className="flex flex-col">
-                <h3>Number:</h3>
-                <input
-                  type="text"
-                  value={updatedPlayer.number}
-                  onChange={(e) =>
-                    setUpdatedPlayer({
-                      ...updatedPlayer,
-                      number: e.target.value,
-                    })
-                  }
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                />
-              </label>
-            </div>
-            <div className="flex">
-              <label className="flex flex-col">
-                <h3>High School:</h3>
-                <input
-                  type="text"
-                  value={updatedPlayer.highSchool}
-                  onChange={(e) =>
-                    setUpdatedPlayer({
-                      ...updatedPlayer,
-                      highSchool: e.target.value,
-                    })
-                  }
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                />
-              </label>
-              <label className="flex flex-col">
-                <h3>Weight:</h3>
-                <input
-                  type="text"
-                  value={updatedPlayer.weight}
-                  onChange={(e) =>
-                    setUpdatedPlayer({
-                      ...updatedPlayer,
-                      weight: e.target.value,
-                    })
-                  }
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                />
-              </label>
-            </div>
-            <div className="flex">
-              <label className="flex flex-col">
-                <h3>Height Feet:</h3>
-                <input
-                  type="text"
-                  value={updatedPlayer.heightFeet}
-                  onChange={(e) =>
-                    setUpdatedPlayer({
-                      ...updatedPlayer,
-                      heightFeet: e.target.value,
-                    })
-                  }
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                />
-              </label>
-              <label className="flex flex-col">
-                <h3>Height Inches:</h3>
-                <input
-                  type="text"
-                  value={updatedPlayer.heightInches}
-                  onChange={(e) =>
-                    setUpdatedPlayer({
-                      ...updatedPlayer,
-                      heightInches: e.target.value,
-                    })
-                  }
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                />
-              </label>
-            </div>
-            <div className="flex">
-              <label className="flex flex-col">
-                <h3>Games Played:</h3>
-                <input
-                  type="text"
-                  value={updatedPlayer.GamesPlayed}
-                  onChange={(e) =>
-                    setUpdatedPlayer({
-                      ...updatedPlayer,
-                      GamesPlayed: e.target.value,
-                    })
-                  }
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                />
-              </label>
-              <div className="flex flex-col">
-                <h3>Sex:</h3>
-                <select
-                  value={updatedPlayer.sex_id}
-                  onChange={(e) =>
-                    setUpdatedPlayer({
-                      ...updatedPlayer,
-                      sex_id: e.target.value,
-                    })
-                  }
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                >
-                  <option value="">--Select a sex--</option>
-                  {sexs.map((team) => (
-                    <option key={team.id} value={team.id}>
-                      {team.Sex}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <h3>Image:</h3>
-              <select
-                value={updatedPlayer.picture_id}
-                onChange={(e) =>
-                  setUpdatedPlayer({
-                    ...updatedPlayer,
-                    picture_id: e.target.value,
-                  })
-                }
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 mb-5 mx-5 w-[150px] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              >
-                <option value="">--Select an Image--</option>
-                {pictures.map((picture) => (
-                  <option key={picture.id} value={picture.id}>
-                    {picture.picture_url}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="flex justify-center">
-              <button
-                className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 mb-5 mx-5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-                onClick={() => setShowModal(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 mb-5 mx-5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                onClick={handleUpdate}
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
+        <EditPlayer player={selectedPlayer} onClose={() => setShowModal(false)} />
       )}
 
       {showGamesModal && (

@@ -1,5 +1,6 @@
 import Navbar from "./layout/Navbar";
 import Players from "./pages/players/Players";
+import EditPlayer from "./pages/players/EditPlayer";
 import Stats from "./pages/addStats/Stats";
 import Teams from "./pages/teams/Teams";
 import TotalStats from "./pages/stats/TotalStats";
@@ -54,6 +55,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/players" element={<Players session={session} />} />
             <Route path="/stats" element={<Stats />} />
+            <Route path="/editplayer/:id" element={<EditPlayer />} />
             <Route path="/teams" element={<Teams />} />
             <Route path="/totalstats" element={<TotalStats />} />
             <Route path="/averagestats" element={<AverageStats />} />
