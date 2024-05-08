@@ -124,7 +124,7 @@ function EditPlayer({ onClose }) {
                 team_id: e.target.value,
               })
             }
-            className="w-8/12 text-right border-b border-gray-200 py-[10px] outline-none"
+            className="w-8/12 text-right border-b border-gray-200 py-[10px] outline-none bg-white"
           >
             <option value="">--Select a Team--</option>
             {teams.map((team) => (
@@ -145,7 +145,7 @@ function EditPlayer({ onClose }) {
                 birthdate: e.target.value,
               })
             }
-            className="w-8/12 text-right border-b border-gray-200 py-[10px] outline-none"
+            className="w-8/12 text-right border-b border-gray-200 py-[10px] outline-none bg-white"
           />
         </label>
         <label className="flex">
@@ -257,7 +257,7 @@ function EditPlayer({ onClose }) {
                 sex_id: e.target.value,
               })
             }
-            className="w-8/12 text-right border-b border-gray-200 py-[10px] outline-none"
+            className="w-8/12 text-right border-b border-gray-200 py-[10px] outline-none bg-white"
           >
             <option value="">--Select a sex--</option>
             {sexs.map((team) => (
@@ -278,7 +278,7 @@ function EditPlayer({ onClose }) {
               picture_id: e.target.value,
             })
           }
-            className="w-8/12 text-right border-b border-gray-200 py-[10px] outline-none"
+            className="w-8/12 text-right border-b border-gray-200 py-[10px] outline-none bg-white"
           >
           <option value="">--Select an Image--</option>
           {pictures.map((picture) => (
