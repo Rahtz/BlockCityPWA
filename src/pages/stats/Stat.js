@@ -109,12 +109,6 @@ const Stat = () => {
     <div className="h-auto bg-gray-200 flex flex-col items-center justify-center">
       <div className="flex items-center justify-center space-x-[20px] bg-white h-[40px] w-full mb-2 px-1 py-1">
         <div>
-          <p className="font-display lg:-ml-[50px] lg:text-lg">
-            Club Stat Leaders {new Date().getFullYear()}
-          </p>
-        </div>
-        <div className="border border-black h-[25px]"></div>
-        <div>
           <Link to={`/stat/`}>
             <p className="text-sm">Leaders</p>
           </Link>
@@ -137,6 +131,7 @@ const Stat = () => {
       </div>
 
       <div className="p-4 lg:w-8/12 h-8/12 w-full rounded-xl bg-white">
+      <h1 className="font-display lg:text-2xl">Club Stat Leaders {new Date().getFullYear()}</h1>
         <div className="flex space-x-4 mb-6">
           <button
             onClick={() => setSelectedSexId(1)}
