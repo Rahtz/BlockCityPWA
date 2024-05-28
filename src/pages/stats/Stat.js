@@ -139,7 +139,7 @@ const Stat = () => {
               selectedSexId === 1 ? "border-red-600" : ""
             }`}
           >
-            Male
+            Mens
           </button>
           <button
             onClick={() => setSelectedSexId(2)}
@@ -147,7 +147,7 @@ const Stat = () => {
               selectedSexId === 2 ? "border-red-600" : ""
             }`}
           >
-            Female
+            Womens
           </button>
           <button
             onClick={() => setSelectedSexId(3)}
