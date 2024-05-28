@@ -51,7 +51,8 @@ const Games = () => {
     const { data } = await supabase
       .from("Games")
       .select()
-      .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1);
+      .range((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage - 1)
+      .order("GameDate", { ascending: false });
     setGames(data);
   }
 

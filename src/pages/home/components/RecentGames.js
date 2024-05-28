@@ -40,7 +40,7 @@ const RecentGames = () => {
           .select("TeamId, OppTeamId, TeamScore, OppTeamScore, GameDate")
           .lte("GameDate", latestGameDate.toISOString()) // Games on or before the latest date
           .gte("GameDate", threeWeeksBefore.toISOString()) // Games on or after 2 weeks before the latest date
-          .order("GameDate", { ascending: true }); // Order the games by GameDate in ascending order
+          .order("GameDate", { ascending: false }); // Order the games by GameDate in ascending order
   
         if (gamesError) {
           return;

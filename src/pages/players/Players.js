@@ -772,10 +772,6 @@ function Players({ session }) {
         </div>
       )}
 
-      {showModal && (
-        <EditPlayer player={selectedPlayer} onClose={() => setShowModal(false)} />
-      )}
-
       {showGamesModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity opacity-100 z-50">
           <div className="bg-white rounded-lg p-3 h-auto w-auto">

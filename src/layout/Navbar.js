@@ -78,70 +78,55 @@ const Navbar = ({ session, handleSessionChange }) => {
                 </div>
               </div>
             </div>
-            <div className={`hidden lg:flex ${isOpen ? "" : "hidden"}`}
-            >
+            <div className={`hidden lg:flex ${isOpen ? "" : "hidden"}`}>
               <p
                 className={`text-sm font-bold py-3 pl-2 w-full font-sans border-onyx ${
                   location.pathname === "/home" ? "text-white" : ""
                 }`}
               >
-                <Link to="/home" >
-                  Home
-                </Link>
+                <Link to="/home">Home</Link>
               </p>
               <p
                 className={`text-sm font-bold py-3 pl-2 w-full font-sans border-onyx ${
                   location.pathname === "/stat" ? "text-white" : ""
                 }`}
               >
-                <Link to="/stat">
-                  Stats
-                </Link>
+                <Link to="/stat">Stats</Link>
               </p>
               <p
                 className={`text-sm font-bold py-3 pl-2 w-full font-sans border-onyx ${
                   location.pathname === "/players" ? "text-white" : ""
                 }`}
               >
-                <Link to="/players" >
-                  Players
-                </Link>
+                <Link to="/players">Players</Link>
               </p>
               <p
                 className={`text-sm font-bold py-3 pl-2 w-full font-sans border-onyx ${
                   location.pathname === "/teams" ? "text-white" : ""
                 }`}
               >
-                <Link to="/teams" >
-                  Teams
-                </Link>
+                <Link to="/teams">Teams</Link>
               </p>
               <p
                 className={`text-sm font-bold py-3 pl-2 w-full font-sans border-onyx ${
                   location.pathname === "/mvp" ? "text-white" : ""
                 }`}
               >
-                <Link to="/mvp" >
-                  MVP
-                </Link>
+                <Link to="/mvp">MVP</Link>
               </p>
               <p
                 className={`text-sm font-bold py-3 pl-2 w-full font-sans border-onyx ${
                   location.pathname === "/milestones" ? "text-white" : ""
                 }`}
               >
-                <Link to="/milestones" >
-                  Milestones
-                </Link>
+                <Link to="/milestones">Milestones</Link>
               </p>
               <p
                 className={`text-sm font-bold py-3 pl-2 w-full font-sans border-onyx ${
                   location.pathname === "/compare" ? "text-white" : ""
                 }`}
               >
-                <Link to="/compare" >
-                  Compare
-                </Link>
+                <Link to="/compare">Compare</Link>
               </p>
               {session ? (
                 <p
@@ -149,9 +134,7 @@ const Navbar = ({ session, handleSessionChange }) => {
                     location.pathname === "/admin" ? "text-white" : ""
                   }`}
                 >
-                  <Link to="/games">
-                    Admin
-                  </Link>
+                  <Link to="/games">Admin</Link>
                 </p>
               ) : (
                 <></>
@@ -171,88 +154,88 @@ const Navbar = ({ session, handleSessionChange }) => {
             </div>
           </div>
           <div
-  className={`fixed inset-x-0 top-0 bg-black lg:hidden transition-transform duration-500 transform ${isOpen ? 'translate-y-0 mt-16' : '-translate-y-full'}`}
-  style={{ zIndex: isOpen ? '-1' : '-1' }}
->
-
-<Link to="/home" onClick={() => setIsOpen(false)}>
-  <div className="flex items-center">
-    {/* <AiOutlineHome /> */}
-    <p
-      className={`text-sm font-bold py-3 pl-1 pr-2 w-full border-b-[1px] font-sans border-onyx text-center ${
-        location.pathname === "/home" ? "text-white" : ""
-      }`}
-      style={{ margin: 0 }}
-    >
-      Home
-    </p>
-  </div>
-</Link>
+            className={`fixed inset-x-0 top-0 bg-black lg:hidden transition-transform duration-500 transform ${
+              isOpen ? "translate-y-0 mt-16" : "-translate-y-full"
+            }`}
+            style={{ zIndex: isOpen ? "-1" : "-1" }}
+          >
+            <Link to="/home" onClick={() => setIsOpen(false)}>
+              <div className="flex items-center">
+                {/* <AiOutlineHome /> */}
+                <p
+                  className={`text-sm font-bold py-3 pl-1 pr-2 w-full border-b-[1px] font-sans border-onyx text-center ${
+                    location.pathname === "/home" ? "text-white" : ""
+                  }`}
+                  style={{ margin: 0 }}
+                >
+                  Home
+                </p>
+              </div>
+            </Link>
             <Link to="/stat" onClick={() => setIsOpen(false)}>
-            <p
-              className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx text-center ${
-                location.pathname === "/stat" ? "text-white" : ""
-              }`}
-            >
-              
-                Stats
-            </p>
-              </Link>
-              <Link to="/players" onClick={() => setIsOpen(false)}>
-            <p
-              className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx text-center ${
-                location.pathname === "/players" ? "text-white" : ""
-              }`}
-            >
-                Players
-            </p>
-              </Link>
-              <Link to="/teams" onClick={() => setIsOpen(false)}>
-            <p
-              className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx text-center ${
-                location.pathname === "/teams" ? "text-white" : ""
-              }`}
-            >
-                Teams
-            </p>
-              </Link>
-              <Link to="/mvp" onClick={() => setIsOpen(false)}>
-            <p
-              className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx text-center ${
-                location.pathname === "/mvp" ? "text-white" : ""
-              }`}
-            >
-                MVP
-            </p>
-              </Link>
-              <Link to="/milestones" onClick={() => setIsOpen(false)}>
-            <p
-              className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx text-center ${
-                location.pathname === "/milestones" ? "text-white" : ""
-              }`}
-            >
-                Milestones
-            </p>
-              </Link>
-              <Link to="/compare" onClick={() => setIsOpen(false)}>
-            <p
-              className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx text-center ${
-                location.pathname === "/compare" ? "text-white" : ""
-              }`}
-            >
-                Compare
-            </p>
-              </Link>
-            {session ? (
-                <Link to="/admin" onClick={() => setIsOpen(false)}>
               <p
                 className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx text-center ${
-                  location.pathname === "/games" ? "text-white" : ""
+                  location.pathname === "/stat" ? "text-white" : ""
                 }`}
               >
-                  Admin
+                Stats
               </p>
-                </Link>
+            </Link>
+            <Link to="/players" onClick={() => setIsOpen(false)}>
+              <p
+                className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx text-center ${
+                  location.pathname === "/players" ? "text-white" : ""
+                }`}
+              >
+                Players
+              </p>
+            </Link>
+            <Link to="/teams" onClick={() => setIsOpen(false)}>
+              <p
+                className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx text-center ${
+                  location.pathname === "/teams" ? "text-white" : ""
+                }`}
+              >
+                Teams
+              </p>
+            </Link>
+            <Link to="/mvp" onClick={() => setIsOpen(false)}>
+              <p
+                className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx text-center ${
+                  location.pathname === "/mvp" ? "text-white" : ""
+                }`}
+              >
+                MVP
+              </p>
+            </Link>
+            <Link to="/milestones" onClick={() => setIsOpen(false)}>
+              <p
+                className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx text-center ${
+                  location.pathname === "/milestones" ? "text-white" : ""
+                }`}
+              >
+                Milestones
+              </p>
+            </Link>
+            <Link to="/compare" onClick={() => setIsOpen(false)}>
+              <p
+                className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx text-center ${
+                  location.pathname === "/compare" ? "text-white" : ""
+                }`}
+              >
+                Compare
+              </p>
+            </Link>
+            {session ? (
+              <Link to="/admin" onClick={() => setIsOpen(false)}>
+                <p
+                  className={`text-sm font-bold py-3 pl-2 w-full border-b-[1px] font-sans border-onyx text-center ${
+                    location.pathname === "/games" ? "text-white" : ""
+                  }`}
+                >
+                  Admin
+                </p>
+              </Link>
             ) : (
               <></>
             )}
