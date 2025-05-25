@@ -26,32 +26,44 @@ const Stat = () => {
 
   const getPlayerName = getPlayerNameMap(players);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const statsData = await getStats();
-        // Get all unique years from stats
-        const years = Array.from(new Set(statsData.map(stat => stat.Season))).sort((a, b) => b - a);
-        setAvailableYears(years);
-        // If current selected year is not in the list, default to latest
-        if (!years.includes(selectedYear)) {
-          setSelectedYear(years[0]);
-        }
-        // Filter stats for selected year
-        const yearStats = statsData.filter(stat => stat.Season === selectedYear);
-        setStats(yearStats);
+ // 1. Fetch years and ensure selectedYear is valid
+useEffect(() => {
+  const fetchYears = async () => {
+    const statsData = await getStats();
+    const years = Array.from(new Set(statsData.map(stat => stat.Season))).sort((a, b) => b - a);
+    setAvailableYears(years);
 
-        const playersData = await fetchPlayers();
-        setPlayers(playersData);
+    // If selectedYear is not valid, set it to the latest year
+    if (years.length && !years.includes(selectedYear)) {
+      setSelectedYear(years[0]);
+    }
+  };
+  fetchYears();
+  // eslint-disable-next-line
+}, []);
 
-        calculateTopPlayers(yearStats, selectedSexId);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-    // eslint-disable-next-line
-  }, [selectedYear]);
+// 2. Fetch stats and players for the selectedYear
+useEffect(() => {
+  // Only fetch if selectedYear is in availableYears and availableYears is not empty
+  if (!availableYears.length || !availableYears.includes(selectedYear)) return;
+
+  const fetchData = async () => {
+    try {
+      const statsData = await getStats();
+      const yearStats = statsData.filter(stat => stat.Season === selectedYear);
+      setStats(yearStats);
+
+      const playersData = await fetchPlayers();
+      setPlayers(playersData);
+
+      calculateTopPlayers(yearStats, selectedSexId);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  fetchData();
+  // eslint-disable-next-line
+}, [selectedYear, availableYears, selectedSexId]);
 
   useEffect(() => {
     calculateTopPlayers(stats, selectedSexId);
@@ -124,6 +136,27 @@ const Stat = () => {
   setTopFreeThrowsMade(topPlayers.FreeThrowsMade);
   setTopMvpPoints(topPlayers.MvpPoints);
 };
+
+const availableSexIds = [1, 2, 3].filter(sexId =>
+    stats.some(stat => stat.sex_id === sexId)
+  );
+
+  // Optionally, you can map sexId to label
+  const sexLabels = {
+    1: "Mens",
+    2: "Womens",
+    3: "Social",
+  };
+
+  // If the current selectedSexId is not available, switch to the first available
+  useEffect(() => {
+    if (!availableSexIds.includes(selectedSexId) && availableSexIds.length > 0) {
+      setSelectedSexId(availableSexIds[0]);
+    }
+    // eslint-disable-next-line
+  }, [stats, selectedSexId, availableSexIds.join(",")]);
+
+
   return (
     <div className="h-auto bg-gray-200 flex flex-col items-center justify-center">
       <div className="flex items-center justify-center space-x-[20px] bg-white h-[40px] w-full mb-2 px-1 py-1">
@@ -169,31 +202,18 @@ const Stat = () => {
           Club Stat Leaders {selectedYear}
         </h1>
         <div className="flex space-x-4 mb-6">
-          <button
-            onClick={() => setSelectedSexId(1)}
-            className={`px-4 py-2 w-4/12 border-b-2 border-transparent hover:border-red-600 focus:outline-none ${
-              selectedSexId === 1 ? "border-red-600" : ""
-            }`}
-          >
-            Mens
-          </button>
-          <button
-            onClick={() => setSelectedSexId(2)}
-            className={`px-4 py-2 w-4/12 border-b-2 border-transparent hover:border-red-600 focus:outline-none ${
-              selectedSexId === 2 ? "border-red-600" : ""
-            }`}
-          >
-            Womens
-          </button>
-          <button
-            onClick={() => setSelectedSexId(3)}
-            className={`px-4 py-2 w-4/12 border-b-2 border-transparent hover:border-red-600 focus:outline-none ${
-              selectedSexId === 3 ? "border-red-600" : ""
-            }`}
-          >
-            Social
-          </button>
-        </div>
+            {availableSexIds.map(sexId => (
+              <button
+                key={sexId}
+                onClick={() => setSelectedSexId(sexId)}
+                className={`px-4 py-2 w-4/12 border-b-2 border-transparent hover:border-red-600 focus:outline-none ${
+                  selectedSexId === sexId ? "border-red-600" : ""
+                }`}
+              >
+                {sexLabels[sexId]}
+              </button>
+            ))}
+          </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="stat-category p-1">
